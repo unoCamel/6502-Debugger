@@ -5,7 +5,14 @@ JC = javac
 		$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-		src/Main.java
+		src/Main.java \
+		src/ALU.java \
+		src/Instructions.java \
+		src/Memory.java \
+		src/Registers.java \
+		src/Loader.java \
+		src/Debugger.java \
+		src/DebuggerGUI.java \
 
 
 default: classes

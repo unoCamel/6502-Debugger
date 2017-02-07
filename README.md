@@ -7,3 +7,16 @@ Frazer Bayley <br />
 Abdulaziz (Aziz) AL-Heidous <br />
 Jeremy Brennan <br />
 Alison Legge <br />
+
+Installation
+------------
+Compile code by running: <br />
+
+make <br /> 
+java -cp bin/ Main <br />
+
+Cleaning
+--------
+To clean, run:<br />
+
+make clean <br />
