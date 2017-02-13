@@ -10,10 +10,10 @@ CLASSES = \
 		src/Instructions.java \
 		src/Memory.java \
 		src/Registers.java \
-		src/Loader.java \
+		src/Import.java \
 		src/Debugger.java \
 		src/DebuggerGUI.java \
-
+		src/Decode.java \
 
 default: classes
 
