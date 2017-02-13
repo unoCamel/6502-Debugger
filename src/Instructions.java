@@ -28,12 +28,12 @@ public boolean Instructions(){return true;}
 *               Affects Flags S V Z C                
 *               A + M + C -> A, C                    */
 
-/* @brief 
+/*@brief 
 * @opcode 0x69
 * @param 
 */
-public static int adc_imm(int ){
-	return -1
+public static int adc_imm(){
+	return -1;
 }
 
 /* ====================== INCREMENTS/DECREMENTS OPERATIONS =========== */
@@ -46,7 +46,7 @@ public static int adc_imm(int ){
 
 /* ====================== STATUS/FLAG OPERATIONS ===================== */
 
-/* ====================== SYSTEM OPERATIONS ========================== */
+/* ======================  SYSTEM OPERATIONS ========================== */
 
 	
 }

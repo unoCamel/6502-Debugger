@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{pgfgantt}
+\usepackage{rotating}
+\usepackage[graphicx]{realboxes}
+
+\newganttchartelement*{mymilestone}{
+	mymilestone/.style={
+		shape=isosceles triangle,
+		inner sep=0pt,
+		draw=cyan,
+		top color=white,
+		bottom color=cyan!50
+	},
+	mymilestone incomplete/.style={
+		/pgfgantt/mymilestone,
+		draw=yellow,
+		bottom color=yellow!50
+	},
+	mymilestone label font=\slshape,
+	mymilestone left shift=0pt,
+	mymilestone right shift=0pt
+}
+
+\newgantttimeslotformat{stardate}{%
+	\def\decomposestardate##1.##2\relax{%
+		\def\stardateyear{##1}\def\stardateday{##2}%
+	}%
+	\decomposestardate#1\relax%
+	\pgfcalendardatetojulian{\stardateyear-01-01}{#2}%
+	\advance#2 by-1\relax%
+	\advance#2 by\stardateday\relax%
+}
+
+
+\begin{document}
+	\begin{sidewaysfigure}
+		\begin{ganttchart}[vgrid, hgrid]{1}{40}
+			\gantttitle{February}{23} 
+			\gantttitle{March}{17}\\
+			\gantttitlelist{6,...,28,1,2,...,17}{1}\\
+			%First Group
+			\ganttgroup{Group 1}{1}{10} \\
+			\ganttbar{Task 1}{2}{3} \\
+			\ganttbar{Task 2}{4}{10} \\
+			\ganttbar{Task 3}{9}{12}\\
+			%\ganttlink{elem0}{elem1}
+			\ganttlink{elem1}{elem2}
+			\ganttlink{elem2}{elem3}
+			%\ganttmilestone{Milestone 1}{11}
+			%Second Group
+			\ganttgroup{Group 2}{14}{20} \\
+			\ganttbar{Task 1}{15}{18} \\
+			\ganttbar{Task 2}{18}{21} \\
+			\ganttbar{Task 3}{22}{24}\\
+			%\ganttlink{elem4}{elem5}
+			\ganttlink{elem5}{elem6}
+			\ganttlink{elem6}{elem7}
+			%\ganttmilestone{Milestone 1}{11}
+			%Third Group
+			\ganttgroup{Group 3}{25}{27} \\
+			\ganttbar{Task 1}{26}{28} \\
+			\ganttbar{Task 2}{28}{32} \\
+			\ganttbar{Task 3}{32}{35}
+			%\ganttlink{elem8}{elem9}
+			\ganttlink{elem9}{elem10}
+			\ganttlink{elem10}{elem11}
+			%\ganttmilestone{Milestone 1}{11}
+		\end{ganttchart}
+	\end{sidewaysfigure}
+	
+\end{document} 
+
+enter image description here
