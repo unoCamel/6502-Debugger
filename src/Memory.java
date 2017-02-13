@@ -2,8 +2,6 @@ import java.util.Arrays;
 
 public class Memory {
 
-	public final int MAX_MEMORY = 8192;
-
 	private int[] memory;
 
 
@@ -91,6 +89,16 @@ public class Memory {
 	public String toString(int index){
 		int[] tempArray = Arrays.copyOfRange(memory, index, memory.length);
 		return Arrays.toString(tempArray); 
+	}
+
+	/* @brief replace each value with zero in Memory.
+	*
+	* @param None.
+	* @return boolean True if successful.
+	*/
+	public boolean clean(){
+		boolean test;
+		return test;
 	}
 
 
