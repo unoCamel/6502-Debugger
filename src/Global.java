@@ -1,3 +1,5 @@
+package src;
+
 public class Global{
 
 	public static final int MAX_MEMORY = 8192;

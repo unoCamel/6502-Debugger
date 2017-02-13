@@ -13,7 +13,8 @@ CLASSES = \
 		src/Import.java \
 		src/Debugger.java \
 		src/DebuggerGUI.java \
-		src/Decode.java \
+		src/Converter.java \
+		src/CPU.java \
 
 default: classes
 

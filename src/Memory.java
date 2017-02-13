@@ -1,4 +1,9 @@
 import java.util.Arrays;
+import src.Global;
+import src.Registers;
+
+//TODO Discuss zero page implementation
+
 
 public class Memory {
 
@@ -11,10 +16,8 @@ public class Memory {
 	* @return boolean True if successfuly created
 	*/
 	public boolean Memory(){
-		memory = new int[MAX_MEMORY];
-
-		boolean test;
-		return test;
+		memory = new int[Global.MAX_MEMORY];
+		return true;
 	}
 
 	/* @brief Initializes a memory of size 65kb, and fills the memory with the inputted
@@ -23,10 +26,8 @@ public class Memory {
 	* @return boolean True if successfuly created and memory is loaded
 	*/
 	public boolean Memory(int[] binaryInstructions){
-		memory = Arrays.copyOf(binaryInstructions, MAX_MEMORY);
-
-		boolean test;
-		return test;
+		memory = Arrays.copyOf(binaryInstructions, Global.MAX_MEMORY);
+		return true;
 	}
 
 	/* @brief Memory is loaded with the inputted binary instructions, starting 
@@ -34,20 +35,18 @@ public class Memory {
 	* @param binaryInstructions An int[] of 8-bit binary values.
 	* @return boolean True if successfuly created and memory is loaded. False if there exists values inside the array.
 	*/
-	public boolean setMemory(int[] binaryInstructions){
-		boolean test;
-		return test;
+	public static boolean setMemory(int[] binaryInstructions){
+		return true;
 	}
 
 
 	/* @brief Initializes a memory of size 65kb
 	* 
 	* @param None.
-	* @return boolean True if successfuly created
+	* @return void.
 	*/
-	public boolean write(int index, int value){
-		boolean test;
-		return test;
+	public static void write(int index, int value){
+		return;
 	}
 
 	/* @brief Finds the binary instruction at the supplied index
@@ -55,9 +54,8 @@ public class Memory {
 	* @param index 16-bit number of index in memory
 	* @return 8-bit binary instruction
 	*/
-	public int[] read(int index){
-		int[] test;
-		return test;
+	public static int[] read(int index){
+		return null;
 	}
 
 	/* @brief Finds all binary instructions between two indexes
@@ -66,9 +64,8 @@ public class Memory {
 	* @param index2 The second index of the range
 	* @return An array of indexes between index1 and index2, inclusive.
 	*/
-	public int[] readRange(int index1, int index2){
-		int[] test;
-		return test;
+	public static int[] readRange(int index1, int index2){
+		return null;
 	}
 
 	/* @brief Prints the array of binary instructions
@@ -76,7 +73,7 @@ public class Memory {
 	* @param None.
 	* @return Void.
 	*/
-	public String toString(){
+	public static String toString(){
 		return Arrays.toString(memory);
 	}
 
@@ -86,7 +83,7 @@ public class Memory {
 	* @param index2 The second index of the range
 	* @return Void.
 	*/
-	public String toString(int index){
+	public static String toString(int index){
 		int[] tempArray = Arrays.copyOfRange(memory, index, memory.length);
 		return Arrays.toString(tempArray); 
 	}
@@ -96,9 +93,8 @@ public class Memory {
 	* @param None.
 	* @return boolean True if successful.
 	*/
-	public boolean clean(){
-		boolean test;
-		return test;
+	public static boolean clean(){
+		return true;
 	}
 
 

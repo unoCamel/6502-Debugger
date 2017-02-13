@@ -1,14 +1,13 @@
-public class Decode {
+public class Converter {
 
 	/*
 		@brief: Converts array of string instructions into array of binary 8 bit instructions.
-
+		["LD A B", "ADC A B"] -> [01010101, 01010101]
 		@param: instructionsArray : Array of string instructions.
 		@return: int[]
 	*/
-	public int[] decode(String[] instructionsArray){
-		int[] test;
-		return test;
+	public static int[] convert(String[] instructionsArray){
+		return null;
 	}
 
 

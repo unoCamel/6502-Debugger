@@ -1,3 +1,5 @@
+package src;
+
 public class Registers {
 
 	private static int[] registers8;
@@ -19,7 +21,7 @@ public class Registers {
 	* @param register Either $A, $X, $Y, $P
 	* @return int 8-bit value
 	*/
-	public int read8(int register){
+	public static int read8(int register){
 		return 1;
 	}
 
@@ -27,10 +29,10 @@ public class Registers {
 	*
 	* @param register Either $A, $X, $Y, $P
 	* @param value 8-bit number
-	* @return boolean True if successful.
+	* @return void.
 	*/
-	public boolean write8(int register, int value){
-		return true;
+	public static void write8(int register, int value){
+
 	}
 
 	/* @brief Read a 16-bit register.
@@ -38,7 +40,7 @@ public class Registers {
 	* @param register Either $SP, $PC
 	* @return int 16-bit value
 	*/
-	public int read16(int register){
+	public static int read16(int register){
 		return 1;
 	}
 
@@ -46,10 +48,10 @@ public class Registers {
 	*
 	* @param register Either $SP, $PC
 	* @param value 16-bit number
-	* @return boolean True if successful.
+	* @return void.
 	*/
-	public boolean write16(int register, int value){
-		return true;
+	public static void write16(int register, int value){
+
 	}
 
 	/* @brief Check current state of flag in %P register.
@@ -57,31 +59,31 @@ public class Registers {
 	* @param None.
 	* @return boolean True if set.
 	*/
-	public boolean isCarry(){
+	public static boolean isCarry(){
 		return true;
 	}
 
-	public boolean isZero(){
+	public static boolean isZero(){
 		return true;
 	}
 
-	public boolean isIRQDisabled(){
+	public static boolean isIRQDisabled(){
 		return true;
 	}
 
-	public boolean isDecimal(){
+	public static boolean isDecimal(){
 		return true;
 	}
 
-	public boolean isBreak(){
+	public static boolean isBreak(){
 		return true;
 	}
 
-	public boolean isOverflow(){
+	public static boolean isOverflow(){
 		return true;
 	}
 
-	public boolean isNegative(){
+	public static boolean isNegative(){
 		return true;
 	}
 
@@ -92,31 +94,31 @@ public class Registers {
 	* @param None.
 	* @return boolean True if successfully set.
 	*/
-	public boolean setCarry(){
+	public static boolean setCarry(){
 		return true;
 	}
 
-	public boolean setZero(){
+	public static boolean setZero(){
 		return true;
 	}
 
-	public boolean setIRQDisabled(){
+	public static boolean setIRQDisabled(){
 		return true;
 	}
 
-	public boolean setDecimal(){
+	public static boolean setDecimal(){
 		return true;
 	}
 
-	public boolean setBreak(){
+	public static boolean setBreak(){
 		return true;
 	}
 
-	public boolean setOverflow(){
+	public static boolean setOverflow(){
 		return true;
 	}
 
-	public boolean setNegative(){
+	public static boolean setNegative(){
 		return true;
 	}
 
@@ -127,31 +129,31 @@ public class Registers {
 	* @param None.
 	* @return boolean True if successfully set.
 	*/
-	public boolean resetCarry(){
+	public static boolean resetCarry(){
 		return true;
 	}
 
-	public boolean resetZero(){
+	public static boolean resetZero(){
 		return true;
 	}
 
-	public boolean resetIRQDisabled(){
+	public static boolean resetIRQDisabled(){
 		return true;
 	}
 
-	public boolean resetDecimal(){
+	public static boolean resetDecimal(){
 		return true;
 	}
 
-	public boolean resetBreak(){
+	public static boolean resetBreak(){
 		return true;
 	}
 
-	public boolean resetOverflow(){
+	public static boolean resetOverflow(){
 		return true;
 	}
 
-	public boolean resetNegative(){
+	public static boolean resetNegative(){
 		return true;
 	}
 
