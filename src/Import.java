@@ -1,3 +1,5 @@
+package src;
+
 public class Import {
 
 	/*
@@ -7,8 +9,33 @@ public class Import {
 		@return: String[]
 	*/
 	public static String[] importInstructions(String str){
-		return null;
-	}
+		int nlIndex = 0;
+		int memCounter = 0;
+		int currentIndex = 0;
+		String[] strArray = new String[Global.MAX_MEMORY];
 
-	
+		while (memCounter < Global.MAX_MEMORY){
+			if (str.equals("") || str == null){
+				return null;
+			}
+
+			nlIndex = str.indexOf('\n', currentIndex);
+			if (nlIndex == -1){
+				if (str.charAt(str.length() - 1) != '\n'){
+					String ins = str.substring(currentIndex, str.length());
+					ins = (ins.replace('\n', ' ')).trim();
+					strArray[memCounter] = ins;
+					break;
+				}
+				break;
+			}
+
+			String ins = str.substring(currentIndex, nlIndex + 1);
+			currentIndex += ins.length();
+			ins = (ins.replace('\n', ' ')).trim();
+			strArray[memCounter] = ins;
+			memCounter += 1;
+		}
+		return strArray;
+	}
 }
