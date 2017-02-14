@@ -16,14 +16,17 @@ public class Import {
 
 		while (memCounter < Global.MAX_MEMORY){
 			if (str.equals("") || str == null){
-				return null;
+				return null; //returns null if String is empty or null
 			}
 
 			nlIndex = str.indexOf('\n', currentIndex);
 			if (nlIndex == -1){
 				if (str.charAt(str.length() - 1) != '\n'){
+					//handles case where string does not end in newline
 					String ins = str.substring(currentIndex, str.length());
-					ins = (ins.replace('\n', ' ')).trim();
+					//creates last substring not ended in a newline
+					ins = ins.trim();
+					//removes any whitespace on edges of string
 					strArray[memCounter] = ins;
 					break;
 				}
@@ -31,8 +34,10 @@ public class Import {
 			}
 
 			String ins = str.substring(currentIndex, nlIndex + 1);
+			//creates substring that ends in newline
 			currentIndex += ins.length();
 			ins = (ins.replace('\n', ' ')).trim();
+			//removes newline char and whitespace on edges
 			strArray[memCounter] = ins;
 			memCounter += 1;
 		}
