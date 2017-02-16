@@ -1,9 +1,7 @@
-import java.util.Arrays;
-import src.Global;
-import src.Registers;
-
 //TODO Discuss zero page implementation
 
+
+import java.util.Arrays;
 
 public class Memory {
 
@@ -13,7 +11,7 @@ public class Memory {
 	/*@brief Initializes a memory of size 65kb
 	* 
 	* @param None.
-	* @return boolean True if successfuly created
+	* @return boolean True if successfully created
 	*/
 	public boolean Memory(){
 		memory = new int[Global.MAX_MEMORY];

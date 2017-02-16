@@ -1,5 +1,3 @@
-package src;
-
 public class CPU{
 	//For now, this is going to be the same as the $PC, later, when pipelined
 	//This will be different.

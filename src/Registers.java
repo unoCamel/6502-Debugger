@@ -1,5 +1,3 @@
-package src;
-
 public class Registers {
 
 	private static int[] registers8;
