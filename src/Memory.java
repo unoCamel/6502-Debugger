@@ -1,6 +1,3 @@
-//TODO Discuss zero page implementation
-
-
 import java.util.Arrays;
 
 public class Memory {
@@ -26,12 +23,12 @@ public class Memory {
         ZeroPage = new int[0xFF]; //first 256 words
         RAM = new int[0x3F00]; //Only half of 32kb, ZeroPage conceptually is inside here. We will ignore empty space for now.
         ROM = new int[0x8000]; //
-//		VIA1 = new int[0x3FFF];
-//		VIA2 = new int[0x3FFF];
-//		VIA3 = new int[0x3FFF];
-//		ACIA1 = new int[0x3FFF];
-//		ACIA2 = new int[0x3FFF];
-//		ACIA3 = new int[0x3FFF];
+    //		VIA1 = new int[0x3FFF];
+    //		VIA2 = new int[0x3FFF];
+    //		VIA3 = new int[0x3FFF];
+    //		ACIA1 = new int[0x3FFF];
+    //		ACIA2 = new int[0x3FFF];
+    //		ACIA3 = new int[0x3FFF];
     }
 
     /*@brief Initializes a memory of size 65kb, and fills the memory with the inputted
@@ -40,7 +37,7 @@ public class Memory {
 	* @return boolean True if successfully created and memory is loaded
 	*/
     public Memory(int[] binaryInstructions) {
-        RAM = Arrays.copyOf(binaryInstructions, 0x3F00);
+        RAM = Arrays.copyOf(binaryInstructions, 0x3F00); //Instructions will only be written to RAM. 0x3F00 is RAM size minus ZeroPage.
     }
 
     /*@brief Memory is loaded with the inputted binary instructions, starting
@@ -50,7 +47,7 @@ public class Memory {
 	*/
     public static void setMemory(int[] binaryInstructions) {
         try {
-            RAM = Arrays.copyOf(binaryInstructions, 0x3F00);
+            RAM = Arrays.copyOf(binaryInstructions, 0x3F00); //Instructions will only be written to RAM. 0x3F00 is RAM size minus ZeroPage.
         } catch (NullPointerException e) {
             System.err.println("NullPointerException, no instructions provided. Message: " + e);
         }
@@ -107,22 +104,28 @@ public class Memory {
     /*@brief Prints the array of binary instructions
 	*
 	* @param None.
-	* @return void.
+	* @return String.
 	*/
     public String toString() {
         return Arrays.toString(RAM);
+    }
+
+    /*@brief Prints provided 8-bit number at specified index.
+    *
+    * @param index Intended value to retrieve from memory..
+    * @return String.
+    */
+    public String toString(int index) {
+        return Integer.toString(read(index));
     }
 
     /*@brief Prints the array of binary instructions between index1 and index2.
 	*
 	* @param index1 The first index of the range
 	* @param index2 The second index of the range
-	* @return Void.
+	* @return String.
 	*/
-    public String toString(int index) {
-        int[] tempArray = Arrays.copyOfRange(RAM, index, RAM.length);
-        return Arrays.toString(tempArray);
-    }
+    public String toString(int index1, int index2) { return Arrays.toString(readRange(index1, index2)); }
 
     /*@brief replace each value with zero in Memory.
 	*
