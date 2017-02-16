@@ -10,13 +10,8 @@ Alison Legge <br />
 
 Installation
 ------------
-Compile code by running: <br />
-
-make <br /> 
-java -cp bin/ Main <br />
+TBC
 
 Cleaning
 --------
-To clean, run:<br />
-
-make clean <br />
+TBC
