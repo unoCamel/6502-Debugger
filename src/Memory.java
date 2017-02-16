@@ -22,7 +22,7 @@ public class Memory {
 	* @return boolean True if successfully created
 	*/
     //TODO Add memory check
-    public boolean Memory() {
+    public Memory() {
         ZeroPage = new int[0xFF]; //first 256 words
         RAM = new int[0x3F00]; //Only half of 32kb, ZeroPage conceptually is inside here. We will ignore empty space for now.
         ROM = new int[0x8000]; //
@@ -32,7 +32,6 @@ public class Memory {
 //		ACIA1 = new int[0x3FFF];
 //		ACIA2 = new int[0x3FFF];
 //		ACIA3 = new int[0x3FFF];
-        return true;
     }
 
     /*@brief Initializes a memory of size 65kb, and fills the memory with the inputted
@@ -40,15 +39,14 @@ public class Memory {
 	* @param binaryInstructions An int[] of 8-bit binary values.
 	* @return boolean True if successfully created and memory is loaded
 	*/
-    public boolean Memory(int[] binaryInstructions) {
+    public Memory(int[] binaryInstructions) {
         RAM = Arrays.copyOf(binaryInstructions, 0x3F00);
-        return true;
     }
 
     /*@brief Memory is loaded with the inputted binary instructions, starting
 	*		  at 0x0100.
 	* @param binaryInstructions An int[] of 8-bit binary values.
-	* @return boolean True if successfully created and memory is loaded. False if there exists values inside the array.
+	* @return void.
 	*/
     public static void setMemory(int[] binaryInstructions) {
         try {
@@ -69,7 +67,7 @@ public class Memory {
         else if (index >= 0x0100 && index <= 0x3FFF) {RAM[index] = value;}
         else if (index >= 0x8000 && index <= 0xFFFF) {ROM[index] = value;}
         else {
-            System.err.println("NullMemoryException, trying to access invalid memory.");
+            System.err.println("NullMemoryException, trying to write to invalid memory.");
         }
     }
 
@@ -80,28 +78,36 @@ public class Memory {
 	*/
     public static int read(int index) {
         if (index >= 0x0000 && index <= 0x00FF) {return ZeroPage[index];}
-        if (index >= 0x0100 && index <= 0x3FFF) {return RAM[index];}
-        if (index >= 0x8000 && index <= 0xFFFF) {return ROM[index];}
+        else if (index >= 0x0100 && index <= 0x3FFF) {return RAM[index];}
+        else if (index >= 0x8000 && index <= 0xFFFF) {return ROM[index];}
         else {
             System.err.println("NullMemoryException, trying to access invalid memory.");
             return -1;
         }
     }
 
-    /*@brief Finds all binary instructions between two indexes
-	*
+    /*@brief Finds all binary instructions between two indexes. Two indexes are needed to be in the same
+	* section of memory, otherwise an error will be returned.
 	* @param index1 The first index of the range
 	* @param index2 The second index of the range
-	* @return An array of indexes between index1 and index2, inclusive.
+	* @return An array of indexes between index1 and index2, inclusive, or null if out of range.
 	*/
     public static int[] readRange(int index1, int index2) {
-        return null;
+        int[] tempMemory;
+        if (index1 >= 0x0000 && index2 <= 0x00FF) {tempMemory = Arrays.copyOfRange(ZeroPage, index1, index2);}
+        else if (index1 >= 0x0100 && index2 <= 0x3FFF) {tempMemory = Arrays.copyOfRange(RAM, index1, index2);}
+        else if (index1 >= 0x8000 && index2 <= 0xFFFF) {tempMemory = Arrays.copyOfRange(ROM, index1, index2);}
+        else {
+            System.err.println("InvalidMemoryAccessException, requested memory must be in the same section.");
+            return null;
+        }
+        return tempMemory;
     }
 
     /*@brief Prints the array of binary instructions
 	*
 	* @param None.
-	* @return Void.
+	* @return void.
 	*/
     public String toString() {
         return Arrays.toString(RAM);
@@ -121,10 +127,12 @@ public class Memory {
     /*@brief replace each value with zero in Memory.
 	*
 	* @param None.
-	* @return boolean True if successful.
+	* @return Void.
 	*/
-    public static boolean clean() {
-        return true;
+    public static void clean() {
+        Arrays.fill(ZeroPage, 0);
+        Arrays.fill(ROM, 0);
+        Arrays.fill(RAM, 0);
     }
 
     /*@brief enumerated type to find out what range of memory something should be placed in.

@@ -3,9 +3,8 @@ public class CPU{
 	//This will be different.
 	private int clock;
 	
-	public boolean CPU(){
+	public CPU(){
 		clock = 0;
-		return true;
 	}
 	/* @brief Returns current state of PC
 	*

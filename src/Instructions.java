@@ -1,6 +1,6 @@
 public class Instructions {
 
-public boolean Instructions(){return true;}
+public Instructions(){}
 
 	/* C = Carry Flag
 	*  Z = Zero Flag

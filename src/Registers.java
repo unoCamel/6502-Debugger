@@ -8,10 +8,9 @@ public class Registers {
 	* @param None.
 	* @return boolean True if successful.
 	*/
-	public boolean Registers(){
+	public Registers(){
 		registers8 = new int[4];
 		registers16 = new int[2];
-		return true;
 	}
 
 	/* @brief Read an 8-bit register.

@@ -16,7 +16,7 @@ public class ALU {
 
 
 
-	public boolean ALU(){return true;}
+	public ALU(){}
 
 	/* @brief Performs the operation A + M + C -> A, C
 	* Add memory to accumulator with carry.
