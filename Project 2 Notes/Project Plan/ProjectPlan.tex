@@ -2,6 +2,10 @@
 \usepackage{pgfgantt}
 \usepackage{rotating}
 \usepackage[graphicx]{realboxes}
+%\usepackage[driver=pdftex]{geometry}
+%\newgeometry{paperwidth=17in,paperheight=11in}
+
+
 
 \newganttchartelement*{mymilestone}{
 	mymilestone/.style={
@@ -40,11 +44,13 @@
 			\gantttitlelist{6,...,28,1,2,...,17}{1}\\
 			%First Group
 			\ganttgroup{Increment 1}{1}{21} \\
-			\ganttbar{Project Plan}{1}{7} \\
-			\ganttbar{ConOps}{1}{7} \\
+			\ganttbar{Project Schedule}{1}{7} \\
+			\ganttbar{ConOps}{1}{8} \\
 			\ganttbar{Use Cases}{7}{11}\\
-			%\ganttlink{elem0}{elem1}
-			\ganttlink{elem2}{elem3}
+			\ganttbar{First draft of SRS}{7}{11}\\
+			\ganttbar{Review Docs}{12}{13}\\
+			\ganttlink{elem4}{elem5}
+			%\ganttlink{elem4}{elem5}
 			%\ganttmilestone{Milestone 1}{11}
 			%Second Group
 			\ganttgroup{Increment 2}{22}{28} \\
@@ -58,6 +64,11 @@
 			%Third Group
 			\ganttgroup{Increment 3}{29}{36} \\
 			\ganttbar{Task 1}{26}{28} \\
+			\ganttbar{Task 2}{28}{32} \\
+			\ganttbar{Task 2}{28}{32} \\
+			\ganttbar{Task 2}{28}{32} \\
+			\ganttbar{Task 2}{28}{32} \\
+			\ganttbar{Task 2}{28}{32} \\
 			\ganttbar{Task 2}{28}{32} \\
 			\ganttbar{Task 3}{32}{35}
 			%\ganttlink{elem8}{elem9}
