@@ -6,33 +6,31 @@ public class CPU{
 	public CPU(){
 		clock = 0;
 	}
+
 	/* @brief Returns current state of PC
 	*
 	*@params None.
 	*@return 16 b
 	*/
-	public static int readPC(){
-		return Registers.read16(Global.$PC);
-	}
-	/* @brief Writes a 16-bit value to the current $PC
+	public static int readPC(){ return Registers.read16(Global.$PC); }
+
+	/* @brief Writes a 16-bit value to the current $PC. For use by branch and jump instructions.
 	*
 	*@params value 16-bit integer.
 	*@return Void.
 	*/
-	public static void writePC(int value){
+	public static void writePC(int value){ Registers.write16(Global.$PC, value); }
 
-	}
-	/* @brief Increment the current $PC by 4. (In this case, 1 based on our arrays)
+	/* @brief Increment the current $PC by the instruction. Not for use by branch or jump instructions.
 	*
-	*@params None.
+	*@params increment 8bit int.
 	*@return Void.
 	*/
-	public static void incrPC(){
-		
-	}
+	public static void incrPC(int increment){ Registers.write16(Global.$PC, (Registers.read16(Global.$PC) + increment)); }
+
 	//TODO for CPU: Currently, will just run entire program. Increment 3 will introduce "Stepping"
 
-	/* @brief Run the CPU based on user input actions. Called for every CPU cycle.
+	/* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
 	*
 	*@params None.
 	*@return Void.
@@ -41,18 +39,25 @@ public class CPU{
 
 	}
 
-	/* @brief Will read the current $PC, use the $PC to find the correct instruction in memory
-	* then increment the current $PC by 4 (in case it does get overwritten) and then find the correct
-	* corresponding instruction to execute.
-	*
-	*@params None.
-	*@return Void.
-	*/
-	private static void decode(){
+    /*
+    @brief Will read the current $PC, use the $PC to find the correct instruction in memory
+    * then increment the current $PC by 4 (in case it does get overwritten) and then find the correct
+    * corresponding instruction to execute. PC needs to increment over the array correctly, not everything in
+    * memory is an instruction, some are values. Some instructions take different levels of memory.
+    *@info Will only be called by CPURun().
+    *@params None.
+    *@return Void.
+    */
+    private static void decode(){
     //TODO need to write method to obtain index of instruction opcodes.
-        int opCode; //
-        int x;
-        //IMPORTANT: Commented out opcodes are opcodes not available to the 6502.
+        int opCode = Memory.read(readPC()); //TODO Need to increment PC Correctly based on the instruction and whats to follow.
+        int x;  //TODO Create data bank to store what we need to increment the pc by based on instruction.
+        //PREFETCH MAXIMUM AMOUNT OF ARGUMENTS
+        //increment clock
+        //increment pc
+        //run the decode below.
+
+        //IMPORTANT: Commented out opcodes are opcodes not available to the standard 6502, we will not support them for now.
         switch(opCode) {
             case 0x00:
             case 0x01:
