@@ -30,20 +30,20 @@ public class Databank {
         // (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         int[] opcodesADC = {0x71, 0x61, 0xFF, 0x79, 0x7D, 0x6D, 0xFF, 0xFF, 0x75, 0x65, 0x69, 0xFF, 0xFF, 0b1_1011_1001_1100};
-        int[] opcodesAND = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesASL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBCC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBCS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBEQ = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBIT = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBMI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBNE = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBPL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBRK = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBVC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesBVS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCLC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-
+        int[] opcodesAND = {0x31, 0x21, 0xFF, 0x39, 0x3D, 0x2D, 0XFF, 0XFF, 0X35, 0X25, 0X29, 0XFF, 0XFF, 0b1_1011_1001_1100};
+        int[] opcodesASL = {0xFF, 0xFF, 0xFF, 0xFF, 0x1E, 0x0E, 0XFF, 0XFF, 0X16, 0X06, 0XFF, 0X0A, 0XFF, 0b0_0001_1001_1010};
+        int[] opcodesBCC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X90, 0b0_0000_0000_0001};
+        int[] opcodesBCS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XB0, 0b0_0000_0000_0001};
+        int[] opcodesBEQ = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XF0, 0b0_0000_0000_0001};
+        int[] opcodesBIT = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x2C, 0XFF, 0XFF, 0XFF, 0X24, 0XFF, 0XFF, 0XFF, 0b0_0000_1000_1000};
+        int[] opcodesBMI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X30, 0b0_0000_0000_0001};
+        int[] opcodesBNE = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XD0, 0b0_0000_0000_0001};
+        int[] opcodesBPL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X10, 0b0_0000_0000_0001};
+        int[] opcodesBRK = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X00, 0b0_0000_0000_0001};
+        int[] opcodesBVC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X50, 0b0_0000_0000_0001};
+        int[] opcodesBVS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X70, 0b0_0000_0000_0001};
+        int[] opcodesCLC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X18, 0b0_0000_0000_0001};
+        //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         int[] opcodesCLD = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesCLI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
@@ -59,7 +59,7 @@ public class Databank {
         int[] opcodesINX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesINY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesJMP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-
+        //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         int[] opcodesJSR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesLDA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
@@ -75,7 +75,7 @@ public class Databank {
         int[] opcodesROL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesROR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesRTI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-
+        //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         int[] opcodesRTS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
         int[] opcodesSBC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
@@ -209,6 +209,18 @@ public class Databank {
 //        modeTXS = 0b0_0000_0000_0000; int[] opcodesTXS = {};
 //        modeTYA = 0b0_0000_0000_0000; int[] opcodesTYA = {};
 
+    }
+    /*
+        TODO, incorrect logic probably (UNTESTED)
+        @brief Returns the specific opcode of the instruction, given the mode as well.
+        "LD A B \n ADC A B \n LD A"
+        @param instruction A String representation of the instruction
+        @param mode a 13-bit number, specifying what mode it is.
+        @return a 8-bit number, specifying the specific opcode.
+    */
+    public static int getOPCode(String instruction, int mode){
+        int[] temp = binaryAssembler.get(instruction);
+        return temp[(mode + 12) % 13];
     }
 
 
