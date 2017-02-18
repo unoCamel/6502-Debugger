@@ -1,7 +1,6 @@
 import java.util.Arrays;
 import java.util.HashMap;
 
-
 public class Import {
 
 	/*
@@ -22,125 +21,84 @@ public class Import {
 
 		while (memCounter < Global.MAX_MEMORY/8){
 			nlindex = str.indexOf('\n', index);
-			scindex = str.indexOf(';', index);
-			String ins = "";
-
-			if (scindex == nlindex){
-				//there is no comments and no newlines -- last instruction
-				ins = str.substring(index, str.length());
-				ins = ins.trim();
-				if (!ins.equals("")){
-					cindex = ins.indexOf(":");
-					if (cindex != -1){
-						//there is a label
-						if (cindex == ins.length() - 1){
-							//only label, store in hashmap, mark LABEL in array
-							ins = ins.replace(':', ' ').trim();
-							labels.put(ins, memCounter);
-							instructions[memCounter] = "LABEL";
-						}
-						else{
-							//label and instruction, store label in hashmap, put 
-							//only instruction in array
-							String l = ins.substring(0, cindex + 1);
-							l = l.replace(':', ' ').trim();
-							ins = ins.substring(cindex + 1, ins.length());
-							ins = ins.trim();
-							labels.put(l, memCounter);
-							instructions[memCounter] = ins;
-						}
-					}
-					else{
-						//no label, place instruction in array
-						instructions[memCounter] = ins;
-					}
-				}
-				Assembly assembly = new Assembly(instructions, labels);
-				return assembly;
-			}
-			else if(scindex == -1){
-				//there is no comment
-				ins = str.substring(index, nlindex + 1);
+			if (nlindex != -1){
+				//there is a new line
+				String ins = str.substring(index, nlindex + 1);
 				ins = ins.replace('\n', ' ').trim();
-				index = nlindex + 1;
-			}
-			else if(nlindex == -1){
-				//last line with comment
-				ins = str.substring(index, scindex);
-				ins = ins.replace(';', ' ').trim();
-				if (!ins.equals("")){
-					cindex = ins.indexOf(":");
-					if (cindex != -1){
-						//there is a label
-						if (cindex == ins.length() - 1){
-							//only label, store in hashmap, mark LABEL in array
-							ins = ins.replace(':', ' ').trim();
-							labels.put(ins, memCounter);
-							instructions[memCounter] = "LABEL";
-						}
-						else{
-							//label and instruction, store label in hashmap, put 
-							//only instruction in array
-							String l = ins.substring(0, cindex + 1);
-							l = l.replace(':', ' ').trim();
-							ins = ins.substring(cindex + 1, ins.length());
-							ins = ins.trim();
-							labels.put(l, memCounter);
-							instructions[memCounter] = ins;
-						}
-					}
-					else{
-						//no label, place instruction in array
-						instructions[memCounter] = ins;
-					}
+				if (ins.length() == 0){
+					//if empty string
+					index = nlindex + 1;
+					continue;
 				}
-				Assembly assembly = new Assembly(instructions, labels);
-				return assembly;
-			}
-			else if(nlindex < scindex && nlindex != -1){
-				//if comment with instruction, new line comes before comment
-				ins = str.substring(index, nlindex + 1);
-				ins = ins.replace('\n', ' ').trim();
-				index = nlindex + 1;			
-			}
-			else if(nlindex > scindex && scindex != -1){
-				//if comment with instruction , new line after comment;
-				ins = str.substring(index, scindex + 1);
-				ins = ins.replace(';', ' ').trim();
-				index = nlindex + 1;
-			}
-
-			if (!ins.equals("")){
-				cindex = ins.indexOf(":");
+				scindex = ins.indexOf(';');
+				cindex = ins.indexOf(':');
+				if (scindex != -1){
+					//there is a comment
+					ins = ins.substring(0, scindex);
+				}
 				if (cindex != -1){
-					//there is a label
+					//there is a lable
 					if (cindex == ins.length() - 1){
-						//only label, store in hashmap, mark LABEL in array
+						//there is only the label
 						ins = ins.replace(':', ' ').trim();
-						labels.put(ins, memCounter);
 						instructions[memCounter] = "LABEL";
+						labels.put(ins, memCounter);
+						memCounter += 1;
+						index = nlindex + 1;
+						continue;
 					}
 					else{
-						//label and instruction, store label in hashmap, put 
-						//only instruction in array
-						String l = ins.substring(0, cindex + 1);
-						l = l.replace(':', ' ').trim();
+						//there is label and instruction
+						String label = ins.substring(0, cindex + 1);
+						label = label.replace(':', ' ').trim();
 						ins = ins.substring(cindex + 1, ins.length());
 						ins = ins.trim();
-						labels.put(l, memCounter);
-						instructions[memCounter] = ins;
+						labels.put(label, memCounter);
 					}
 				}
-				else{
-					//no label, place instruction in array
-					instructions[memCounter] = ins;
-				}
+				ins = ins.trim();
+				instructions[memCounter] = ins;
 				memCounter += 1;
+				index = nlindex + 1;
 			}
-
+			else{
+				//there is no newline -- last instruction
+				String ins = str.substring(index, str.length());
+				ins = ins.trim();
+				if (ins.length() != 0){
+					scindex = ins.indexOf(';');
+					cindex = ins.indexOf(':');
+					if (scindex != -1){
+						//there is a comment
+						ins = ins.substring(0, scindex);
+					}
+					if (cindex != -1){
+						//there is a lable
+						if (cindex == ins.length() - 1){
+							//there is only the label
+							ins = ins.replace(':', ' ').trim();
+							instructions[memCounter] = "LABEL";
+							labels.put(ins, memCounter);
+							break;
+						}
+						else{
+							//there is label and instruction
+							String label = ins.substring(0, cindex + 1);
+							label = label.replace(':', ' ').trim();
+							ins = ins.substring(cindex + 1, ins.length());
+							ins = ins.trim();
+							instructions[memCounter] = ins;
+							labels.put(label, memCounter);
+							break;
+						}
+					}
+					instructions[memCounter] = ins;
+					break;
+				}
+				break;
+			}
 		}
 		Assembly assembly = new Assembly(instructions, labels);
 		return assembly;
 	}
 }
-
