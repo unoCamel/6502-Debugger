@@ -138,20 +138,21 @@ public void assemble(){
 			int modebit = 0;
 			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
+		// have to run Immediate check before before ZeroPage
 	    if (checkImplicit(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkAccumulator(instruction)){modebit = modebit | (1 << 1);}
-	    if (checkImmediate(instruction)){modebit = modebit | (1 << 2);}
-	    if (checkZeroPage(instruction)){modebit = modebit | (1 << 3);}
-	    if (checkZeroPageX(instruction)){modebit = modebit | (1 << 4);}
-	    if (checkZeroPageY(instruction)){modebit = modebit | (1 << 5);}
-	    if (checkRelative(instruction)){modebit = modebit | (1 << 6);}
-	    if (checkAbsolute(instruction)){modebit = modebit | (1 << 7);}
-	    if (checkAbsoluteX(instruction)){modebit = modebit | (1 << 8);}
-	    if (checkAbsoluteY(instruction)){modebit = modebit | (1 << 9);}
-	    if (checkIndirect(instruction)){modebit = modebit | (1 << 10);}
-	    if (checkIndirectX(instruction)){modebit = modebit | (1 << 11);}
-	    if (checkIndirectY(instruction)){modebit = modebit | (1 << 12);}
-			return modebit;
+	    else if (checkAccumulator(instruction)){modebit = modebit | (1 << 1);}
+	    else if (checkImmediate(instruction)){modebit = modebit | (1 << 2);}
+	    else if (checkZeroPage(instruction)){modebit = modebit | (1 << 3);}
+	    else if (checkZeroPageX(instruction)){modebit = modebit | (1 << 4);}
+	    else if (checkZeroPageY(instruction)){modebit = modebit | (1 << 5);}
+	    else if (checkRelative(instruction)){modebit = modebit | (1 << 6);}
+	    else if (checkAbsolute(instruction)){modebit = modebit | (1 << 7);}
+	    else if (checkAbsoluteX(instruction)){modebit = modebit | (1 << 8);}
+	    else if (checkAbsoluteY(instruction)){modebit = modebit | (1 << 9);}
+	    else if (checkIndirect(instruction)){modebit = modebit | (1 << 10);}
+	    else if (checkIndirectX(instruction)){modebit = modebit | (1 << 11);}
+	    else if (checkIndirectY(instruction)){modebit = modebit | (1 << 12);}
+		return modebit;
 	}
 
 	private boolean checkImmediate(String inst){
@@ -164,37 +165,68 @@ public void assemble(){
 		return true;
 	}
 	private boolean checkAccumulator(String inst){
+		String[] s = inst.split(" ");
+		if (s.length < 2) return false;
+		String arg = s[1];
+		if (!arg.equals("A")) return false;
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{1,2}$";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkZeroPageX(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{1,2},X";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkZeroPageY(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{1,2},Y";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkRelative(String inst){
 		return true;
 	}
 	private boolean checkAbsolute(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{3,4}";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkAbsoluteX(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{3,4},X";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkAbsoluteY(String inst){
-		return true;
+		String pattern = "\\$[0-9a-f]{3,4},Y";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkIndirect(String inst){
-		return true;
+		String pattern = "\\(\\$[0-9a-f]{3,4}\\)";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkIndirectX(String inst){
-		return true;
+		String pattern = "\\(\\$[0-9a-f]{1,2},X\\)";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 	private boolean checkIndirectY(String inst){
-		return true;
+		String pattern = "\\(\\$[0-9a-f]{1,2}\\),Y";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		return m.find();
 	}
 
 
