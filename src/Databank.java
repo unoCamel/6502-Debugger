@@ -1,4 +1,3 @@
-import jdk.internal.util.xml.impl.Pair;
 import java.util.*;
 
 public class Databank {
@@ -13,85 +12,84 @@ public class Databank {
 //                       modeJSR, modeLDA, modeLDX, modeLDY, modeLSR, modeNOP, modeORA, modePHA, modePHP, modePLA, modePLP, modeROL, modeROR, modeRTI,
 //                       modeRTS, modeSBC, modeSEC, modeSED, modeSEI, modeSTA, modeSTX, modeSTY, modeTAX, modeTAY, modeTSX, modeTXA, modeTXS, modeTYA;
 
-    static private int[] opcodesADC, opcodesAND, opcodesASL, opcodesBCC, opcodesBCS, opcodesBEQ, opcodesBIT, opcodesBMI, opcodesBNE, opcodesBPL, opcodesBRK, opcodesBVC, opcodesBVS, opcodesCLC,
+    static private Integer[] opcodesADC, opcodesAND, opcodesASL, opcodesBCC, opcodesBCS, opcodesBEQ, opcodesBIT, opcodesBMI, opcodesBNE, opcodesBPL, opcodesBRK, opcodesBVC, opcodesBVS, opcodesCLC,
                          opcodesCLD, opcodesCLI, opcodesCLV, opcodesCMP, opcodesCPX, opcodesCPY, opcodesDEC, opcodesDEX, opcodesDEY, opcodesEOR, opcodesINC, opcodesINX, opcodesINY, opcodesJMP,
                          opcodesJSR, opcodesLDA, opcodesLDX, opcodesLDY, opcodesLSR, opcodesNOP, opcodesORA, opcodesPHA, opcodesPHP, opcodesPLA, opcodesPLP, opcodesROL, opcodesROR, opcodesRTI,
                          opcodesRTS, opcodesSBC, opcodesSEC, opcodesSED, opcodesSEI, opcodesSTA, opcodesSTX, opcodesSTY, opcodesTAX, opcodesTAY, opcodesTSX, opcodesTXA, opcodesTXS, opcodesTYA;
 
-//    static private Pair<Integer, int[]> pairADC, pairAND, pairASL, pairBCC, pairBCS, pairBEQ, pairBIT, pairBMI, pairBNE, pairBPL, pairBRK, pairBVC, pairBVS, pairCLC,
+//    static private Pair<Integer, Integer[]> pairADC, pairAND, pairASL, pairBCC, pairBCS, pairBEQ, pairBIT, pairBMI, pairBNE, pairBPL, pairBRK, pairBVC, pairBVS, pairCLC,
 //                                        pairCLD, pairCLI, pairCLV, pairCMP, pairCPX, pairCPY, pairDEC, pairDEX, pairDEY, pairEOR, pairINC, pairINX, pairINY, pairJMP,
 //                                        pairJSR, pairLDA, pairLDX, pairLDY, pairLSR, pairNOP, pairORA, pairPHA, pairPHP, pairPLA, pairPLP, pairROL, pairROR, pairRTI,
 //                                        pairRTS, pairSBC, pairSEC, pairSED, pairSEI, pairSTA, pairSTX, pairSTY, pairTAX, pairTAY, pairTSX, pairTXA, pairTXS, pairTYA;
 
-    private static Map<String, int[]> binaryAssembler;
+    private static Map<String, Integer[]> binaryAssembler = new HashMap<String, Integer[]>();
 
     public Databank(){
         // (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
         // (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
-        int[] opcodesADC = {0x71, 0x61, 0xFF, 0x79, 0x7D, 0x6D, 0xFF, 0xFF, 0x75, 0x65, 0x69, 0xFF, 0xFF, 0b1_1011_1001_1100};
-        int[] opcodesAND = {0x31, 0x21, 0xFF, 0x39, 0x3D, 0x2D, 0XFF, 0XFF, 0X35, 0X25, 0X29, 0XFF, 0XFF, 0b1_1011_1001_1100};
-        int[] opcodesASL = {0xFF, 0xFF, 0xFF, 0xFF, 0x1E, 0x0E, 0XFF, 0XFF, 0X16, 0X06, 0XFF, 0X0A, 0XFF, 0b0_0001_1001_1010};
-        int[] opcodesBCC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X90, 0b0_0000_0000_0001};
-        int[] opcodesBCS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XB0, 0b0_0000_0000_0001};
-        int[] opcodesBEQ = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XF0, 0b0_0000_0000_0001};
-        int[] opcodesBIT = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x2C, 0XFF, 0XFF, 0XFF, 0X24, 0XFF, 0XFF, 0XFF, 0b0_0000_1000_1000};
-        int[] opcodesBMI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X30, 0b0_0000_0000_0001};
-        int[] opcodesBNE = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XD0, 0b0_0000_0000_0001};
-        int[] opcodesBPL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X10, 0b0_0000_0000_0001};
-        int[] opcodesBRK = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X00, 0b0_0000_0000_0001};
-        int[] opcodesBVC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X50, 0b0_0000_0000_0001};
-        int[] opcodesBVS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X70, 0b0_0000_0000_0001};
-        int[] opcodesCLC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X18, 0b0_0000_0000_0001};
+        Integer[] opcodesADC = {0x71, 0x61, null, 0x79, 0x7D, 0x6D, null, null, 0x75, 0x65, 0x69, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesAND = {0x31, 0x21, null, 0x39, 0x3D, 0x2D, null, null, 0x35, 0x25, 0x29, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesASL = {null, null, null, null, 0x1E, 0x0E, null, null, 0x16, 0x06, null, 0x0A, null, 0b0_0001_1001_1010};
+        Integer[] opcodesBCC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x90, 0b0_0000_0000_0001};
+        Integer[] opcodesBCS = {null, null, null, null, null, null, null, null, null, null, null, null, 0xB0, 0b0_0000_0000_0001};
+        Integer[] opcodesBEQ = {null, null, null, null, null, null, null, null, null, null, null, null, 0xF0, 0b0_0000_0000_0001};
+        Integer[] opcodesBIT = {null, null, null, null, null, 0x2C, null, null, null, 0x24, null, null, null, 0b0_0000_1000_1000};
+        Integer[] opcodesBMI = {null, null, null, null, null, null, null, null, null, null, null, null, 0x30, 0b0_0000_0000_0001};
+        Integer[] opcodesBNE = {null, null, null, null, null, null, null, null, null, null, null, null, 0xD0, 0b0_0000_0000_0001};
+        Integer[] opcodesBPL = {null, null, null, null, null, null, null, null, null, null, null, null, 0x10, 0b0_0000_0000_0001};
+        Integer[] opcodesBRK = {null, null, null, null, null, null, null, null, null, null, null, null, 0x00, 0b0_0000_0000_0001};
+        Integer[] opcodesBVC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x50, 0b0_0000_0000_0001};
+        Integer[] opcodesBVS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x70, 0b0_0000_0000_0001};
+        Integer[] opcodesCLC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x18, 0b0_0000_0000_0001};
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
-        int[] opcodesCLD = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XD8, 0b0_0000_0000_0001};
-        int[] opcodesCLI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X58, 0b0_0000_0000_0001};
-        int[] opcodesCLV = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XB8, 0b0_0000_0000_0001};
-        int[] opcodesCMP = {0xD1, 0xC1, 0xFF, 0xD9, 0xDD, 0xCD, 0XFF, 0XFF, 0XD5, 0XC5, 0XC9, 0XFF, 0XFF, 0b1_1011_1001_1100};
-        int[] opcodesCPX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xEC, 0XFF, 0XFF, 0XFF, 0XE4, 0XE0, 0XFF, 0XFF, 0b0_0000_1000_1100};
-        int[] opcodesCPY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xCC, 0XFF, 0XFF, 0XFF, 0XC4, 0XC0, 0XFF, 0XFF, 0b0_0000_1000_1100};
-        int[] opcodesDEC = {0xFF, 0xFF, 0xFF, 0xFF, 0xDE, 0xCE, 0XFF, 0XFF, 0XD6, 0XC6, 0XFF, 0XFF, 0XFF, 0b0_0001_1001_1000};
-        int[] opcodesDEX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XCA, 0b0_0000_0000_0001};
-        int[] opcodesDEY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X88, 0b0_0000_0000_0001};
-        int[] opcodesEOR = {0x51, 0x41, 0xFF, 0x59, 0x5D, 0x4D, 0XFF, 0XFF, 0X55, 0X45, 0X49, 0XFF, 0XFF, 0b1_1011_1001_1100};
-        int[] opcodesINC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFE, 0xEE, 0XFF, 0XFF, 0XF6, 0XE6, 0XFF, 0XFF, 0XFF, 0b0_0001_1001_1000};
-        int[] opcodesINX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XE8, 0b0_0000_0000_0001};
-        int[] opcodesINY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XC8, 0b0_0000_0000_0001};
-        int[] opcodesJMP = {0xFF, 0xFF, 0x6C, 0xFF, 0xFF, 0x4C, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0100_1000_0000};
+        Integer[] opcodesCLD = {null, null, null, null, null, null, null, null, null, null, null, null, 0XD8, 0b0_0000_0000_0001};
+        Integer[] opcodesCLI = {null, null, null, null, null, null, null, null, null, null, null, null, 0X58, 0b0_0000_0000_0001};
+        Integer[] opcodesCLV = {null, null, null, null, null, null, null, null, null, null, null, null, 0XB8, 0b0_0000_0000_0001};
+        Integer[] opcodesCMP = {0xD1, 0xC1, null, 0xD9, 0xDD, 0xCD, null, null, 0xD5, 0xC5, 0xC9, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesCPX = {null, null, null, null, null, 0xEC, null, null, null, 0xE4, 0xE0, null, null, 0b0_0000_1000_1100};
+        Integer[] opcodesCPY = {null, null, null, null, null, 0xCC, null, null, null, 0xC4, 0xC0, null, null, 0b0_0000_1000_1100};
+        Integer[] opcodesDEC = {null, null, null, null, 0xDE, 0xCE, null, null, 0xD6, 0xC6, null, null, null, 0b0_0001_1001_1000};
+        Integer[] opcodesDEX = {null, null, null, null, null, null, null, null, null, null, null, null, 0xCA, 0b0_0000_0000_0001};
+        Integer[] opcodesDEY = {null, null, null, null, null, null, null, null, null, null, null, null, 0x88, 0b0_0000_0000_0001};
+        Integer[] opcodesEOR = {0x51, 0x41, null, 0x59, 0x5D, 0x4D, null, null, 0x55, 0x45, 0x49, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesINC = {null, null, null, null, 0xFE, 0xEE, null, null, 0xF6, 0xE6, null, null, null, 0b0_0001_1001_1000};
+        Integer[] opcodesINX = {null, null, null, null, null, null, null, null, null, null, null, null, 0xE8, 0b0_0000_0000_0001};
+        Integer[] opcodesINY = {null, null, null, null, null, null, null, null, null, null, null, null, 0xC8, 0b0_0000_0000_0001};
+        Integer[] opcodesJMP = {null, null, 0x6C, null, null, 0x4C, null, null, null, null, null, null, null, 0b0_0100_1000_0000};
+                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
+        Integer[] opcodesJSR = {null, null, null, null, null, 0x20, null, null, null, null, null, null, null, 0b0_0000_1000_0000};
+        Integer[] opcodesLDA = {0xB1, 0xA1, null, 0xB9, 0xBD, 0xAD, null, null, 0xB5, 0xA5, 0xA9, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesLDX = {null, null, null, 0xBE, null, 0xAE, null, 0xB6, null, 0xA6, 0xA2, null, null, 0b0_0010_1010_1100};
+        Integer[] opcodesLDY = {null, null, null, null, 0xBC, 0xAC, null, null, 0xB4, 0xA4, 0xA0, null, null, 0b0_0001_1001_1100};
+        Integer[] opcodesLSR = {null, null, null, null, 0x5E, 0x4E, null, null, 0x56, 0x46, null, 0x4A, null, 0b0_0001_1001_1010};
+        Integer[] opcodesNOP = {null, null, null, null, null, null, null, null, null, null, null, null, 0xEA, 0b0_0000_0000_0001};
+        Integer[] opcodesORA = {0x11, 0x01, null, 0x19, 0x1D, 0x0D, null, null, 0x15, 0x05, 0x09, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesPHA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x01, 0b0_0000_0000_0001};
+        Integer[] opcodesPHP = {null, null, null, null, null, null, null, null, null, null, null, null, 0x08, 0b0_0000_0000_0001};
+        Integer[] opcodesPLA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x68, 0b0_0000_0000_0001};
+        Integer[] opcodesPLP = {null, null, null, null, null, null, null, null, null, null, null, null, 0x28, 0b0_0000_0000_0001};
+        Integer[] opcodesROL = {null, null, null, null, 0x3E, 0x2E, null, null, 0x36, 0x26, null, 0x2A, null, 0b0_0001_1001_1010};
+        Integer[] opcodesROR = {null, null, null, null, 0x7E, 0x6E, null, null, 0x76, 0x66, null, 0x6A, null, 0b0_0001_1001_1010};
+        Integer[] opcodesRTI = {null, null, null, null, null, null, null, null, null, null, null, null, 0x40, 0b0_0000_0000_0001};
         //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
-        int[] opcodesJSR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesLDA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesLDX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesLDY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesLSR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesNOP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesORA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesPHA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesPHP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesPLA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesPLP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesROL = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesROR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesRTI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        //TODO
-                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
-        int[] opcodesRTS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSBC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSEC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSED = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSEI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSTA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSTX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesSTY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTAX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTAY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTSX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTXA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTXS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesTYA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
+        Integer[] opcodesRTS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x60, 0b0_0000_0000_0001};
+        Integer[] opcodesSBC = {0xF1, 0xE1, null, 0xF9, 0xFD, 0xED, null, null, 0xF5, 0xE5, 0xE9, null, null, 0b1_1011_1001_1100};
+        Integer[] opcodesSEC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x38, 0b0_0000_0000_0001};
+        Integer[] opcodesSED = {null, null, null, null, null, null, null, null, null, null, null, null, 0xF8, 0b0_0000_0000_0001};
+        Integer[] opcodesSEI = {null, null, null, null, null, null, null, null, null, null, null, null, 0x78, 0b0_0000_0000_0001};
+        Integer[] opcodesSTA = {0x91, 0x81, null, 0x99, 0x9D, 0x8D, null, null, 0x95, 0x85, null, null, null, 0b1_1011_1001_1000};
+        Integer[] opcodesSTX = {null, null, null, null, null, 0x8E, null, 0x96, null, 0x86, null, null, null, 0b0_0000_1010_1000};
+        Integer[] opcodesSTY = {null, null, null, null, null, 0x8C, null, null, 0x94, 0x84, null, null, null, 0b0_0000_1001_1000};
+        Integer[] opcodesTAX = {null, null, null, null, null, null, null, null, null, null, null, null, 0xAA, 0b0_0000_0000_0001};
+        Integer[] opcodesTAY = {null, null, null, null, null, null, null, null, null, null, null, null, 0xA8, 0b0_0000_0000_0001};
+        Integer[] opcodesTSX = {null, null, null, null, null, null, null, null, null, null, null, null, 0xBA, 0b0_0000_0000_0001};
+        Integer[] opcodesTXA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x8A, 0b0_0000_0000_0001};
+        Integer[] opcodesTXS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x9A, 0b0_0000_0000_0001};
+        Integer[] opcodesTYA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x98, 0b0_0000_0000_0001};
 
-
+//        binaryAssembler = new Map<String, Integer[]>();
         binaryAssembler.put("ADC", opcodesADC);
         binaryAssembler.put("AND", opcodesAND);
         binaryAssembler.put("ASL", opcodesASL);
@@ -149,64 +147,64 @@ public class Databank {
         binaryAssembler.put("TXS", opcodesTXS);
         binaryAssembler.put("TYA", opcodesTYA);
 
-        //        modeAND = 0b0_0000_0000_0000; int[] opcodesAND = {};
-//        modeASL = 0b0_0000_0000_0000; int[] opcodesASL = {};
-//        modeBCC = 0b0_0000_0000_0000; int[] opcodesBCC = {};
-//        modeBCS = 0b0_0000_0000_0000; int[] opcodesBCS = {};
-//        modeBEQ = 0b0_0000_0000_0000; int[] opcodesBEQ = {};
-//        modeBIT = 0b0_0000_0000_0000; int[] opcodesBIT = {};
-//        modeBMI = 0b0_0000_0000_0000; int[] opcodesBMI = {};
-//        modeBNE = 0b0_0000_0000_0000; int[] opcodesBNE = {};
-//        modeBPL = 0b0_0000_0000_0000; int[] opcodesBPL = {};
-//        modeBRK = 0b0_0000_0000_0000; int[] opcodesBRK = {};
-//        modeBVC = 0b0_0000_0000_0000; int[] opcodesBVC = {};
-//        modeBVS = 0b0_0000_0000_0000; int[] opcodesBVS = {};
-//        modeCLC = 0b0_0000_0000_0000; int[] opcodesCLC = {};
+        //        modeAND = 0b0_0000_0000_0000; Integer[] opcodesAND = {};
+//        modeASL = 0b0_0000_0000_0000; Integer[] opcodesASL = {};
+//        modeBCC = 0b0_0000_0000_0000; Integer[] opcodesBCC = {};
+//        modeBCS = 0b0_0000_0000_0000; Integer[] opcodesBCS = {};
+//        modeBEQ = 0b0_0000_0000_0000; Integer[] opcodesBEQ = {};
+//        modeBIT = 0b0_0000_0000_0000; Integer[] opcodesBIT = {};
+//        modeBMI = 0b0_0000_0000_0000; Integer[] opcodesBMI = {};
+//        modeBNE = 0b0_0000_0000_0000; Integer[] opcodesBNE = {};
+//        modeBPL = 0b0_0000_0000_0000; Integer[] opcodesBPL = {};
+//        modeBRK = 0b0_0000_0000_0000; Integer[] opcodesBRK = {};
+//        modeBVC = 0b0_0000_0000_0000; Integer[] opcodesBVC = {};
+//        modeBVS = 0b0_0000_0000_0000; Integer[] opcodesBVS = {};
+//        modeCLC = 0b0_0000_0000_0000; Integer[] opcodesCLC = {};
 //
-//        modeCLD = 0b0_0000_0000_0000; int[] opcodesCLD = {};
-//        modeCLI = 0b0_0000_0000_0000; int[] opcodesCLI = {};
-//        modeCLV = 0b0_0000_0000_0000; int[] opcodesCLV = {};
-//        modeCMP = 0b0_0000_0000_0000; int[] opcodesCMP = {};
-//        modeCPX = 0b0_0000_0000_0000; int[] opcodesCPX = {};
-//        modeCPY = 0b0_0000_0000_0000; int[] opcodesCPY = {};
-//        modeDEC = 0b0_0000_0000_0000; int[] opcodesDEC = {};
-//        modeDEX = 0b0_0000_0000_0000; int[] opcodesDEX = {};
-//        modeDEY = 0b0_0000_0000_0000; int[] opcodesDEY = {};
-//        modeEOR = 0b0_0000_0000_0000; int[] opcodesEOR = {};
-//        modeINC = 0b0_0000_0000_0000; int[] opcodesINC = {};
-//        modeINX = 0b0_0000_0000_0000; int[] opcodesINX = {};
-//        modeINY = 0b0_0000_0000_0000; int[] opcodesINY = {};
-//        modeJMP = 0b0_0000_0000_0000; int[] opcodesJMP = {};
+//        modeCLD = 0b0_0000_0000_0000; Integer[] opcodesCLD = {};
+//        modeCLI = 0b0_0000_0000_0000; Integer[] opcodesCLI = {};
+//        modeCLV = 0b0_0000_0000_0000; Integer[] opcodesCLV = {};
+//        modeCMP = 0b0_0000_0000_0000; Integer[] opcodesCMP = {};
+//        modeCPX = 0b0_0000_0000_0000; Integer[] opcodesCPX = {};
+//        modeCPY = 0b0_0000_0000_0000; Integer[] opcodesCPY = {};
+//        modeDEC = 0b0_0000_0000_0000; Integer[] opcodesDEC = {};
+//        modeDEX = 0b0_0000_0000_0000; Integer[] opcodesDEX = {};
+//        modeDEY = 0b0_0000_0000_0000; Integer[] opcodesDEY = {};
+//        modeEOR = 0b0_0000_0000_0000; Integer[] opcodesEOR = {};
+//        modeINC = 0b0_0000_0000_0000; Integer[] opcodesINC = {};
+//        modeINX = 0b0_0000_0000_0000; Integer[] opcodesINX = {};
+//        modeINY = 0b0_0000_0000_0000; Integer[] opcodesINY = {};
+//        modeJMP = 0b0_0000_0000_0000; Integer[] opcodesJMP = {};
 //
-//        modeJSR = 0b0_0000_0000_0000; int[] opcodesJSR = {};
-//        modeLDA = 0b0_0000_0000_0000; int[] opcodesLDA = {};
-//        modeLDX = 0b0_0000_0000_0000; int[] opcodesLDX = {};
-//        modeLDY = 0b0_0000_0000_0000; int[] opcodesLDY = {};
-//        modeLSR = 0b0_0000_0000_0000; int[] opcodesLSR = {};
-//        modeNOP = 0b0_0000_0000_0000; int[] opcodesNOP = {};
-//        modeORA = 0b0_0000_0000_0000; int[] opcodesORA = {};
-//        modePHA = 0b0_0000_0000_0000; int[] opcodesPHA = {};
-//        modePHP = 0b0_0000_0000_0000; int[] opcodesPHP = {};
-//        modePLA = 0b0_0000_0000_0000; int[] opcodesPLA = {};
-//        modePLP = 0b0_0000_0000_0000; int[] opcodesPLP = {};
-//        modeROL = 0b0_0000_0000_0000; int[] opcodesROL = {};
-//        modeROR = 0b0_0000_0000_0000; int[] opcodesROR = {};
-//        modeRTI = 0b0_0000_0000_0000; int[] opcodesRTI = {};
+//        modeJSR = 0b0_0000_0000_0000; Integer[] opcodesJSR = {};
+//        modeLDA = 0b0_0000_0000_0000; Integer[] opcodesLDA = {};
+//        modeLDX = 0b0_0000_0000_0000; Integer[] opcodesLDX = {};
+//        modeLDY = 0b0_0000_0000_0000; Integer[] opcodesLDY = {};
+//        modeLSR = 0b0_0000_0000_0000; Integer[] opcodesLSR = {};
+//        modeNOP = 0b0_0000_0000_0000; Integer[] opcodesNOP = {};
+//        modeORA = 0b0_0000_0000_0000; Integer[] opcodesORA = {};
+//        modePHA = 0b0_0000_0000_0000; Integer[] opcodesPHA = {};
+//        modePHP = 0b0_0000_0000_0000; Integer[] opcodesPHP = {};
+//        modePLA = 0b0_0000_0000_0000; Integer[] opcodesPLA = {};
+//        modePLP = 0b0_0000_0000_0000; Integer[] opcodesPLP = {};
+//        modeROL = 0b0_0000_0000_0000; Integer[] opcodesROL = {};
+//        modeROR = 0b0_0000_0000_0000; Integer[] opcodesROR = {};
+//        modeRTI = 0b0_0000_0000_0000; Integer[] opcodesRTI = {};
 //
-//        modeRTS = 0b0_0000_0000_0000; int[] opcodesRTS = {};
-//        modeSBC = 0b0_0000_0000_0000; int[] opcodesSBC = {};
-//        modeSEC = 0b0_0000_0000_0000; int[] opcodesSEC = {};
-//        modeSED = 0b0_0000_0000_0000; int[] opcodesSED = {};
-//        modeSEI = 0b0_0000_0000_0000; int[] opcodesSEI = {};
-//        modeSTA = 0b0_0000_0000_0000; int[] opcodesSTA = {};
-//        modeSTX = 0b0_0000_0000_0000; int[] opcodesSTX = {};
-//        modeSTY = 0b0_0000_0000_0000; int[] opcodesSTY = {};
-//        modeTAX = 0b0_0000_0000_0000; int[] opcodesTAX = {};
-//        modeTAY = 0b0_0000_0000_0000; int[] opcodesTAY = {};
-//        modeTSX = 0b0_0000_0000_0000; int[] opcodesTSX = {};
-//        modeTXA = 0b0_0000_0000_0000; int[] opcodesTXA = {};
-//        modeTXS = 0b0_0000_0000_0000; int[] opcodesTXS = {};
-//        modeTYA = 0b0_0000_0000_0000; int[] opcodesTYA = {};
+//        modeRTS = 0b0_0000_0000_0000; Integer[] opcodesRTS = {};
+//        modeSBC = 0b0_0000_0000_0000; Integer[] opcodesSBC = {};
+//        modeSEC = 0b0_0000_0000_0000; Integer[] opcodesSEC = {};
+//        modeSED = 0b0_0000_0000_0000; Integer[] opcodesSED = {};
+//        modeSEI = 0b0_0000_0000_0000; Integer[] opcodesSEI = {};
+//        modeSTA = 0b0_0000_0000_0000; Integer[] opcodesSTA = {};
+//        modeSTX = 0b0_0000_0000_0000; Integer[] opcodesSTX = {};
+//        modeSTY = 0b0_0000_0000_0000; Integer[] opcodesSTY = {};
+//        modeTAX = 0b0_0000_0000_0000; Integer[] opcodesTAX = {};
+//        modeTAY = 0b0_0000_0000_0000; Integer[] opcodesTAY = {};
+//        modeTSX = 0b0_0000_0000_0000; Integer[] opcodesTSX = {};
+//        modeTXA = 0b0_0000_0000_0000; Integer[] opcodesTXA = {};
+//        modeTXS = 0b0_0000_0000_0000; Integer[] opcodesTXS = {};
+//        modeTYA = 0b0_0000_0000_0000; Integer[] opcodesTYA = {};
 
     }
     /*
@@ -218,8 +216,12 @@ public class Databank {
         @return a 8-bit number, specifying the specific opcode.
     */
     public static int getOPCode(String instruction, int mode){
-        int[] temp = binaryAssembler.get(instruction);
+        Integer[] temp = binaryAssembler.get(instruction);
         return temp[(mode + 12) % 13];
+    }
+
+    public static void toString(Map<String, Integer[]> map) {
+        System.out.println(map.toString());
     }
 
 
@@ -255,6 +257,14 @@ public class Databank {
 //            return opcodes;
 //        }
 //    }
+
+//    public static void main(String[] args) {
+//
+//        System.out.println("Hello, World");
+//        Databank db = new Databank();
+//        Databank.toString(db.binaryAssembler);
+//    }
+
 }
 
 
