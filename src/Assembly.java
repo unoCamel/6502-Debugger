@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Assembly{
 
@@ -61,8 +63,8 @@ public class Assembly{
 * as keys and indexes of labels as values.
 * @return None.
 */
-public assemble(){
-		binaryInstructions = new int[instructions.length];
+public void assemble(){
+		int[] binaryInstructions = new int[instructions.length];
 
 		for (String instruction  : instructions) {
 			if (instruction.equals("LABEL")) continue;
@@ -132,67 +134,67 @@ public assemble(){
 		}
 }
 
-	private int checkMode(instruction){
+	private int checkMode(String instruction){
 			int modebit = 0;
 			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
 	    if (checkImplicit(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkAccumulator(instruction)){modebit = modebit | (1 << 0);}
+	    if (checkAccumulator(instruction)){modebit = modebit | (1 << 1);}
 	    if (checkImmediate(instruction)){modebit = modebit | (1 << 2);}
-	    if (checkZeroPage(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkZeroPageX(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkZeroPageY(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkRelative(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkAbsolute(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkAbsoluteX(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkAbsoluteY(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkIndirect(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkIndirectX(instruction)){modebit = modebit | (1 << 0);}
-	    if (checkIndirectY(instruction)){modebit = modebit | (1 << 0);}
+	    if (checkZeroPage(instruction)){modebit = modebit | (1 << 3);}
+	    if (checkZeroPageX(instruction)){modebit = modebit | (1 << 4);}
+	    if (checkZeroPageY(instruction)){modebit = modebit | (1 << 5);}
+	    if (checkRelative(instruction)){modebit = modebit | (1 << 6);}
+	    if (checkAbsolute(instruction)){modebit = modebit | (1 << 7);}
+	    if (checkAbsoluteX(instruction)){modebit = modebit | (1 << 8);}
+	    if (checkAbsoluteY(instruction)){modebit = modebit | (1 << 9);}
+	    if (checkIndirect(instruction)){modebit = modebit | (1 << 10);}
+	    if (checkIndirectX(instruction)){modebit = modebit | (1 << 11);}
+	    if (checkIndirectY(instruction)){modebit = modebit | (1 << 12);}
 			return modebit;
 	}
 
 	private boolean checkImmediate(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
+		String pattern = "#\\$[0-9a-f]{1,2}";
 		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
+		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkImplicit(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
 	}
 	private boolean checkAccumulator(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
 	}
 	private boolean checkZeroPageX(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
 	}
 	private boolean checkZeroPageY(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
 	}
 	private boolean checkRelative(String inst){
-		String pattern = "#\$[0-9a-f]{1,2}";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(line);
-		return m.find();
+		return true;
+	}
+	private boolean checkAbsolute(String inst){
+		return true;
+	}
+	private boolean checkAbsoluteX(String inst){
+		return true;
+	}
+	private boolean checkAbsoluteY(String inst){
+		return true;
+	}
+	private boolean checkIndirect(String inst){
+		return true;
+	}
+	private boolean checkIndirectX(String inst){
+		return true;
+	}
+	private boolean checkIndirectY(String inst){
+		return true;
 	}
 
 
