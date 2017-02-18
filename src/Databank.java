@@ -43,22 +43,21 @@ public class Databank {
         int[] opcodesBVC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X50, 0b0_0000_0000_0001};
         int[] opcodesBVS = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X70, 0b0_0000_0000_0001};
         int[] opcodesCLC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X18, 0b0_0000_0000_0001};
-        //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
-        int[] opcodesCLD = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCLI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCLV = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCMP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCPX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesCPY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesDEC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesDEX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesDEY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesEOR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesINC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesINX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesINY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
-        int[] opcodesJMP = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
+        int[] opcodesCLD = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XD8, 0b0_0000_0000_0001};
+        int[] opcodesCLI = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X58, 0b0_0000_0000_0001};
+        int[] opcodesCLV = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XB8, 0b0_0000_0000_0001};
+        int[] opcodesCMP = {0xD1, 0xC1, 0xFF, 0xD9, 0xDD, 0xCD, 0XFF, 0XFF, 0XD5, 0XC5, 0XC9, 0XFF, 0XFF, 0b1_1011_1001_1100};
+        int[] opcodesCPX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xEC, 0XFF, 0XFF, 0XFF, 0XE4, 0XE0, 0XFF, 0XFF, 0b0_0000_1000_1100};
+        int[] opcodesCPY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xCC, 0XFF, 0XFF, 0XFF, 0XC4, 0XC0, 0XFF, 0XFF, 0b0_0000_1000_1100};
+        int[] opcodesDEC = {0xFF, 0xFF, 0xFF, 0xFF, 0xDE, 0xCE, 0XFF, 0XFF, 0XD6, 0XC6, 0XFF, 0XFF, 0XFF, 0b0_0001_1001_1000};
+        int[] opcodesDEX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XCA, 0b0_0000_0000_0001};
+        int[] opcodesDEY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0X88, 0b0_0000_0000_0001};
+        int[] opcodesEOR = {0x51, 0x41, 0xFF, 0x59, 0x5D, 0x4D, 0XFF, 0XFF, 0X55, 0X45, 0X49, 0XFF, 0XFF, 0b1_1011_1001_1100};
+        int[] opcodesINC = {0xFF, 0xFF, 0xFF, 0xFF, 0xFE, 0xEE, 0XFF, 0XFF, 0XF6, 0XE6, 0XFF, 0XFF, 0XFF, 0b0_0001_1001_1000};
+        int[] opcodesINX = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XE8, 0b0_0000_0000_0001};
+        int[] opcodesINY = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XC8, 0b0_0000_0000_0001};
+        int[] opcodesJMP = {0xFF, 0xFF, 0x6C, 0xFF, 0xFF, 0x4C, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0100_1000_0000};
         //TODO
                           /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         int[] opcodesJSR = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
