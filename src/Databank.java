@@ -93,8 +93,64 @@ public class Databank {
         int[] opcodesTYA = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0XFF, 0b0_0000_0000_0000};
 
 
+        binaryAssembler.put("ADC", opcodesADC);
+        binaryAssembler.put("AND", opcodesAND);
+        binaryAssembler.put("ASL", opcodesASL);
+        binaryAssembler.put("BCC", opcodesBCC);
+        binaryAssembler.put("BCS", opcodesBCS);
+        binaryAssembler.put("BEQ", opcodesBEQ);
+        binaryAssembler.put("BIT", opcodesBIT);
+        binaryAssembler.put("BMI", opcodesBMI);
+        binaryAssembler.put("BNE", opcodesBNE);
+        binaryAssembler.put("BPL", opcodesBPL);
+        binaryAssembler.put("BRK", opcodesBRK);
+        binaryAssembler.put("BVC", opcodesBVC);
+        binaryAssembler.put("BVS", opcodesBVS);
+        binaryAssembler.put("CLC", opcodesCLC);
+        binaryAssembler.put("CLD", opcodesCLD);
+        binaryAssembler.put("CLI", opcodesCLI);
+        binaryAssembler.put("CLV", opcodesCLV);
+        binaryAssembler.put("CMP", opcodesCMP);
+        binaryAssembler.put("CPX", opcodesCPX);
+        binaryAssembler.put("CPY", opcodesCPY);
+        binaryAssembler.put("DEC", opcodesDEC);
+        binaryAssembler.put("DEX", opcodesDEX);
+        binaryAssembler.put("DEY", opcodesDEY);
+        binaryAssembler.put("EOR", opcodesEOR);
+        binaryAssembler.put("INC", opcodesINC);
+        binaryAssembler.put("INX", opcodesINX);
+        binaryAssembler.put("INY", opcodesINY);
+        binaryAssembler.put("JMP", opcodesJMP);
+        binaryAssembler.put("JSR", opcodesJSR);
+        binaryAssembler.put("LDA", opcodesLDA);
+        binaryAssembler.put("LDX", opcodesLDX);
+        binaryAssembler.put("LDY", opcodesLDY);
+        binaryAssembler.put("LSR", opcodesLSR);
+        binaryAssembler.put("NOP", opcodesNOP);
+        binaryAssembler.put("ORA", opcodesORA);
+        binaryAssembler.put("PHA", opcodesPHA);
+        binaryAssembler.put("PHP", opcodesPHP);
+        binaryAssembler.put("PLA", opcodesPLA);
+        binaryAssembler.put("PLP", opcodesPLP);
+        binaryAssembler.put("ROL", opcodesROL);
+        binaryAssembler.put("ROR", opcodesROR);
+        binaryAssembler.put("RTI", opcodesRTI);
+        binaryAssembler.put("RTS", opcodesRTS);
+        binaryAssembler.put("SBC", opcodesSBC);
+        binaryAssembler.put("SEC", opcodesSEC);
+        binaryAssembler.put("SED", opcodesSED);
+        binaryAssembler.put("SEI", opcodesSEI);
+        binaryAssembler.put("STA", opcodesSTA);
+        binaryAssembler.put("STX", opcodesSTX);
+        binaryAssembler.put("STY", opcodesSTY);
+        binaryAssembler.put("TAX", opcodesTAX);
+        binaryAssembler.put("TAY", opcodesTAY);
+        binaryAssembler.put("TSX", opcodesTSX);
+        binaryAssembler.put("TXA", opcodesTXA);
+        binaryAssembler.put("TXS", opcodesTXS);
+        binaryAssembler.put("TYA", opcodesTYA);
 
-//        modeAND = 0b0_0000_0000_0000; int[] opcodesAND = {};
+        //        modeAND = 0b0_0000_0000_0000; int[] opcodesAND = {};
 //        modeASL = 0b0_0000_0000_0000; int[] opcodesASL = {};
 //        modeBCC = 0b0_0000_0000_0000; int[] opcodesBCC = {};
 //        modeBCS = 0b0_0000_0000_0000; int[] opcodesBCS = {};
@@ -153,98 +209,41 @@ public class Databank {
 //        modeTXS = 0b0_0000_0000_0000; int[] opcodesTXS = {};
 //        modeTYA = 0b0_0000_0000_0000; int[] opcodesTYA = {};
 
-        binaryAssembler.put("ADC", opcodesADC);
-        binaryAssembler.put("AND", opcodesAND);
-        binaryAssembler.put("ASL", opcodesASL);
-        binaryAssembler.put("BCC", opcodesBCC);
-        binaryAssembler.put("BCS", opcodesBCS);
-        binaryAssembler.put("BEQ", opcodesBEQ);
-        binaryAssembler.put("BIT", opcodesBIT);
-        binaryAssembler.put("BMI", opcodesBMI);
-        binaryAssembler.put("BNE", opcodesBNE);
-        binaryAssembler.put("BPL", opcodesBPL);
-        binaryAssembler.put("BRK", opcodesBRK);
-        binaryAssembler.put("BVC", opcodesBVC);
-        binaryAssembler.put("BVS", opcodesBVS);
-        binaryAssembler.put("CLC", opcodesCLC);
-        binaryAssembler.put("CLD", opcodesCLD);
-        binaryAssembler.put("CLI", opcodesCLI);
-        binaryAssembler.put("CLV", opcodesCLV);
-        binaryAssembler.put("CMP", opcodesCMP);
-        binaryAssembler.put("CPX", opcodesCPX);
-        binaryAssembler.put("CPY", opcodesCPY);
-        binaryAssembler.put("DEC", opcodesDEC);
-        binaryAssembler.put("DEX", opcodesDEX);
-        binaryAssembler.put("DEY", opcodesDEY);
-        binaryAssembler.put("EOR", opcodesEOR);
-        binaryAssembler.put("INC", opcodesINC);
-        binaryAssembler.put("INX", opcodesINX);
-        binaryAssembler.put("INY", opcodesINY);
-        binaryAssembler.put("JMP", opcodesJMP);
-        binaryAssembler.put("JSR", opcodesJSR);
-        binaryAssembler.put("LDA", opcodesLDA);
-        binaryAssembler.put("LDX", opcodesLDX);
-        binaryAssembler.put("LDY", opcodesLDY);
-        binaryAssembler.put("LSR", opcodesLSR);
-        binaryAssembler.put("NOP", opcodesNOP);
-        binaryAssembler.put("ORA", opcodesORA);
-        binaryAssembler.put("PHA", opcodesPHA);
-        binaryAssembler.put("PHP", opcodesPHP);
-        binaryAssembler.put("PLA", opcodesPLA);
-        binaryAssembler.put("PLP", opcodesPLP);
-        binaryAssembler.put("ROL", opcodesROL);
-        binaryAssembler.put("ROR", opcodesROR);
-        binaryAssembler.put("RTI", opcodesRTI);
-        binaryAssembler.put("RTS", opcodesRTS);
-        binaryAssembler.put("SBC", opcodesSBC);
-        binaryAssembler.put("SEC", opcodesSEC);
-        binaryAssembler.put("SED", opcodesSED);
-        binaryAssembler.put("SEI", opcodesSEI);
-        binaryAssembler.put("STA", opcodesSTA);
-        binaryAssembler.put("STX", opcodesSTX);
-        binaryAssembler.put("STY", opcodesSTY);
-        binaryAssembler.put("TAX", opcodesTAX);
-        binaryAssembler.put("TAY", opcodesTAY);
-        binaryAssembler.put("TSX", opcodesTSX);
-        binaryAssembler.put("TXA", opcodesTXA);
-        binaryAssembler.put("TXS", opcodesTXS);
-        binaryAssembler.put("TYA", opcodesTYA);
-
     }
 
 
 
-
-	/* @brief Class to combine generic types together.
-	*/
-    private static class Pair<K, V> {
-
-        private final K modes;
-        private final V opcodes;
-
-        /* @brief Create a Pair, provide two types.
-        *
-        * @param modes
-        * @param opcodes
-        * @return Pair<K, V>.
-        */
-        private static <K, V> Pair<K, V> createPair(K modes, V opcodes) {
-            return new Pair<K, V>(modes, opcodes);
-        }
-
-        private Pair(K modes, V opcodes) {
-            this.modes = modes;
-            this.opcodes = opcodes;
-        }
-
-        public K getModes() {
-            return modes;
-        }
-
-        public V getOpcodes() {
-            return opcodes;
-        }
-    }
+//
+//	/* @brief Class to combine generic types together.
+//	*/
+//    private static class Pair<K, V> {
+//
+//        private final K modes;
+//        private final V opcodes;
+//
+//        /* @brief Create a Pair, provide two types.
+//        *
+//        * @param modes
+//        * @param opcodes
+//        * @return Pair<K, V>.
+//        */
+//        private static <K, V> Pair<K, V> createPair(K modes, V opcodes) {
+//            return new Pair<K, V>(modes, opcodes);
+//        }
+//
+//        private Pair(K modes, V opcodes) {
+//            this.modes = modes;
+//            this.opcodes = opcodes;
+//        }
+//
+//        public K getModes() {
+//            return modes;
+//        }
+//
+//        public V getOpcodes() {
+//            return opcodes;
+//        }
+//    }
 }
 
 
