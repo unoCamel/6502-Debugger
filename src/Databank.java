@@ -22,7 +22,7 @@ public class Databank {
 //                                        pairJSR, pairLDA, pairLDX, pairLDY, pairLSR, pairNOP, pairORA, pairPHA, pairPHP, pairPLA, pairPLP, pairROL, pairROR, pairRTI,
 //                                        pairRTS, pairSBC, pairSEC, pairSED, pairSEI, pairSTA, pairSTX, pairSTY, pairTAX, pairTAY, pairTSX, pairTXA, pairTXS, pairTYA;
 
-    private static Map<String, Integer[]> binaryAssembler;
+    private static Map<String, Integer[]> binaryAssembler = new HashMap<String, Integer[]>();
 
     public Databank(){
         // (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
@@ -89,7 +89,7 @@ public class Databank {
         Integer[] opcodesTXS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x9A, 0b0_0000_0000_0001};
         Integer[] opcodesTYA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x98, 0b0_0000_0000_0001};
 
-
+//        binaryAssembler = new Map<String, Integer[]>();
         binaryAssembler.put("ADC", opcodesADC);
         binaryAssembler.put("AND", opcodesAND);
         binaryAssembler.put("ASL", opcodesASL);
@@ -257,6 +257,14 @@ public class Databank {
 //            return opcodes;
 //        }
 //    }
+
+//    public static void main(String[] args) {
+//
+//        System.out.println("Hello, World");
+//        Databank db = new Databank();
+//        Databank.toString(db.binaryAssembler);
+//    }
+
 }
 
 
