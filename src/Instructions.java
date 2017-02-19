@@ -23,7 +23,7 @@ public class Instructions {
 
 /* ====================== LOGICAL OPERATIONS ========================= */
 
-/* ====================== ARTHMETIC OPERATIONS ======================= */
+/* ====================== ARITHMETIC OPERATIONS ======================= */
 
 /* ---------------------- ADC ---------------------- *
 * @brief Add Memory to Accumulator with Carry
@@ -31,24 +31,94 @@ public class Instructions {
 * Flags Set:	N	Z	C	I	D	V
 * 				+	+	+	-	-	+
 */
-	//
+    //0x69
 	public static void ADC_IMM(int value8){}
-
+    //0x65
 	public static void ADC_ZP(int value8){}
-
+    //0x75
 	public static void ADC_ZPX(int value8){}
-
+	//0x6D
 	public static void ADC_AB(int value16){}
-
+    //0x7D
 	public static void ADC_ABX(int value16){}
-
+    //0x79
 	public static void ADC_ABY(int value16){}
-
+    //0x61
 	public static void ADC_INX(int value8){}
-
+    //0x71
 	public static void ADC_INY(int value8){}
 
+/* ---------------------- SBC ---------------------- *
+* @brief Subtract Memory from Accumulator with Borrow
+* Operation:   A - M - C -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	+	-	-	+
+*/
+    //0xE9
+    public static void SBC_IMM(int value8){}
+    //0xE5
+    public static void SBC_ZP(int value8){}
+    //0xF5
+    public static void SBC_ZPX(int value8){}
+    //0xED
+    public static void SBC_AB(int value16){}
+    //0xFD
+    public static void SBC_ABX(int value16){}
+    //0xF9
+    public static void SBC_ABY(int value16){}
+    //0xE1
+    public static void SBC_IDX(int value8){}
+    //0xF1
+    public static void SBC_IDY(int value8){}
 
+/* ---------------------- CMP ---------------------- *
+* @brief Compare Memory with Accumulator
+* Operation:   A - M
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	+	-	-	-
+*/
+    //0xC9
+    public static void CMP_IMM(int value8){}
+    //0xC5
+    public static void CMP_ZP(int value8){}
+    //0xD5
+    public static void CMP_ZPX(int value8){}
+    //0xCD
+    public static void CMP_AB(int value16){}
+    //0xDD
+    public static void CMP_ABX(int value16){}
+    //0xD9
+    public static void CMP_ABY(int value16){}
+    //0xC1
+    public static void CMP_IDX(int value8){}
+    //D1
+    public static void CMP_IDY(int value8){}
+
+/* ---------------------- CPX ---------------------- *
+* @brief Compare Memory and Index X
+* Operation:   X - M
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	+	-	-	-
+*/
+    //0xE0
+    public static void CPX_IMM(int value8){}
+    //0xE4
+    public static void CPX_ZP(int value8){}
+    //0xEC
+    public static void CPX_AB(int value16){}
+
+/* ---------------------- CPY ---------------------- *
+* @brief Compare Memory and Index Y
+* Operation:   Y - M
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	+	-	-	-
+*/
+    //0xC0
+    public static void CPY_IMM(int value8){}
+    //0xC4
+    public static void CPY_ZP(int value8){}
+    //0xCC
+    public static void CPY_AB(int value16){}
 
 
 /* ====================== INCREMENTS/DECREMENTS OPERATIONS =========== */
