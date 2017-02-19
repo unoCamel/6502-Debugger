@@ -274,7 +274,7 @@ public class Instructions {
     //0x55
     public static void EOR_ZPX(int value8){}
     //0x4D
-    public static void EOR_ABS(int value16){}
+    public static void EOR_AB(int value16){}
     //0x5D
     public static void EOR_ABX(int value16){}
     //0x59
@@ -583,7 +583,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //0x4c
-    public static void JMP_ABS(int value16){}
+    public static void JMP_AB(int value16){}
     //0x6C
     public static void JMP_ID(int value8){} //TODO CHECK
 
@@ -597,7 +597,7 @@ public class Instructions {
 */
 
     //0x20
-    public static void JSR_ABS(int value16){}
+    public static void JSR_AB(int value16){}
 
 /* ---------------------- RTS ---------------------- *
 * @brief Return from Subroutine
