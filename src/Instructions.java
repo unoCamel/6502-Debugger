@@ -32,10 +32,10 @@ public class Instructions {
 * 				+	+	+	-	-	+
 */
 
-	/*
+	/* test
 	* @param map The map to print.
 	* @return void.
-	*/
+	*/ 
 	public static void ADC_IMM(int value8){}
 
 	public static void ADC_ZP(int value8){}
