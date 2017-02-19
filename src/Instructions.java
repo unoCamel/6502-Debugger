@@ -1,6 +1,7 @@
 public class Instructions {
 
-public Instructions(){}
+	public Instructions() {
+	}
 
 	/* C = Carry Flag
 	*  Z = Zero Flag
@@ -25,16 +26,34 @@ public Instructions(){}
 /* ====================== ARTHMETIC OPERATIONS ======================= */
 
 /* ---------------------- ADC ---------------------- *
-*               Affects Flags S V Z C                
-*               A + M + C -> A, C                    */
-
-/*@brief 
-* @opcode 0x69
-* @param 
+* @brief Add Memory to Accumulator with Carry
+* Operation:  A + M + C -> A, C
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	+	-	-	+
 */
-public static int adc_imm(){
-	return -1;
-}
+
+	/*
+	* @param map The map to print.
+	* @return void.
+	*/
+	public static void ADC_IMM(int value8){}
+
+	public static void ADC_ZP(int value8){}
+
+	public static void ADC_ZPX(int value8){}
+
+	public static void ADC_AB(int value16){}
+
+	public static void ADC_ABX(int value16){}
+
+	public static void ADC_ABY(int value16){}
+
+	public static void ADC_INX(int value8){}
+
+	public static void ADC_INY(int value8){}
+
+
+
 
 /* ====================== INCREMENTS/DECREMENTS OPERATIONS =========== */
 
