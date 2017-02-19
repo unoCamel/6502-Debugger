@@ -59,7 +59,68 @@ public class Instructions {
     //0x98
     public static void TYA_IMP(){}
 
-/* ====================== STACK OPERATIONS =========================== */
+/* ====================== STACK OPERATIONS ===========================
+*The 6502 microprocessor supports a 256 byte stack fixed between memory locations $0100 and $01FF.
+* A special 8-bit register, S, is used to keep track of the next free byte of stack space.
+* Pushing a byte on to the stack causes the value to be stored at the current free location (e.g. $0100,S)
+* and then the stack pointer is post decremented. Pull operations reverse this procedure.
+* The stack register can only be accessed by transferring its value to or from the X register.
+* Its value is automatically modified by push/pull instructions, subroutine calls and returns, interrupts and returns from interrupts.
+*/
+
+/* ---------------------- TSX ---------------------- *
+* @brief Transfer Stack Pointer to Index X
+* Operation:  SP -> X
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0xBA
+    public static void TSX_IMP(){}
+
+/* ---------------------- TXS ---------------------- *
+* @brief Transfer Index X to Stack Register
+* Operation:  x -> SP
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x9A
+    public static void TXS_IMP(){}
+
+/* ---------------------- PHA ---------------------- *
+* @brief Push Accumulator on Stack
+* Operation:  push A
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+    //48
+    public static void PHA_IMP(){}
+
+/* ---------------------- PHP ---------------------- *
+* @brief Push Processor Status on Stack
+* Operation:  push SR
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+    //0x08
+    public static void PHP_IMP(){}
+
+/* ---------------------- PLA ---------------------- *
+* @brief Pull Accumulator from Stack
+* Operation:  pull A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x68
+    public static void PLA_IMP(){}
+
+/* ---------------------- PLP ---------------------- *
+* @brief Pull Processor Status from Stack
+* Operation:  pull SR
+* Flags Set:	N	Z	C	I	D	V
+* 				flag results from stack
+*/
+    //0x28
+    public static void PLP_IMP(){}
 
 /* ====================== LOGICAL OPERATIONS =========================
 *The following instructions perform logical operations on the contents of the accumulator and another value held in memory.
