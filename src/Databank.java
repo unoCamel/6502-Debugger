@@ -161,6 +161,41 @@ public class Databank {
         System.out.println(map.toString());
     }
 
+    private static Integer[] jumpCodes = {1, 2, null, null, null, 2, 2, null, 1, 2,
+                                          1, null, null, 3, 3, null, 1, 2, null, null,
+                                          null, 2, 2, null, 1, 3, null, null, null, 3,
+                                          3, null, 3, 2, null, null, 2, 2, 2, null,
+                                          1, 2, 1, null, 3, 3, 3, null, 1, 2,
+                                          null, null, null, 2, 2, null, 1, 3, null, null,
+                                          null, 3, 3, null, 1, 2, null, null, null, 2,
+                                          2, null, 1, 2, 1, null, 3, 3, 3, null,
+                                          1, 2, null, null, null, 2, 2, null, 1, 3,
+                                          null, null, null, 3, 3, null, 1, 2, null, null,
+                                          null, 2, 2, null, 1, 2, 1, null, 3, 3,
+                                          3, null, 1, 2, null, null, null, 2, 2, null,
+                                          1, 3, null, null, null, 3, 3, null, null, 2,
+                                          null, null, 2, 2, 2, null, 1, null, 1, null,
+                                          3, 3, 3, null, 1, 2, null, null, 2, 2, 2,
+                                          null, 1, 3, 1, null, null, 3, null, null, 2,
+                                          2, 2, null, 2, 2, 2, null, 1, 2, 1, null,
+                                          3, 3, 3, null, 1, 2, null, null, 2, 2, 2, null,
+                                          1, 3, 1, null, 3, 3, 3, null, 2, 2, null, 
+                                          null, 2, 2, 2, null, 1, 2, 1, null, 3, 3, 3, 
+                                          null, 1, 2, null, null, null, 2, 2, null, 1, 3, 
+                                          null, null, null, 3, 3, null, 2, 2, null, null, 
+                                          2, 2, 2, null, 1, 2, 1, null, 3, 3, 3, null, 1, 
+                                          2, null, null, null, 2, 2, null, 1, 3, null, 
+                                          null, null, 3, 3};
+
+    /*@brief willgive back the number of increments to the program counter
+    *
+    * @param int opcode 
+    * @return Integer jumpcCode
+    */
+    public static Integer getJumpCode(int opcode){
+        return jumpCodes[opcode];
+    }
+
 
 }
 
