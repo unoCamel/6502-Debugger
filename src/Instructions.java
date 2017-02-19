@@ -13,6 +13,8 @@ public class Instructions {
 	*/
 
 /* Grouped by: http://www.obelisk.me.uk/6502/instructions.html
+* ALSO: Header comments from: http://www.e-tradition.net/bytes/6502/6502_instruction_set.html
+ */
 
 
 /* ====================== LOAD/STORE OPERATIONS ====================== */
@@ -313,13 +315,146 @@ public class Instructions {
 
 /* ====================== SHIFT OPERATIONS =========================== */
 
-/* ====================== JUMPS/CALLS OPERATIONS ===================== */
+/* ====================== JUMPS/CALLS OPERATIONS =====================
+* The following instructions modify the program counter causing a break to normal sequential execution.
+* The JSR instruction pushes the old PC onto the stack before changing it to the new location allowing
+* a subsequent RTS to return execution to the instruction after the call.
+ */
+
+/* ---------------------- JMP ---------------------- *
+* @brief Jump to a New Location
+* Operation:   (PC+1) -> PCL
+* Operation:   (PC+2) -> PCH
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+    //0x4c
+    public static void JMP_ABS(int value16){}
+    //0x6C
+    public static void JMP_ID(int value8){} //TODO CHECK
+
+/* ---------------------- JSR ---------------------- *
+* @brief Jump to New Location Saving Return Address
+* Operation:   (push (PC+2), then either
+* Operation:   (PC+1) -> PCL
+* Operation:   (PC+2) -> PCH
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+
+    //0x20
+    public static void JSR_ABS(int value16){}
+
+/* ---------------------- RTS ---------------------- *
+* @brief Return from Subroutine
+* Operation:   pull PC, then
+* Operation:   PC+1 -> PC
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+
+    //0x60
+    public static void RTS_IMP(){}
 
 /* ====================== BRANCHES OPERATIONS ======================== */
 
-/* ====================== STATUS/FLAG OPERATIONS ===================== */
+/* ====================== STATUS/FLAG OPERATIONS =====================
+* The following instructions change the values of specific status flags.
+*/
 
-/* ======================  SYSTEM OPERATIONS ========================== */
+/* ---------------------- CLC ---------------------- *
+* @brief Clear Carry Flag
+* Operation:   0 -> C
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	0	-	-	-
+*/
+    //0x18
+    public static void CLC_IMP(){}
 
+/* ---------------------- CLD ---------------------- *
+* @brief Clear Decimal Mode
+* Operation:   0 -> C
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	0	-
+*/
+    //0xD8
+    public static void CLD_IMP(){}
+
+/* ---------------------- CLI ---------------------- *
+* @brief Clear Interrupt Disable Bit
+* Operation:   0 -> I
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	0	-	-
+*/
+    //0x58
+    public static void CLI_IMP(){}
+
+/* ---------------------- CLV ---------------------- *
+* @brief Clear Overflow Flag
+* Operation:   0 -> V
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	0
+*/
+    //0xB8
+    public static void CLV_IMP(){}
+
+/* ---------------------- SEC ---------------------- *
+* @brief Set Carry Flag
+* Operation:   1 -> C
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	1	0	-	-
+*/
+    //0x38
+    public static void SEC_IMP(){}
+
+/* ---------------------- SED ---------------------- *
+* @brief Set Decimal Flag
+* Operation:   1 -> D
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	1	-
+*/
+    //0xF8
+    public static void SED_IMP(){}
+
+/* ---------------------- SEI ---------------------- *
+* @brief Set Interrupt Disable Status
+* Operation:   1 -> I
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	1	-	-
+*/
+    //0x78
+    public static void SEI_IMP(){}
+
+/* ======================  SYSTEM OPERATIONS ==========================
+* Functions focused on interrupts, and then the No-operation function.
+*/
+
+/* ---------------------- BRK ---------------------- *
+* @brief Force an interrupt
+* Operation:   interrupt, then
+* Operation:    push PC+2, push SR
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	1	-	-
+*/
+    //0x00
+    public static void BRK_IMP(){}
+
+/* ---------------------- NOP ---------------------- *
+* @brief No-Operation
+* Operation: None.
+* Flags Set:	N	Z	C	I	D	V
+* 				-	-	-	-	-	-
+*/
+    //0xEA
+    public static void NOP_IMP(){}
+
+/* ---------------------- RTI ---------------------- *
+* @brief Return from interrupt
+* Operation: pull SR, pull PC
+* Flags Set:	N	Z	C	I	D	V
+* 				info comes from stack
+*/
+    //0x40
+    public static void RTI_IMP(){}
 	
 }
