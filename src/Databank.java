@@ -7,27 +7,18 @@ public class Databank {
     * / (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
     *
      */
-//    static private int modeADC, modeAND, modeASL, modeBCC, modeBCS, modeBEQ, modeBIT, modeBMI, modeBNE, modeBPL, modeBRK, modeBVC, modeBVS, modeCLC,
-//                       modeCLD, modeCLI, modeCLV, modeCMP, modeCPX, modeCPY, modeDEC, modeDEX, modeDEY, modeEOR, modeINC, modeINX, modeINY, modeJMP,
-//                       modeJSR, modeLDA, modeLDX, modeLDY, modeLSR, modeNOP, modeORA, modePHA, modePHP, modePLA, modePLP, modeROL, modeROR, modeRTI,
-//                       modeRTS, modeSBC, modeSEC, modeSED, modeSEI, modeSTA, modeSTX, modeSTY, modeTAX, modeTAY, modeTSX, modeTXA, modeTXS, modeTYA;
 
     static private Integer[] opcodesADC, opcodesAND, opcodesASL, opcodesBCC, opcodesBCS, opcodesBEQ, opcodesBIT, opcodesBMI, opcodesBNE, opcodesBPL, opcodesBRK, opcodesBVC, opcodesBVS, opcodesCLC,
                          opcodesCLD, opcodesCLI, opcodesCLV, opcodesCMP, opcodesCPX, opcodesCPY, opcodesDEC, opcodesDEX, opcodesDEY, opcodesEOR, opcodesINC, opcodesINX, opcodesINY, opcodesJMP,
                          opcodesJSR, opcodesLDA, opcodesLDX, opcodesLDY, opcodesLSR, opcodesNOP, opcodesORA, opcodesPHA, opcodesPHP, opcodesPLA, opcodesPLP, opcodesROL, opcodesROR, opcodesRTI,
                          opcodesRTS, opcodesSBC, opcodesSEC, opcodesSED, opcodesSEI, opcodesSTA, opcodesSTX, opcodesSTY, opcodesTAX, opcodesTAY, opcodesTSX, opcodesTXA, opcodesTXS, opcodesTYA;
 
-//    static private Pair<Integer, Integer[]> pairADC, pairAND, pairASL, pairBCC, pairBCS, pairBEQ, pairBIT, pairBMI, pairBNE, pairBPL, pairBRK, pairBVC, pairBVS, pairCLC,
-//                                        pairCLD, pairCLI, pairCLV, pairCMP, pairCPX, pairCPY, pairDEC, pairDEX, pairDEY, pairEOR, pairINC, pairINX, pairINY, pairJMP,
-//                                        pairJSR, pairLDA, pairLDX, pairLDY, pairLSR, pairNOP, pairORA, pairPHA, pairPHP, pairPLA, pairPLP, pairROL, pairROR, pairRTI,
-//                                        pairRTS, pairSBC, pairSEC, pairSED, pairSEI, pairSTA, pairSTX, pairSTY, pairTAX, pairTAY, pairTSX, pairTXA, pairTXS, pairTYA;
-
     private static Map<String, Integer[]> binaryAssembler = new HashMap<String, Integer[]>();
 
     public Databank(){
         // (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
         // (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
-                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
+                                /*13  12    11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         Integer[] opcodesADC = {0x71, 0x61, null, 0x79, 0x7D, 0x6D, null, null, 0x75, 0x65, 0x69, null, null, 0b1_1011_1001_1100};
         Integer[] opcodesAND = {0x31, 0x21, null, 0x39, 0x3D, 0x2D, null, null, 0x35, 0x25, 0x29, null, null, 0b1_1011_1001_1100};
         Integer[] opcodesASL = {null, null, null, null, 0x1E, 0x0E, null, null, 0x16, 0x06, null, 0x0A, null, 0b0_0001_1001_1010};
@@ -42,7 +33,7 @@ public class Databank {
         Integer[] opcodesBVC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x50, 0b0_0000_0000_0001};
         Integer[] opcodesBVS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x70, 0b0_0000_0000_0001};
         Integer[] opcodesCLC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x18, 0b0_0000_0000_0001};
-                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
+                                /*13  12    11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         Integer[] opcodesCLD = {null, null, null, null, null, null, null, null, null, null, null, null, 0XD8, 0b0_0000_0000_0001};
         Integer[] opcodesCLI = {null, null, null, null, null, null, null, null, null, null, null, null, 0X58, 0b0_0000_0000_0001};
         Integer[] opcodesCLV = {null, null, null, null, null, null, null, null, null, null, null, null, 0XB8, 0b0_0000_0000_0001};
@@ -57,7 +48,7 @@ public class Databank {
         Integer[] opcodesINX = {null, null, null, null, null, null, null, null, null, null, null, null, 0xE8, 0b0_0000_0000_0001};
         Integer[] opcodesINY = {null, null, null, null, null, null, null, null, null, null, null, null, 0xC8, 0b0_0000_0000_0001};
         Integer[] opcodesJMP = {null, null, 0x6C, null, null, 0x4C, null, null, null, null, null, null, null, 0b0_0100_1000_0000};
-                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
+                                /*13  12    11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         Integer[] opcodesJSR = {null, null, null, null, null, 0x20, null, null, null, null, null, null, null, 0b0_0000_1000_0000};
         Integer[] opcodesLDA = {0xB1, 0xA1, null, 0xB9, 0xBD, 0xAD, null, null, 0xB5, 0xA5, 0xA9, null, null, 0b1_1011_1001_1100};
         Integer[] opcodesLDX = {null, null, null, 0xBE, null, 0xAE, null, 0xB6, null, 0xA6, 0xA2, null, null, 0b0_0010_1010_1100};
@@ -73,7 +64,7 @@ public class Databank {
         Integer[] opcodesROR = {null, null, null, null, 0x7E, 0x6E, null, null, 0x76, 0x66, null, 0x6A, null, 0b0_0001_1001_1010};
         Integer[] opcodesRTI = {null, null, null, null, null, null, null, null, null, null, null, null, 0x40, 0b0_0000_0000_0001};
         //TODO
-                          /*13    12	11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
+                                /*13  12    11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         Integer[] opcodesRTS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x60, 0b0_0000_0000_0001};
         Integer[] opcodesSBC = {0xF1, 0xE1, null, 0xF9, 0xFD, 0xED, null, null, 0xF5, 0xE5, 0xE9, null, null, 0b1_1011_1001_1100};
         Integer[] opcodesSEC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x38, 0b0_0000_0000_0001};
@@ -147,123 +138,29 @@ public class Databank {
         binaryAssembler.put("TXS", opcodesTXS);
         binaryAssembler.put("TYA", opcodesTYA);
 
-        //        modeAND = 0b0_0000_0000_0000; Integer[] opcodesAND = {};
-//        modeASL = 0b0_0000_0000_0000; Integer[] opcodesASL = {};
-//        modeBCC = 0b0_0000_0000_0000; Integer[] opcodesBCC = {};
-//        modeBCS = 0b0_0000_0000_0000; Integer[] opcodesBCS = {};
-//        modeBEQ = 0b0_0000_0000_0000; Integer[] opcodesBEQ = {};
-//        modeBIT = 0b0_0000_0000_0000; Integer[] opcodesBIT = {};
-//        modeBMI = 0b0_0000_0000_0000; Integer[] opcodesBMI = {};
-//        modeBNE = 0b0_0000_0000_0000; Integer[] opcodesBNE = {};
-//        modeBPL = 0b0_0000_0000_0000; Integer[] opcodesBPL = {};
-//        modeBRK = 0b0_0000_0000_0000; Integer[] opcodesBRK = {};
-//        modeBVC = 0b0_0000_0000_0000; Integer[] opcodesBVC = {};
-//        modeBVS = 0b0_0000_0000_0000; Integer[] opcodesBVS = {};
-//        modeCLC = 0b0_0000_0000_0000; Integer[] opcodesCLC = {};
-//
-//        modeCLD = 0b0_0000_0000_0000; Integer[] opcodesCLD = {};
-//        modeCLI = 0b0_0000_0000_0000; Integer[] opcodesCLI = {};
-//        modeCLV = 0b0_0000_0000_0000; Integer[] opcodesCLV = {};
-//        modeCMP = 0b0_0000_0000_0000; Integer[] opcodesCMP = {};
-//        modeCPX = 0b0_0000_0000_0000; Integer[] opcodesCPX = {};
-//        modeCPY = 0b0_0000_0000_0000; Integer[] opcodesCPY = {};
-//        modeDEC = 0b0_0000_0000_0000; Integer[] opcodesDEC = {};
-//        modeDEX = 0b0_0000_0000_0000; Integer[] opcodesDEX = {};
-//        modeDEY = 0b0_0000_0000_0000; Integer[] opcodesDEY = {};
-//        modeEOR = 0b0_0000_0000_0000; Integer[] opcodesEOR = {};
-//        modeINC = 0b0_0000_0000_0000; Integer[] opcodesINC = {};
-//        modeINX = 0b0_0000_0000_0000; Integer[] opcodesINX = {};
-//        modeINY = 0b0_0000_0000_0000; Integer[] opcodesINY = {};
-//        modeJMP = 0b0_0000_0000_0000; Integer[] opcodesJMP = {};
-//
-//        modeJSR = 0b0_0000_0000_0000; Integer[] opcodesJSR = {};
-//        modeLDA = 0b0_0000_0000_0000; Integer[] opcodesLDA = {};
-//        modeLDX = 0b0_0000_0000_0000; Integer[] opcodesLDX = {};
-//        modeLDY = 0b0_0000_0000_0000; Integer[] opcodesLDY = {};
-//        modeLSR = 0b0_0000_0000_0000; Integer[] opcodesLSR = {};
-//        modeNOP = 0b0_0000_0000_0000; Integer[] opcodesNOP = {};
-//        modeORA = 0b0_0000_0000_0000; Integer[] opcodesORA = {};
-//        modePHA = 0b0_0000_0000_0000; Integer[] opcodesPHA = {};
-//        modePHP = 0b0_0000_0000_0000; Integer[] opcodesPHP = {};
-//        modePLA = 0b0_0000_0000_0000; Integer[] opcodesPLA = {};
-//        modePLP = 0b0_0000_0000_0000; Integer[] opcodesPLP = {};
-//        modeROL = 0b0_0000_0000_0000; Integer[] opcodesROL = {};
-//        modeROR = 0b0_0000_0000_0000; Integer[] opcodesROR = {};
-//        modeRTI = 0b0_0000_0000_0000; Integer[] opcodesRTI = {};
-//
-//        modeRTS = 0b0_0000_0000_0000; Integer[] opcodesRTS = {};
-//        modeSBC = 0b0_0000_0000_0000; Integer[] opcodesSBC = {};
-//        modeSEC = 0b0_0000_0000_0000; Integer[] opcodesSEC = {};
-//        modeSED = 0b0_0000_0000_0000; Integer[] opcodesSED = {};
-//        modeSEI = 0b0_0000_0000_0000; Integer[] opcodesSEI = {};
-//        modeSTA = 0b0_0000_0000_0000; Integer[] opcodesSTA = {};
-//        modeSTX = 0b0_0000_0000_0000; Integer[] opcodesSTX = {};
-//        modeSTY = 0b0_0000_0000_0000; Integer[] opcodesSTY = {};
-//        modeTAX = 0b0_0000_0000_0000; Integer[] opcodesTAX = {};
-//        modeTAY = 0b0_0000_0000_0000; Integer[] opcodesTAY = {};
-//        modeTSX = 0b0_0000_0000_0000; Integer[] opcodesTSX = {};
-//        modeTXA = 0b0_0000_0000_0000; Integer[] opcodesTXA = {};
-//        modeTXS = 0b0_0000_0000_0000; Integer[] opcodesTXS = {};
-//        modeTYA = 0b0_0000_0000_0000; Integer[] opcodesTYA = {};
-
     }
-    /*
-        TODO, incorrect logic probably (UNTESTED)
-        @brief Returns the specific opcode of the instruction, given the mode as well.
-        "LD A B \n ADC A B \n LD A"
-        @param instruction A String representation of the instruction
-        @param mode a 13-bit number, specifying what mode it is.
-        @return a 8-bit number, specifying the specific opcode.
+    /*@brief Returns the specific opcode of the instruction, given the mode as well.
+     *"LD A B \n ADC A B \n LD A"
+     *@param instruction A String representation of the instruction
+     *@param mode a 13-bit number, specifying what mode it is.
+     *@return a 8-bit number, specifying the specific opcode.
     */
-    public static int getOPCode(String instruction, int mode){
+    public static Integer getOPCode(String instruction, int mode){
         Integer[] temp = binaryAssembler.get(instruction);
-        return temp[(mode + 12) % 13];
+        Integer[] opCodeArray = new Integer[12];
+        System.arraycopy(temp, 0, opCodeArray, 0, 12);
+        //System.out.println(Arrays.toString(opCodeArray));
+        return temp[((12-mode)+1)];
     }
-
+    /*@brief will print the currently loaded map of opcodes and modes.
+	*
+	* @param map The map to print.
+	* @return void.
+	*/
     public static void toString(Map<String, Integer[]> map) {
         System.out.println(map.toString());
     }
 
-
-
-//
-//	/* @brief Class to combine generic types together.
-//	*/
-//    private static class Pair<K, V> {
-//
-//        private final K modes;
-//        private final V opcodes;
-//
-//        /* @brief Create a Pair, provide two types.
-//        *
-//        * @param modes
-//        * @param opcodes
-//        * @return Pair<K, V>.
-//        */
-//        private static <K, V> Pair<K, V> createPair(K modes, V opcodes) {
-//            return new Pair<K, V>(modes, opcodes);
-//        }
-//
-//        private Pair(K modes, V opcodes) {
-//            this.modes = modes;
-//            this.opcodes = opcodes;
-//        }
-//
-//        public K getModes() {
-//            return modes;
-//        }
-//
-//        public V getOpcodes() {
-//            return opcodes;
-//        }
-//    }
-
-//    public static void main(String[] args) {
-//
-//        System.out.println("Hello, World");
-//        Databank db = new Databank();
-//        Databank.toString(db.binaryAssembler);
-//    }
 
 }
 
