@@ -63,7 +63,6 @@ public class Databank {
         Integer[] opcodesROL = {null, null, null, null, 0x3E, 0x2E, null, null, 0x36, 0x26, null, 0x2A, null, 0b0_0001_1001_1010};
         Integer[] opcodesROR = {null, null, null, null, 0x7E, 0x6E, null, null, 0x76, 0x66, null, 0x6A, null, 0b0_0001_1001_1010};
         Integer[] opcodesRTI = {null, null, null, null, null, null, null, null, null, null, null, null, 0x40, 0b0_0000_0000_0001};
-        //TODO
                                 /*13  12    11	  10	9	  8	    7	  6     5     4	    3	  2     1   MODE= 12   8    4  1*/
         Integer[] opcodesRTS = {null, null, null, null, null, null, null, null, null, null, null, null, 0x60, 0b0_0000_0000_0001};
         Integer[] opcodesSBC = {0xF1, 0xE1, null, 0xF9, 0xFD, 0xED, null, null, 0xF5, 0xE5, 0xE9, null, null, 0b1_1011_1001_1100};
@@ -187,10 +186,10 @@ public class Databank {
                                           2, null, null, null, 2, 2, null, 1, 3, null, 
                                           null, null, 3, 3};
 
-    /*@brief willgive back the number of increments to the program counter
+    /*@brief will give back the number of increments to the program counter
     *
     * @param int opcode 
-    * @return Integer jumpcCode
+    * @return Integer jumpCode
     */
     public static Integer getJumpCode(int opcode){
         return jumpCodes[opcode];
