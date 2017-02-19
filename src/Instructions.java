@@ -61,7 +61,91 @@ public class Instructions {
 
 /* ====================== STACK OPERATIONS =========================== */
 
-/* ====================== LOGICAL OPERATIONS ========================= */
+/* ====================== LOGICAL OPERATIONS =========================
+*The following instructions perform logical operations on the contents of the accumulator and another value held in memory.
+* The BIT instruction performs a logical AND to test the presence of bits in the memory value to set the flags but does not keep the result.
+ */
+
+/* ---------------------- AND ---------------------- *
+* @brief AND Memory with Accumulator
+* Operation:  A AND M -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x29
+    public static void AND_IMM(int value8){}
+    //0x25
+    public static void AND_ZP(int value8){}
+    //0x35
+    public static void AND_ZPX(int value8){}
+    //0x2D
+    public static void AND_AB(int value16){}
+    //0x3D
+    public static void AND_ABX(int value16){}
+    //0x39
+    public static void AND_ABY(int value16){}
+    //0x21
+    public static void AND_IDX(int value8){}
+    //0x31
+    public static void AND_IDY(int value8){}
+
+/* ---------------------- EOR ---------------------- *
+* @brief Exclusive-OR Memory with Accumulator
+* Operation:  A EOR M -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x49
+    public static void EOR_IMM(int value8){}
+    //0x45
+    public static void EOR_ZP(int value8){}
+    //0x55
+    public static void EOR_ZPX(int value8){}
+    //0x4D
+    public static void EOR_ABS(int value16){}
+    //0x5D
+    public static void EOR_ABX(int value16){}
+    //0x59
+    public static void EOR_ABY(int value16){}
+    //0x41
+    public static void EOR_IDX(int value8){}
+    //0x51
+    public static void EOR_IDY(int value8){}
+
+/* ---------------------- ORA ---------------------- *
+* @brief OR Memory with Accumulator
+* Operation:  A OR M -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x09
+    public static void ORA_IMM(int value8){}
+    //0x05
+    public static void ORA_ZP(int value8){}
+    //0x15
+    public static void ORA_ZPX(int value8){}
+    //0x0D
+    public static void ORA_AB(int value16){}
+    //0x1D
+    public static void ORA_ABX(int value16){}
+    //0x19
+    public static void ORA_ABY(int value16){}
+    //0x01
+    public static void ORA_IDX(int value8){}
+    //0x11
+    public static void ORA_IDY(int value8){}
+
+/* ---------------------- BIT ---------------------- *
+* @brief Test Bits in Memory with Accumulator bits 7 and 6 of operand are transferred to bit 7 and 6 of SR (N,V);
+* the zeroflag is set to the result of operand AND accumulator.
+* Operation:  A AND M, M7 -> N, M6 -> V
+* Flags Set:	N	Z	C	I	D	V
+* 				M7	+	-	-	-	M6
+*/
+    //0x24
+    public static void BIT_ZP(int value8){}
+    //0x2C
+    public static void BIT_AB(int value16){}
 
 /* ====================== ARITHMETIC OPERATIONS =======================
 *The arithmetic operations perform addition and subtraction on the contents of the accumulator.
