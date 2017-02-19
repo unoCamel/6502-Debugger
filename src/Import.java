@@ -16,10 +16,10 @@ public class Import {
 		int cindex = 0;
 		int memCounter = 0;
 
-		String[] instructions = new String[Global.MAX_MEMORY/8];
+		String[] instructions = new String[Global.MAX_MEMORY];
 		HashMap<String, Integer> labels = new HashMap<String, Integer>();
 
-		while (memCounter < Global.MAX_MEMORY/8){
+		while (memCounter < Global.MAX_MEMORY){
 			nlindex = str.indexOf('\n', index);
 			if (nlindex != -1){
 				//there is a new line
@@ -126,13 +126,5 @@ public class Import {
 	public static void main(String[] args){
 		testImport();
 	}
-
-
-
-
-
-
-
-
 
 }
