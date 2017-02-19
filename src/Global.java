@@ -1,6 +1,7 @@
 public class Global{
 
-	public static final int MAX_MEMORY = 8192;
+	public static final int MAX_MEMORY = 0xFFFF;
+	public static final int MAX_INSTRUCTIONS_MEMORY = 0x3FFF;
 
 	//registers
 	public static final int $A = 0;
