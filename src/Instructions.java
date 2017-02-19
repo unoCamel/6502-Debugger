@@ -17,13 +17,56 @@ public class Instructions {
 
 /* ====================== LOAD/STORE OPERATIONS ====================== */
 
-/* ====================== REGISTER TRANSFERS ========================= */
+/* ====================== REGISTER TRANSFERS =========================
+*The contents of the X and Y registers can be moved to or from the accumulator,
+*setting the negative (N) and zero (Z) flags as appropriate.
+*/
+
+/* ---------------------- TAX ---------------------- *
+* @brief Transfer Accumulator to Index X
+* Operation:   A -> X
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0xAA
+    public static void TAX_IMP(){}
+
+/* ---------------------- TAY ---------------------- *
+* @brief Transfer Accumulator to Index Y
+* Operation:   A -> Y
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0xA8
+    public static void TAY_IMP(){}
+
+/* ---------------------- TXA ---------------------- *
+* @brief Transfer Index X to Accumulator
+* Operation:   X -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+    //0x8A
+    public static void TXA_IMP(){}
+
+/* ---------------------- TYA ---------------------- *
+* @brief Transfer Index Y to Accumulator
+* Operation:   Y -> A
+* Flags Set:	N	Z	C	I	D	V
+* 				+	+	-	-	-	-
+*/
+
+    //0x98
+    public static void TYA_IMP(){}
 
 /* ====================== STACK OPERATIONS =========================== */
 
 /* ====================== LOGICAL OPERATIONS ========================= */
 
-/* ====================== ARITHMETIC OPERATIONS ======================= */
+/* ====================== ARITHMETIC OPERATIONS =======================
+*The arithmetic operations perform addition and subtraction on the contents of the accumulator.
+* The compare operations allow the comparison of the accumulator and X or Y with memory values.
+ */
 
 /* ---------------------- ADC ---------------------- *
 * @brief Add Memory to Accumulator with Carry
