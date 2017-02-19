@@ -39,6 +39,17 @@ public class CPU{
 
 	}
 
+    /* @brief Taken two values, will concatenate by little endian method.
+    *
+    *@params value1 first index, will be second.
+    *@params value2 second index, will be first.
+    *@return Void.
+    */
+	private static int littleEndian(int value1, int value2){
+	    String result = "" + value2 + value1;
+	    return Integer.parseInt(result);
+    }
+
     /*
     @brief Will read the current $PC, use the $PC to find the correct instruction in memory
     * then increment the current $PC by 4 (in case it does get overwritten) and then find the correct
@@ -51,7 +62,9 @@ public class CPU{
     private static void decode(){
     //TODO need to write method to obtain index of instruction opcodes.
         int opCode = Memory.read(readPC()); //TODO Need to increment PC Correctly based on the instruction and whats to follow.
-        int x;  //TODO Create data bank to store what we need to increment the pc by based on instruction.
+        int value8 = Memory.read(readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
+        int value16 = littleEndian(value8, Memory.read(readPC()+2));
+        incrPC(Databank.getJumpCode(opCode));
         //PREFETCH MAXIMUM AMOUNT OF ARGUMENTS
         //increment clock
         //increment pc
@@ -59,24 +72,24 @@ public class CPU{
 
         //IMPORTANT: Commented out opcodes are opcodes not available to the standard 6502, we will not support them for now.
         switch(opCode) {
-            case 0x00:
-            case 0x01:
+            case 0x00: Instructions.BRK_IMP();
+            case 0x01: Instructions.ORA_IDX(value8);
             //case 0x02:
             //case 0x03:
             //case 0x04:
-            case 0x05:
-            case 0x06:
+            case 0x05: Instructions.ORA_ZP(value8);
+            case 0x06: //Instructions.ASL_ZP(value8);
             //case 0x07:
-            case 0x08:
-            case 0x09:
-            case 0x0A:
+            case 0x08: Instructions.PHP_IMP();
+            case 0x09: Instructions.ORA_IMM(value8);
+            case 0x0A: //Instructions.ASL_ACC(value8);
             //case 0x0B:
             //case 0x0C:
-            case 0x0D:
-            case 0x0E:
+            case 0x0D: Instructions.ORA_AB(value16);
+            case 0x0E: //Instructions.ASL_ACC(value8);
             //case 0x0F:
 
-            case 0x10:
+            case 0x10: //Instructions.BPL();
             case 0x11:
             //case 0x12:
             //case 0x13:
