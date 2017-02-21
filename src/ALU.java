@@ -36,6 +36,7 @@ public class ALU {
 		return -1;
 	}
 
+
 	/* @brief Performs the opeation A | B -> A
 	* Flags set as follows:
 	* C: Not Set.
