@@ -330,11 +330,7 @@ public class Instructions {
 * Flags Set:	N	Z	C	I	D	V
 * 				+	+	+	-	-	+
 */
-<<<<<<< HEAD
-	//
-=======
-    //0x69
->>>>>>> fb_instructions
+	//0x69
 	public static void ADC_IMM(int value8){}
     //0x65
 	public static void ADC_ZP(int value8){}
