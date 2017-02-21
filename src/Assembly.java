@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,6 +71,9 @@ public void assemble(){
 		binaryInstructions = new int[Global.MAX_MEMORY/8];
 		i = 0;
 		for (String instruction  : instructions) {
+			if (instruction == null || instruction.equals("done")){
+				continue;
+			}
 			if (instruction.equals("LABEL")) {
 				binaryInstructions[i++] = 0xEA ; //NOP
 				continue;
@@ -93,42 +97,6 @@ public void assemble(){
 	    	int opcode= Databank.getOPCode(instName, modebit);
 	    	binaryInstructions[i++] = opcode;
 	    }
-	    else if (checkAccumulator(instruction)){
-	    	modebit = modebit | (1 << 1);
-	    }
-	    else if (checkImmediate(instruction)){
-	    	modebit = modebit | (1 << 2);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkZeroPage(instruction)){
-	    	modebit = modebit | (1 << 3);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkZeroPageX(instruction)){
-	    	modebit = modebit | (1 << 4);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkZeroPageY(instruction)){
-	    	modebit = modebit | (1 << 5);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkBranch(instruction)){
-	    	modebit = modebit | (1 << 6);
-			int index = getLabelIndex(params[1]);
-			addToQueue(instName, modebit, index);		
-	    }
-	    else if (checkAbsolute(instruction)){
-	    	modebit = modebit | (1 << 7);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkAbsoluteX(instruction)){
-	    	modebit = modebit | (1 << 8);
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkAbsoluteY(instruction)){
-	    	modebit = modebit | (1 << 9);
-	    	addToQueue(instName, modebit, params);
-	    }
 	    else if (checkIndirect(instruction)){
 	    	modebit = modebit | (1 << 10);
 	    	addToQueue(instName, modebit, params);
@@ -139,6 +107,42 @@ public void assemble(){
 	    }
 	    else if (checkIndirectY(instruction)){
 	    	modebit = modebit | (1 << 12);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAccumulator(instruction)){
+	    	modebit = modebit | (1 << 1);
+	    }
+	    else if (checkImmediate(instruction)){
+	    	modebit = modebit | (1 << 2);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPageX(instruction)){
+	    	modebit = modebit | (1 << 4);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPageY(instruction)){
+	    	modebit = modebit | (1 << 5);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPage(instruction)){
+	    	modebit = modebit | (1 << 3);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkBranch(instruction)){
+	    	modebit = modebit | (1 << 6);
+			int index = getLabelIndex(params[1]);
+			addToQueue(instName, modebit, index);		
+	    }
+	    else if (checkAbsoluteX(instruction)){
+	    	modebit = modebit | (1 << 8);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAbsoluteY(instruction)){
+	    	modebit = modebit | (1 << 9);
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAbsolute(instruction)){
+	    	modebit = modebit | (1 << 7);
 	    	addToQueue(instName, modebit, params);
 	    }
 		return modebit;
@@ -166,15 +170,19 @@ public void assemble(){
 		return m.find();
 	}
 	private boolean checkImplicit(String inst){
-		String[] s = inst.split(" ");
-		if (s.length < 1) return false;
+		if (inst.contains(" ")){
+			String[] s = inst.split(" ");
+			if (s.length > 1) return false;
+		}
 		return true;
 	}
 	private boolean checkAccumulator(String inst){
-		String[] s = inst.split(" ");
-		if (s.length < 2) return false;
-		String arg = s[1];
-		if (!arg.equals("A")) return false;
+		if (inst.contains(" ")){
+			String[] s = inst.split(" ");
+			if (s.length < 2) return false;
+			String arg = s[1];
+			if (!arg.equals("A")) return false;
+		}
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
