@@ -507,15 +507,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x0A
-	public static ASL_ACC(){}
+	public static void ASL_ACC(){}
 	//0x06
-	public static ASL_ZP(int value8){}
+	public static void ASL_ZP(int value8){}
 	//0x16
-	public static ASL_ZPX(int value8){}
+	public static void ASL_ZPX(int value8){}
 	//0x0E
-	public static ASL_AB(int value16){}
+	public static void ASL_AB(int value16){}
 	//0x1E
-	public static ASL_ABX(int value16){}
+	public static void ASL_ABX(int value16){}
 
 /* ---------------------- LSR ---------------------- *
 * @brief Shift One Bit Right (Memory or Accumulator)
@@ -524,15 +524,15 @@ public class Instructions {
 * 				-	+	+	-	-	-
 */
 	//0x4A
-	public static LSR_ACC(){}
+	public static void LSR_ACC(){}
 	//0x46
-	public static LSR_ZP(int value8){}
+	public static void LSR_ZP(int value8){}
 	//0x56
-	public static LSR_ZPX(int value8){}
+	public static void LSR_ZPX(int value8){}
 	//0x4E
-	public static LSR_AB(int value16){}
+	public static void LSR_AB(int value16){}
 	//0x5E
-	public static LSR_ABX(int value16){}
+	public static void LSR_ABX(int value16){}
 
 /* ---------------------- ROL ---------------------- *
 * @brief Rotate One Bit Left (Memory or Accumulator)
@@ -541,15 +541,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x2A
-	public static ROL_ACC(){}
+	public static void ROL_ACC(){}
 	//0x26
-	public static ROL_ZP(int value8){}
+	public static void ROL_ZP(int value8){}
 	//0x36
-	public static ROL_ZPX(int value8){}
+	public static void ROL_ZPX(int value8){}
 	//0x2E
-	public static ROL_AB(int value16){}
+	public static void ROL_AB(int value16){}
 	//0x3E
-	public static ROL_ABX(int value16){}
+	public static void ROL_ABX(int value16){}
 
 /* ---------------------- ROR ---------------------- *
 * @brief Rotate One Bit Right (Memory or Accumulator)
@@ -558,15 +558,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x6A
-	public static ROR_ACC(){}
+	public static void ROR_ACC(){}
 	//0x66
-	public static ROR_ZP(int value8){}
+	public static void ROR_ZP(int value8){}
 	//0x76
-	public static ROR_ZPX(int value8){}
+	public static void ROR_ZPX(int value8){}
 	//0x6E
-	public static ROR_AB(int value16){}
+	public static void ROR_AB(int value16){}
 	//0x7E
-	public static ROR_ABX(int value16){}
+	public static void ROR_ABX(int value16){}
 
 
 /* ====================== JUMPS/CALLS OPERATIONS =====================
@@ -623,7 +623,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x90
-	public static BCC_REL(){}
+	public static void BCC_REL(){}
 
 /* ---------------------- BCS ---------------------- *
 * @brief Branch on Carry Set
@@ -632,7 +632,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xB0
-	public static BCS_REL(){}
+	public static void BCS_REL(){}
 
 /* ---------------------- BEQ ---------------------- *
 * @brief Branch on Result Zero
@@ -641,7 +641,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xF0
-	public static BEQ_REL(){}
+	public static void BEQ_REL(){}
 
 /* ---------------------- BMI ---------------------- *
 * @brief Branch on Result Minus
@@ -650,7 +650,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x30
-	public static BMI_REL(){}
+	public static void BMI_REL(){}
 
 /* ---------------------- BNE ---------------------- *
 * @brief Branch on Result not Zero
@@ -659,7 +659,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xD0
-	public static BNE_REL(){}
+	public static void BNE_REL(){}
 
 /* ---------------------- BPL ---------------------- *
 * @brief Branch on Result not Zero
@@ -668,7 +668,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x10
-	public static BPL_REL(){}
+	public static void BPL_REL(){}
 
 /* ---------------------- BVC ---------------------- *
 * @brief Branch on Overflow Clear
@@ -677,7 +677,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x50
-	public static BVC_REL(){}
+	public static void BVC_REL(){}
 
 /* ---------------------- BVS ---------------------- *
 * @brief Branch on Overflow Set
@@ -686,7 +686,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x50
-	public static BVS_REL(){}
+	public static void BVS_REL(){}
 
 /* ====================== STATUS/FLAG OPERATIONS =====================
 * The following instructions change the values of specific status flags.

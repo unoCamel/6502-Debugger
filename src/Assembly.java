@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,6 +7,9 @@ public class Assembly{
 
 	private String[] instructions;
 	private HashMap<String, Integer> labels;
+	private int[] binaryInstructions;
+	private int i = 0;
+
 
     /*@brief Initializes Assembly class, purpose is to hold instruction and
     * their corresponding labels.
@@ -64,95 +68,99 @@ public class Assembly{
 * @return None.
 */
 public void assemble(){
-		int[] binaryInstructions = new int[instructions.length];
-
+		binaryInstructions = new int[Global.MAX_MEMORY/8];
+		i = 0;
 		for (String instruction  : instructions) {
-			if (instruction.equals("LABEL")) continue;
-			checkMode(instruction);
-			switch (instruction.substring(0, 3)) {
-				case "ADC":	break;
-				case "AND":	break;
-				case "ASL":	break;
-				case "BCC":	break;
-				case "BCS":	break;
-				case "BEQ":	break;
-				case "BIT":	break;
-				case "BMI":	break;
-				case "BNE":	break;
-				case "BPL":	break;
-				case "BRK":	break;
-				case "BVC":	break;
-				case "BVS":	break;
-				case "CLC":	break;
-				case "CLD":	break;
-				case "CLI":	break;
-				case "CLV":	break;
-				case "CMP":	break;
-				case "CPX":	break;
-				case "CPY":	break;
-				case "DEC":	break;
-				case "DEX":	break;
-				case "DEY":	break;
-				case "EOR":	break;
-				case "INC":	break;
-				case "INX":	break;
-				case "INY":	break;
-				case "JMP":	break;
-				case "JSR":	break;
-				case "LDA":	break;
-				case "LDX":	break;
-				case "LDY":	break;
-				case "LSR":	break;
-				case "NOP":	break;
-				case "ORA":	break;
-				case "PHA":	break;
-				case "PHP":	break;
-				case "PLA":	break;
-				case "PLP":	break;
-				case "ROL":	break;
-				case "ROR":	break;
-				case "RTI":	break;
-				case "RTS":	break;
-				case "SBC":	break;
-				case "SEC":	break;
-				case "SED":	break;
-				case "SEI":	break;
-				case "STA":	break;
-				case "STX":	break;
-				case "STY":	break;
-				case "TAX":	break;
-				case "TAY":	break;
-				case "TSX":	break;
-				case "TXA":	break;
-				case "TXS":	break;
-				case "TYA":	break;
-				default:	break;
-
-
+			if (instruction == null || instruction.equals("done")){
+				continue;
 			}
-
+			if (instruction.equals("LABEL")) {
+				binaryInstructions[i++] = 0xEA ; //NOP
+				continue;
+			}
+			setupQueue(instruction);			
+			}
+		Memory.setMemory(binaryInstructions);
 		}
-}
+		
 
-	private int checkMode(String instruction){
-			int modebit = 0;
-			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
+
+	private int setupQueue(String instruction){
+		int modebit = 0;
+			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) branch
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
 		// have to run Immediate check before before ZeroPage
-	    if (checkImplicit(instruction)){modebit = modebit | (1 << 0);}
-	    else if (checkAccumulator(instruction)){modebit = modebit | (1 << 1);}
-	    else if (checkImmediate(instruction)){modebit = modebit | (1 << 2);}
-	    else if (checkZeroPage(instruction)){modebit = modebit | (1 << 3);}
-	    else if (checkZeroPageX(instruction)){modebit = modebit | (1 << 4);}
-	    else if (checkZeroPageY(instruction)){modebit = modebit | (1 << 5);}
-	    else if (checkRelative(instruction)){modebit = modebit | (1 << 6);}
-	    else if (checkAbsolute(instruction)){modebit = modebit | (1 << 7);}
-	    else if (checkAbsoluteX(instruction)){modebit = modebit | (1 << 8);}
-	    else if (checkAbsoluteY(instruction)){modebit = modebit | (1 << 9);}
-	    else if (checkIndirect(instruction)){modebit = modebit | (1 << 10);}
-	    else if (checkIndirectX(instruction)){modebit = modebit | (1 << 11);}
-	    else if (checkIndirectY(instruction)){modebit = modebit | (1 << 12);}
+		String instName = instruction.substring(0, 3);
+		String[] params = instruction.split(" ");
+	    if (checkImplicit(instruction)){
+	    	modebit = 1;
+	    	int opcode= Databank.getOPCode(instName, modebit);
+	    	binaryInstructions[i++] = opcode;
+	    }
+	    else if (checkIndirect(instruction)){
+	    	modebit = 11;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkIndirectX(instruction)){
+	    	modebit = 12;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkIndirectY(instruction)){
+	    	modebit = 13;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAccumulator(instruction)){
+	    	modebit = 2;
+	    }
+	    else if (checkImmediate(instruction)){
+	    	modebit = 3;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPageX(instruction)){
+	    	modebit = 5;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPageY(instruction)){
+	    	modebit = 6;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkZeroPage(instruction)){
+	    	modebit = 4;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkBranch(instruction)){
+	    	modebit = 7;
+			int index = getLabelIndex(params[1]);
+			addToQueue(instName, modebit, index);		
+	    }
+	    else if (checkAbsoluteX(instruction)){
+	    	modebit = 9;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAbsoluteY(instruction)){
+	    	modebit = 10;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkAbsolute(instruction)){
+	    	modebit = 8;
+	    	addToQueue(instName, modebit, params);
+	    }
 		return modebit;
+	}
+
+	private void addToQueue(String instName, int modebit, String[] params) {
+		// TODO Auto-generated method stub
+		int opcode= Databank.getOPCode(instName, modebit);
+    	int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9]+", ""), 16);
+    	binaryInstructions[i++] = opcode;
+    	binaryInstructions[i++] = paramNum;  
+	}
+	
+	private void addToQueue(String instName, int modebit, int param) {
+		// TODO Auto-generated method stub
+		int opcode= Databank.getOPCode(instName, modebit);
+    	binaryInstructions[i++] = opcode;
+    	binaryInstructions[i++] = param;  
 	}
 
 	private boolean checkImmediate(String inst){
@@ -162,13 +170,19 @@ public void assemble(){
 		return m.find();
 	}
 	private boolean checkImplicit(String inst){
+		if (inst.contains(" ")){
+			String[] s = inst.split(" ");
+			if (s.length > 1) return false;
+		}
 		return true;
 	}
 	private boolean checkAccumulator(String inst){
-		String[] s = inst.split(" ");
-		if (s.length < 2) return false;
-		String arg = s[1];
-		if (!arg.equals("A")) return false;
+		if (inst.contains(" ")){
+			String[] s = inst.split(" ");
+			if (s.length < 2) return false;
+			String arg = s[1];
+			if (!arg.equals("A")) return false;
+		}
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
@@ -189,8 +203,18 @@ public void assemble(){
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
-	private boolean checkRelative(String inst){
-		return true;
+	private boolean checkBranch(String inst){
+		String pattern = "B\\w*";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		if (m.find()){
+			String[] s = inst.split(" ");
+			if (s.length < 2) return false;
+			String arg = s[1];
+			Matcher m1 = r.matcher(arg);
+			return m1.find();
+		}
+		return false;
 	}
 	private boolean checkAbsolute(String inst){
 		String pattern = "\\$[0-9a-f]{3,4}";
