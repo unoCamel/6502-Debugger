@@ -87,62 +87,62 @@ public void assemble(){
 
 	private int setupQueue(String instruction){
 		int modebit = 0;
-			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) Relative
+			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) branch
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
 		// have to run Immediate check before before ZeroPage
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split(" ");
 	    if (checkImplicit(instruction)){
-	    	modebit = modebit | (1 << 0);
+	    	modebit = 1;
 	    	int opcode= Databank.getOPCode(instName, modebit);
 	    	binaryInstructions[i++] = opcode;
 	    }
 	    else if (checkIndirect(instruction)){
-	    	modebit = modebit | (1 << 10);
+	    	modebit = 11;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkIndirectX(instruction)){
-	    	modebit = modebit | (1 << 11);
+	    	modebit = 12;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkIndirectY(instruction)){
-	    	modebit = modebit | (1 << 12);
+	    	modebit = 13;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkAccumulator(instruction)){
-	    	modebit = modebit | (1 << 1);
+	    	modebit = 2;
 	    }
 	    else if (checkImmediate(instruction)){
-	    	modebit = modebit | (1 << 2);
+	    	modebit = 3;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkZeroPageX(instruction)){
-	    	modebit = modebit | (1 << 4);
+	    	modebit = 5;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkZeroPageY(instruction)){
-	    	modebit = modebit | (1 << 5);
+	    	modebit = 6;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkZeroPage(instruction)){
-	    	modebit = modebit | (1 << 3);
+	    	modebit = 4;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkBranch(instruction)){
-	    	modebit = modebit | (1 << 6);
+	    	modebit = 7;
 			int index = getLabelIndex(params[1]);
 			addToQueue(instName, modebit, index);		
 	    }
 	    else if (checkAbsoluteX(instruction)){
-	    	modebit = modebit | (1 << 8);
+	    	modebit = 9;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkAbsoluteY(instruction)){
-	    	modebit = modebit | (1 << 9);
+	    	modebit = 10;
 	    	addToQueue(instName, modebit, params);
 	    }
 	    else if (checkAbsolute(instruction)){
-	    	modebit = modebit | (1 << 7);
+	    	modebit = 8;
 	    	addToQueue(instName, modebit, params);
 	    }
 		return modebit;
