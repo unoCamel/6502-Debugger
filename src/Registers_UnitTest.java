@@ -21,16 +21,17 @@ public class Registers_UnitTest {
         Assert.assertTrue(Registers.isZero() == false);
         Registers.setCarry();
         Registers.setNegative();
+        Registers.setDecimal();
         System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
         Assert.assertTrue(Registers.isCarry() == true);
         Assert.assertTrue(Registers.isZero() == false);
         Assert.assertTrue(Registers.isNegative() == true);
+        Assert.assertTrue(Registers.isDecimal() == true);
         Registers.resetNegative();
         System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
         Assert.assertTrue(Registers.isCarry() == true);
         Assert.assertTrue(Registers.isNegative() == false);
-
-
+        Assert.assertTrue(Registers.isDecimal() == true);
     }
 
     public static void runRegisterSuite(){
