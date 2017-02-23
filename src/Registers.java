@@ -26,7 +26,13 @@ public class Registers {
 	* @param value 8-bit number
 	* @return void.
 	*/
-	public static void write8(int register, int value){ registers8[register] = value; }
+	public static void write8(int register, int value){
+	    if(value >= 0 && value <= 0xFF){
+            registers8[register] = value;
+        } else {
+	        throw new Error("Value is not 8-bits: " + value);
+        }
+	}
 
 	/* @brief Read a 16-bit register.
 	*
@@ -41,46 +47,52 @@ public class Registers {
 	* @param value 16-bit number
 	* @return void.
 	*/
-	public static void write16(int register, int value){ registers16[register] = value; }
+	public static void write16(int register, int value) {
+        if (value >= 0 && value <= 0xFFFF) {
+            registers16[register] = value;
+        } else {
+            throw new Error("Value is not 16-bits: " + value);
+        }
+    }
 
 	/* @brief Check current state of flag in %P register.
 	*
 	* @param None.
 	* @return boolean True if set.
 	*/
-	public static boolean isCarry()			{return (registers8[Global.$P]) != 0;}
-	public static boolean isZero()			{return (((registers8[Global.$P] >> 0x01) & 0x01) != 0);} //Checking individual bit by shifting bit down
-	public static boolean isIRQDisabled()	{return (((registers8[Global.$P] >> 0x02) & 0x01) != 0);} //Then checking the first bit
-	public static boolean isDecimal()		{return (((registers8[Global.$P] >> 0x03) & 0x01) != 0);} //Then converting bit into boolean 1 = True
-	public static boolean isBreak()			{return (((registers8[Global.$P] >> 0x04) & 0x01) != 0);} //Sorry for C code.
-	public static boolean isOverflow()		{return (((registers8[Global.$P] >> 0x06) & 0x01) != 0);}
-	public static boolean isNegative()		{return (((registers8[Global.$P] >> 0x07) & 0x01) != 0);}
+	public static boolean isCarry()			{return ((registers8[Global.$P]) & 0b0000_0001) != 0;}
+	public static boolean isZero()			{return ((registers8[Global.$P] & 0b0000_0010) != 0);} //Checking individual bit by shifting bit down
+	public static boolean isIRQDisabled()	{return ((registers8[Global.$P] & 0b0000_0100) != 0);} //Then checking the first bit
+	public static boolean isDecimal()		{return ((registers8[Global.$P] & 0b0000_1000) != 0);} //Then converting bit into boolean 1 = True
+	public static boolean isBreak()			{return ((registers8[Global.$P] & 0b0001_0000) != 0);} //Sorry for C code.
+	public static boolean isOverflow()		{return ((registers8[Global.$P] & 0b0100_0000) != 0);}
+	public static boolean isNegative()		{return ((registers8[Global.$P] & 0b1000_0000) != 0);}
 
 	/* @brief Set specific flag to 1 (true) in $P register
 	*
 	* @param None.
 	* @return boolean True if successfully set.
 	*/
-	public static void setCarry()			{registers8[Global.$P] |= 0x01;} //Just replace the singular bit to 1, if not already.
-	public static void setZero()			{registers8[Global.$P] |= 0x02;} //This will ignore the rest of the bits
-	public static void setIRQDisabled()		{registers8[Global.$P] |= 0x03;} //So other bits will not get overwritten.
-	public static void setDecimal()			{registers8[Global.$P] |= 0x04;}
-	public static void setBreak()			{registers8[Global.$P] |= 0x05;}
-	public static void setOverflow()		{registers8[Global.$P] |= 0x07;}
-	public static void setNegative()		{registers8[Global.$P] |= 0x08;}
+	public static void setCarry()			{registers8[Global.$P] |= 0b0000_0001;} //Just replace the singular bit to 1, if not already.
+	public static void setZero()			{registers8[Global.$P] |= 0b0000_0010;} //This will ignore the rest of the bits
+	public static void setIRQDisabled()		{registers8[Global.$P] |= 0b0000_0100;} //So other bits will not get overwritten.
+	public static void setDecimal()			{registers8[Global.$P] |= 0b0000_1000;}
+	public static void setBreak()			{registers8[Global.$P] |= 0b0001_0000;}
+	public static void setOverflow()		{registers8[Global.$P] |= 0b0100_0000;}
+	public static void setNegative()		{registers8[Global.$P] |= 0b1000_0000;}
 
 	/* @brief Set specific flag to 0 (false) in $P register.
 	*
 	* @param None.
 	* @return boolean True if successfully set.
 	*/
-	public static void resetCarry()			{registers8[Global.$P] &= ~(0x01);}
-	public static void resetZero()			{registers8[Global.$P] &= ~(0x01 << 0x01);} //Flip the bit 1 at the shifted bit
-	public static void resetIRQDisabled()	{registers8[Global.$P] &= ~(0x01 << 0x02);} //This is shifting the selected bit
-	public static void resetDecimal()		{registers8[Global.$P] &= ~(0x01 << 0x03);} //To the first position bit.
-	public static void resetBreak()			{registers8[Global.$P] &= ~(0x01 << 0x04);}
-	public static void resetOverflow()		{registers8[Global.$P] &= ~(0x01 << 0x06);}
-	public static void resetNegative()		{registers8[Global.$P] &= ~(0x01 << 0x07);}
+	public static void resetCarry()			{registers8[Global.$P] ^= (0b0000_0001);}
+	public static void resetZero()			{registers8[Global.$P] ^= (0b0000_0010);} //Flip the bit 1 at the shifted bit
+	public static void resetIRQDisabled()	{registers8[Global.$P] ^= (0b0000_0100);} //This is shifting the selected bit
+	public static void resetDecimal()		{registers8[Global.$P] ^= (0b0000_1000);} //To the first position bit.
+	public static void resetBreak()			{registers8[Global.$P] ^= (0b0001_0000);}
+	public static void resetOverflow()		{registers8[Global.$P] ^= (0b0100_0000);}
+	public static void resetNegative()		{registers8[Global.$P] ^= (0b1000_0000);}
 
 	
 }
