@@ -330,9 +330,6 @@ public class Instructions {
 * Flags Set:	N	Z	C	I	D	V
 * 				+	+	+	-	-	+
 */
-
-
-
 	//0x69
 	public static void ADC_IMM(int value8){}
     //0x65
