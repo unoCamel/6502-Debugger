@@ -15,20 +15,20 @@ public class Registers_UnitTest {
     }
 
     public static void testPFlags(){
-        System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
+        //System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
         Assert.assertTrue(Registers.isCarry() == false);
         Assert.assertTrue(Registers.isNegative() == false);
         Assert.assertTrue(Registers.isZero() == false);
         Registers.setCarry();
         Registers.setNegative();
         Registers.setDecimal();
-        System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
+        //System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
         Assert.assertTrue(Registers.isCarry() == true);
         Assert.assertTrue(Registers.isZero() == false);
         Assert.assertTrue(Registers.isNegative() == true);
         Assert.assertTrue(Registers.isDecimal() == true);
         Registers.resetNegative();
-        System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
+        //System.out.println("value: " + Integer.toBinaryString(Registers.read8(Global.$P)));
         Assert.assertTrue(Registers.isCarry() == true);
         Assert.assertTrue(Registers.isNegative() == false);
         Assert.assertTrue(Registers.isDecimal() == true);
@@ -38,6 +38,7 @@ public class Registers_UnitTest {
             System.out.println("Starting Register Tests");
             testReadWrite();
             testPFlags();
+            System.out.println("Finished Register Tests");
     }
 
 }

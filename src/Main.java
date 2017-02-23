@@ -4,6 +4,7 @@ public class Main {
         System.out.println("Running Test Suite");
         Registers_UnitTest RegistersUT = new Registers_UnitTest();
         Registers_UnitTest.runRegisterSuite();
+        Memory_UnitTest.runMemorySuite();
 
     }
 
