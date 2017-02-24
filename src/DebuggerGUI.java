@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class DebuggerGUI extends JFrame {
 
@@ -38,7 +40,8 @@ public class DebuggerGUI extends JFrame {
 	 */
 	public DebuggerGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 400);
+		setBounds(100, 100, 450, 490);
+		setTitle("6502 Debugger");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -51,32 +54,52 @@ public class DebuggerGUI extends JFrame {
 		JTextPane textPane = new JTextPane();
 		scrollPane.setViewportView(textPane);
 		
-		JButton btnNewButton = new JButton("Run");
+		JButton btnNewButton = new JButton("Execute");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(354, 20, 90, 29);
+		btnNewButton.setBounds(354, 102, 90, 29);
 		contentPane.add(btnNewButton);
 		
 		JButton btnStep = new JButton("Step");
-		btnStep.setBounds(354, 61, 90, 29);
+		btnStep.setBounds(354, 20, 90, 29);
 		contentPane.add(btnStep);
 		
 		JButton btnStepOver = new JButton("Step Over");
-		btnStepOver.setBounds(354, 102, 90, 29);
+		btnStepOver.setBounds(354, 61, 90, 29);
 		contentPane.add(btnStepOver);
 		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(252, 316, 192, 146);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
 		JLabel lblNewLabel = new JLabel("A=$00");
-		lblNewLabel.setBounds(6, 321, 61, 16);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setBounds(83, 40, 43, 16);
+		panel.add(lblNewLabel);
 		
 		JLabel lblS = new JLabel("X=$00");
-		lblS.setBounds(6, 338, 61, 16);
-		contentPane.add(lblS);
+		lblS.setBounds(83, 68, 42, 16);
+		panel.add(lblS);
 		
 		JLabel lblY = new JLabel("Y=$00");
-		lblY.setBounds(6, 356, 61, 16);
-		contentPane.add(lblY);
+		lblY.setBounds(83, 96, 42, 16);
+		panel.add(lblY);
+		
+		JLabel lblRegisters = new JLabel("Registers:");
+		lblRegisters.setBounds(9, 6, 85, 16);
+		panel.add(lblRegisters);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setBounds(6, 316, 237, 146);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblMemory = new JLabel("Memory:");
+		lblMemory.setBounds(6, 6, 54, 16);
+		panel_1.add(lblMemory);
 	}
 }

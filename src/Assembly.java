@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +10,7 @@ public class Assembly{
 	private HashMap<String, Integer> labels;
 	private int[] binaryInstructions;
 	private int i = 0;
+	private Databank db;
 
 
     /*@brief Initializes Assembly class, purpose is to hold instruction and
@@ -21,6 +23,7 @@ public class Assembly{
 	public Assembly(String[] ins, HashMap<String, Integer> ls){
 		instructions = ins;
 		labels = ls;
+		db = new Databank();
 	}
 
     /*@brief Gets the array of instructions when called. Array is size
@@ -60,15 +63,13 @@ public class Assembly{
 		return labels.get(key);
 	}
 
-	/*@brief Initializes Assembly class, purpose is to hold instruction and
-	* their corresponding labels.
-*
-* @param String[] ins all instructions, HashMap<String, Integer> ls labels
-* as keys and indexes of labels as values.
-* @return None.
-*/
-public void assemble(){
-		binaryInstructions = new int[Global.MAX_MEMORY/8];
+	/*@brief converts instructions to opcodes and send them to memory 
+	*
+	* @param None
+	* @return None.
+	*/
+	public int[] assemble(){
+		binaryInstructions = new int[Global.MAX_MEMORY];
 		i = 0;
 		for (String instruction  : instructions) {
 			if (instruction == null || instruction.equals("done")){
@@ -80,7 +81,9 @@ public void assemble(){
 			}
 			setupQueue(instruction);			
 			}
-		Memory.setMemory(binaryInstructions);
+		
+		int[] result = Arrays.copyOfRange(binaryInstructions, 0, i);
+		return result;
 		}
 		
 
@@ -94,7 +97,7 @@ public void assemble(){
 		String[] params = instruction.split(" ");
 	    if (checkImplicit(instruction)){
 	    	modebit = 1;
-	    	int opcode= Databank.getOPCode(instName, modebit);
+	    	int opcode= db.getOPCode(instName, modebit);
 	    	binaryInstructions[i++] = opcode;
 	    }
 	    else if (checkIndirect(instruction)){
@@ -111,6 +114,8 @@ public void assemble(){
 	    }
 	    else if (checkAccumulator(instruction)){
 	    	modebit = 2;
+	    	int opcode= db.getOPCode(instName, modebit);
+	    	binaryInstructions[i++] = opcode;
 	    }
 	    else if (checkImmediate(instruction)){
 	    	modebit = 3;
@@ -130,6 +135,7 @@ public void assemble(){
 	    }
 	    else if (checkBranch(instruction)){
 	    	modebit = 7;
+	    	System.out.println(params[1]);
 			int index = getLabelIndex(params[1]);
 			addToQueue(instName, modebit, index);		
 	    }
@@ -150,7 +156,7 @@ public void assemble(){
 
 	private void addToQueue(String instName, int modebit, String[] params) {
 		// TODO Auto-generated method stub
-		int opcode= Databank.getOPCode(instName, modebit);
+		int opcode= db.getOPCode(instName, modebit);
     	int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9]+", ""), 16);
     	binaryInstructions[i++] = opcode;
     	binaryInstructions[i++] = paramNum;  
@@ -158,7 +164,7 @@ public void assemble(){
 	
 	private void addToQueue(String instName, int modebit, int param) {
 		// TODO Auto-generated method stub
-		int opcode= Databank.getOPCode(instName, modebit);
+		int opcode= db.getOPCode(instName, modebit);
     	binaryInstructions[i++] = opcode;
     	binaryInstructions[i++] = param;  
 	}
