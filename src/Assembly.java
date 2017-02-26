@@ -159,7 +159,15 @@ public class Assembly{
 		int opcode= db.getOPCode(instName, modebit);
     	int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9]+", ""), 16);
     	binaryInstructions[i++] = opcode;
-    	binaryInstructions[i++] = paramNum;  
+    	// check if 16 bit
+    	if (paramNum > 0xff && paramNum < 0xffff){
+    		binaryInstructions[i++] = (paramNum & 0xff);
+    		binaryInstructions[i++] = ((paramNum >> 8) & 0xff);
+    	}
+    	else{
+    		binaryInstructions[i++] = paramNum;
+    	}
+    	
 	}
 	
 	private void addToQueue(String instName, int modebit, int param) {

@@ -7,13 +7,13 @@ public class Assembly_UnitTest {
 		
 		
 		Assembly test = Import.importInstructions(""
-				+ "RTI \n" 			//Implicit
+				+ "LABELA: RTI \n" 			//Implicit
 				+ "LSR A\n" 		//Accumulator
 				+ "ADC #$44\n" 		//Immediate
 				+ "AND $44\n"		//ZeroPage 
 				+ "ASL $44,X\n"		//ZeroPageX 
 				+ "STX $44,Y\n"		//ZeroPageY
-				//+ "BPL LABELA\n"	//Branch
+				+ "BPL LABELA\n"	//Branch
 				+ "INC $4400\n"		//Absolute
 				+ "LDA $4400,X\n"	//AbsoluteX
 				+ "SBC $4400,Y\n"	//AbsoluteY
@@ -29,31 +29,32 @@ public class Assembly_UnitTest {
 				0x25, 0x44,		//ZeroPage 
 				0x16, 0x44,		//ZeroPageX 
 				0x96, 0x44, 	//ZeroPageY
-				//0x10, 0x6,		//Branch
-				0xEE, 0x4400,	//Absolute
-				0xBD, 0x4400,	//AbsoluteX
-				0xF9, 0x4400,	//AbsoluteY
-				0x6C, 0x5597,	//Indirect
+				0x10, 0x0,		//Branch
+				0xEE, 0x00, 0x44,	//Absolute
+				0xBD, 0x00, 0x44,	//AbsoluteX
+				0xF9, 0x00, 0x44,	//AbsoluteY
+				0x6C, 0x97, 0x55,	//Indirect
 				0x41, 0x44,		//IndirectX
 				0xD1, 0x44};	//IndirectY
 
 		 int[] actual = test.assemble();
-		 System.out.println(expected.length);
+		 System.out.println("expected length: " + expected.length);
 		 for (int n: expected){
 			 System.out.print(Integer.toHexString(n));
 		 }
 		 System.out.println();
 		 
-		 System.out.println(actual.length);
+		 System.out.println("actual length: " + actual.length);
 		 for (int n: actual){
 			 System.out.print(Integer.toHexString(n));
 		 }
 		 System.out.println();
-		//Assert.assertEquals(expected, actual);
+		 
+		Assert.assertArrayEquals(expected, actual);
 	}
 
 	public static void runImportSuite(){
-		System.out.println("Starting Import Test");
+		System.out.println("Starting Assembly Test");
 		testAssemle();
 	}
 }
