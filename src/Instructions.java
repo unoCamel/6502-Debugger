@@ -37,7 +37,7 @@ public class Instructions {
 	//0xB5
 	public static void LDA_ZPX(int value8){}
 	//0xAD
-	public static void LDA_AB(int value16){}
+	public static void LDA_AB(int value16){Register.write8(Global.$A, Memory.read(value16));}
 	//0xBD
 	public static void LDA_ABX(int value16){}
 	//0xB9
@@ -92,7 +92,7 @@ public class Instructions {
 	//0x95
 	public static void STA_ZPX(int value8){}
 	//0x8D
-	public static void STA_AB(int value16){}
+	public static void STA_AB(int value16){Memory.write(Regiser.read8(Global.$A));}
 	//0x9D
 	public static void STA_ABX(int value16){}
 	//0x99
@@ -331,7 +331,7 @@ public class Instructions {
 * 				+	+	+	-	-	+
 */
 	//0x69
-	public static void ADC_IMM(int value8){}
+	public static void ADC_IMM(int value8){Register.write8(Global.$A, ALU.ADD(Register.read8(Global.$A), value8));}
     //0x65
 	public static void ADC_ZP(int value8){}
     //0x75
