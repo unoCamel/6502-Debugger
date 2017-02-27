@@ -1,7 +1,7 @@
 public class Registers {
 
-	private static int[] registers8;
-	private static int[] registers16;
+	private static int[] registers8 = new int[4];
+	private static int[] registers16 = new int[2];
 
 	/* @brief Initializes an array of 8-bit registers and a separate array of 16-bit registers
 	*
@@ -9,8 +9,8 @@ public class Registers {
 	* @return boolean True if successful.
 	*/
 	public Registers(){
-		registers8 = new int[4];
-		registers16 = new int[2];
+//		registers8 = new int[4];
+//		registers16 = new int[2];
 	}
 
 	/* @brief Read an 8-bit register.
@@ -33,6 +33,11 @@ public class Registers {
 	        throw new Error("Value is not 8-bits: " + value);
         }
 	}
+
+	public static void init_Memory(){
+		registers8[Global.$A] = 0;
+	}
+
 
 	/* @brief Read a 16-bit register.
 	*

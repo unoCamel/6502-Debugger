@@ -36,6 +36,13 @@ public class CPU{
 	*@return Void.
 	*/
 	public static void CPURun(){
+    writePC(0x0200);
+    decode();
+    decode();
+    decode();
+    decode();
+    decode();
+
 
 	}
 
@@ -65,6 +72,8 @@ public class CPU{
         int value8 = Memory.read(readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
         int value16 = littleEndian(value8, Memory.read(readPC()+2));
         incrPC(Databank.getJumpCode(opCode));
+
+
         //PREFETCH MAXIMUM AMOUNT OF ARGUMENTS
         //increment clock
         //increment pc
@@ -183,7 +192,7 @@ public class CPU{
             case 0x66:
             //case 0x67:
             case 0x68:
-            case 0x69:
+            case 0x69: Instructions.ADC_IMM(value8); break;
             case 0x6A:
             //case 0x6B:
             case 0x6C:
@@ -221,7 +230,7 @@ public class CPU{
             case 0x8A:
             //case 0x8B:
             case 0x8C:
-            case 0x8D:
+            case 0x8D: Instructions.STA_AB(value16); break;
             case 0x8E:
             //case 0x8F:
 
@@ -255,7 +264,7 @@ public class CPU{
             case 0xAA:
             //case 0xAB:
             case 0xAC:
-            case 0xAD:
+            case 0xAD: Instructions.LDA_AB(value16); break;
             case 0xAE:
             //case 0xAF:
 
@@ -343,7 +352,7 @@ public class CPU{
             case 0xFD:
             case 0xFE:
             //case 0xFF:
-            default: System.err.println("InvalidCPUInstructionException, decoded instruction not available in 6502 Processor.");
+            default: System.err.println("InvalidCPUInstructionException, decoded instruction not available in 6502 Processor." + Integer.toHexString(opCode));
 
         }
 	}

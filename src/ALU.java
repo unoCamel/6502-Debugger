@@ -32,7 +32,7 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public int ADD(int value1, int value2){
+	public static int ADD(int value1, int value2){
 		return value1 + value2;
 	}
 
@@ -50,19 +50,19 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public int OR(int value1, int value2){
+	public static int OR(int value1, int value2){
 		return -1;
 	}
 
-	public int XOR(int value1, int value2){
+	public static int XOR(int value1, int value2){
 		return -1;
 	}
 
-	public int AND(int value1, int value2){
+	public static int AND(int value1, int value2){
 		return -1;
 	}
 
-	public int SR(int value1, int value2){
+	public static int SR(int value1, int value2){
 		return -1;
 	}
 

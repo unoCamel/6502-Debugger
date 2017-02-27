@@ -123,8 +123,4 @@ public class Import {
 		System.out.println("\n\n\n\nDONE WITH TEST.");
 	}
 
-	public static void main(String[] args){
-		testImport();
-	}
-
 }
