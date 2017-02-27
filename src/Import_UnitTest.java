@@ -1,5 +1,5 @@
-import org.junit.Assert;
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class Import_UnitTest{
 
@@ -13,12 +13,18 @@ public class Import_UnitTest{
 		instructions[3] = "LDA #$27";
 
 		HashMap<String, Integer> labels = new HashMap<String, Integer>();
-
 		Assembly expected = new Assembly(instructions, labels);
-
 		Assembly actual = Import.importInstructions(test);
 
-		Assert.assertEquals(expected, actual);
+		//check if instructions equal each other
+		if (!Arrays.equals(expected.getAllInstructions(), actual.getAllInstructions())){
+			System.out.println("IMPORT FAILS TEST: Instruction set is not the same.");
+		}
+
+		//check if hashmap is empty
+		if (!actual.getAllLabels().isEmpty()){
+			System.out.println("IMPORT FAILS TEST: HashMap should be empty for this test.");
+		}
 	}
 
 	public static void runImportSuite(){
