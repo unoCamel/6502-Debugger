@@ -2,16 +2,50 @@ public class Registers {
 
 	private static int[] registers8 = new int[4];
 	private static int[] registers16 = new int[2];
+	private static int PC;
+	private static int SP;
 
 	/* @brief Initializes an array of 8-bit registers and a separate array of 16-bit registers
 	*
 	* @param None.
 	* @return boolean True if successful.
 	*/
-	public Registers(){
-//		registers8 = new int[4];
-//		registers16 = new int[2];
-	}
+	public Registers(){}
+
+	/* @brief Returns current state of PC
+	*
+	*@params None.
+	*@return 16 b
+	*/
+	public static int readPC(){ return PC; }
+
+	/* @brief Writes a 16-bit value to the current $PC. For use by branch and jump instructions.
+	*
+	*@params value 16-bit integer.
+	*@return Void.
+	*/
+	public static void writePC(int value){ PC = value; }
+
+	/* @brief Increment the current $PC by the instruction. Not for use by branch or jump instructions.
+	*
+	*@params increment 8bit int.
+	*@return Void.
+	*/
+	public static void incrPC(int increment){ PC += increment; }
+
+	/* @brief Returns current state of SP
+	*
+	*@params None.
+	*@return 8 bit value
+	*/
+	public static int readSP(){ return SP; }
+
+	/* @brief Writes a 8-bit value to the current $SP. For use by branch and jump instructions.
+	*
+	*@params value 16-bit integer.
+	*@return Void.
+	*/
+	public static void writeSP(int value){ SP = value; }
 
 	/* @brief Read an 8-bit register.
 	*
@@ -35,7 +69,9 @@ public class Registers {
 	}
 
 	public static void init_Memory(){
-		registers8[Global.$A] = 0;
+		Array.fill(registers8, 0);
+		writePC(0x0200);
+		writeSP(0xFF);
 	}
 
 
@@ -91,13 +127,13 @@ public class Registers {
 	* @param None.
 	* @return boolean True if successfully set.
 	*/
-	public static void resetCarry()			{registers8[Global.$P] ^= (0b0000_0001);}
-	public static void resetZero()			{registers8[Global.$P] ^= (0b0000_0010);} //Flip the bit 1 at the shifted bit
-	public static void resetIRQDisabled()	{registers8[Global.$P] ^= (0b0000_0100);} //This is shifting the selected bit
-	public static void resetDecimal()		{registers8[Global.$P] ^= (0b0000_1000);} //To the first position bit.
-	public static void resetBreak()			{registers8[Global.$P] ^= (0b0001_0000);}
-	public static void resetOverflow()		{registers8[Global.$P] ^= (0b0100_0000);}
-	public static void resetNegative()		{registers8[Global.$P] ^= (0b1000_0000);}
+	public static void resetCarry()			{registers8[Global.$P] &= ~(0b0000_0001);}
+	public static void resetZero()			{registers8[Global.$P] &= ~(0b0000_0010);} //Flip the bit 1 at the shifted bit
+	public static void resetIRQDisabled()	{registers8[Global.$P] &= ~(0b0000_0100);} //This is shifting the selected bit
+	public static void resetDecimal()		{registers8[Global.$P] &= ~(0b0000_1000);} //To the first position bit.
+	public static void resetBreak()			{registers8[Global.$P] &= ~(0b0001_0000);}
+	public static void resetOverflow()		{registers8[Global.$P] &= ~(0b0100_0000);}
+	public static void resetNegative()		{registers8[Global.$P] &= ~(0b1000_0000);}
 
 	
 }

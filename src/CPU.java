@@ -7,27 +7,6 @@ public class CPU{
 		clock = 0;
 	}
 
-	/* @brief Returns current state of PC
-	*
-	*@params None.
-	*@return 16 b
-	*/
-	public static int readPC(){ return Registers.read16(Global.$PC); }
-
-	/* @brief Writes a 16-bit value to the current $PC. For use by branch and jump instructions.
-	*
-	*@params value 16-bit integer.
-	*@return Void.
-	*/
-	public static void writePC(int value){ Registers.write16(Global.$PC, value); }
-
-	/* @brief Increment the current $PC by the instruction. Not for use by branch or jump instructions.
-	*
-	*@params increment 8bit int.
-	*@return Void.
-	*/
-	public static void incrPC(int increment){ Registers.write16(Global.$PC, (Registers.read16(Global.$PC) + increment)); }
-
 	//TODO for CPU: Currently, will just run entire program. Increment 3 will introduce "Stepping"
 
 	/* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
@@ -68,10 +47,10 @@ public class CPU{
     */
     private static void decode(){
     //TODO need to write method to obtain index of instruction opcodes.
-        int opCode = Memory.read(readPC()); //TODO Need to increment PC Correctly based on the instruction and whats to follow.
-        int value8 = Memory.read(readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
-        int value16 = littleEndian(value8, Memory.read(readPC()+2));
-        incrPC(Databank.getJumpCode(opCode));
+        int opCode = Memory.read(Registers.readPC()); //TODO Need to increment PC Correctly based on the instruction and whats to follow.
+        int value8 = Memory.read(Registers.readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
+        int value16 = littleEndian(value8, Memory.read(Registers.readPC()+2));
+        Registers.incrPC(Databank.getJumpCode(opCode));
 
 
         //PREFETCH MAXIMUM AMOUNT OF ARGUMENTS
