@@ -7,21 +7,23 @@ public class CPU{
 		clock = 0;
 	}
 
-	//TODO for CPU: Currently, will just run entire program. Increment 3 will introduce "Stepping"
-
+    /* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
+    *
+    *@params None.
+    *@return Void.
+    */
+    public static void Execute(){
+        while (Memory.read(Registers.readPC) != null){
+            CPURun();
+        }
+    }
 	/* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
 	*
 	*@params None.
 	*@return Void.
 	*/
 	public static void CPURun(){
-    decode();
-    decode();
-    decode();
-    decode();
-    decode();
-
-
+        decode();
 	}
 
     /* @brief Taken two values, will concatenate by little endian method.

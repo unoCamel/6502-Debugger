@@ -19,7 +19,7 @@ public class Main {
             Memory.setMemory(Asm.assemble());
             System.out.println(Arrays.toString(Asm.getAllInstructions()));
             Memory.instrToString();
-            CPU.CPURun();
+            CPU.Execute();
             System.out.println("\n Register A is: " + Registers.read8(Global.$A));
         } catch(FileNotFoundException e){
 

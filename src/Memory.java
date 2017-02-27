@@ -2,10 +2,10 @@ import java.util.Arrays;
 
 public class Memory {
 
-    private static int[] ZeroPage = new int[0xFF];
-    private static int[] Stack = new int[0xFF];
+    private static Integer[] ZeroPage = new Integer[0xFF];
+    private static Integer[] Stack = new Integer[0xFF];
     public static Integer[] RAM = new Integer[0x3F00]; //0x0000-0x3FFFF This is for instructions, and the header RAM file. 32kb of information.
-    private static int[] ROM = new int[0x8000]; //0x
+    private static Integer[] ROM = new Integer[0x8000]; //0x
     //TODO We aren't going to implement these yet. More hardware based.
 //	private static int[] VIA1;
 //	private static int[] VIA2;
@@ -21,21 +21,21 @@ public class Memory {
 	*/
     //TODO Add memory check
     public Memory() {
-        ZeroPage = new int[0xFF]; //first 256 words
-        Stack = new int[0xFF]; //Stack space 0x0100 to 0x01FF
+        ZeroPage = new Integer[0xFF]; //first 256 words
+        Stack = new Integer[0xFF]; //Stack space 0x0100 to 0x01FF
         RAM = new Integer[0x3F00]; //Only half of 32kb, ZeroPage conceptually is inside here. We will ignore empty space for now.
-        ROM = new int[0x8000]; //
-    //		VIA1 = new int[0x3FFF];
-    //		VIA2 = new int[0x3FFF];
-    //		VIA3 = new int[0x3FFF];
-    //		ACIA1 = new int[0x3FFF];
-    //		ACIA2 = new int[0x3FFF];
-    //		ACIA3 = new int[0x3FFF];
+        ROM = new Integer[0x8000]; //
+    //		VIA1 = new Integer[0x3FFF];
+    //		VIA2 = new Integer[0x3FFF];
+    //		VIA3 = new Integer[0x3FFF];
+    //		ACIA1 = new Integer[0x3FFF];
+    //		ACIA2 = new Integer[0x3FFF];
+    //		ACIA3 = new Integer[0x3FFF];
     }
 
     /*@brief Initializes a memory of size 65kb, and fills the memory with the inputted
 	*         list of binary instructions.
-	* @param binaryInstructions An int[] of 8-bit binary values.
+	* @param binaryInstructions An Integer[] of 8-bit binary values.
 	* @return None
 	*/
     public Memory(Integer[] binaryInstructions) {
@@ -44,7 +44,7 @@ public class Memory {
 
     /*@brief Memory is loaded with the inputted binary instructions, starting
 	*		  at 0x0100.
-	* @param binaryInstructions An int[] of 8-bit binary values.
+	* @param binaryInstructions An Integer[] of 8-bit binary values.
 	* @return void.
 	*/
     public static void setMemory(Integer[] binaryInstructions) {
@@ -76,7 +76,7 @@ public class Memory {
 	* @param index 16-bit number of index in memory
 	* @return 8-bit binary instruction
 	*/
-    public static int read(int index) {
+    public static Integer read(int index) {
         if (index >= 0x0000 && index <= 0x00FF) {return ZeroPage[index];}
         else if (index >= 0x0100 && index <= 0x01FF) {return Stack[(index-0x0100)];}
         else if (index >= 0x0200 && index <= 0x3FFF) {return RAM[(index-0x0200)];}
@@ -93,8 +93,8 @@ public class Memory {
 	* @param index2 The second index of the range
 	* @return An array of indexes between index1 and index2, inclusive, or null if out of range.
 	*/
-    public static int[] readRange(int index1, int index2) {
-        int[] tempMemory;
+    public static Integer[] readRange(int index1, int index2) {
+        Integer[] tempMemory;
         if (index1 >= 0x0000 && index2 <= 0x00FF) {tempMemory = Arrays.copyOfRange(ZeroPage, index1, index2);}
         //else if (index1 >= 0x0200 && index2 <= 0x3FFF) {tempMemory = Arrays.copyOfRange(RAM, index1-0x0200, index2-0x0200);}
         else if (index1 >= 0x8000 && index2 <= 0xFFFF) {tempMemory = Arrays.copyOfRange(ROM, index1-0x8000, index2-0x8000);}
