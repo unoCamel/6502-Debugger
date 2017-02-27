@@ -8,7 +8,7 @@ public class Assembly{
 
 	private String[] instructions;
 	private HashMap<String, Integer> labels;
-	private int[] binaryInstructions;
+	private Integer[] binaryInstructions;
 	private int i = 0;
 	private Databank db;
 
@@ -68,8 +68,8 @@ public class Assembly{
 	* @param None
 	* @return None.
 	*/
-	public int[] assemble(){
-		binaryInstructions = new int[Global.MAX_MEMORY];
+	public Integer[] assemble(){
+		binaryInstructions = new Integer[Global.MAX_MEMORY];
 		i = 0;
 		for (String instruction  : instructions) {
 			if (instruction == null || instruction.equals("done")){
@@ -82,7 +82,7 @@ public class Assembly{
 			setupQueue(instruction);			
 			}
 		
-		int[] result = Arrays.copyOfRange(binaryInstructions, 0, i);
+		Integer[] result = Arrays.copyOfRange(binaryInstructions, 0, i);
 		return result;
 		}
 		
