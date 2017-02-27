@@ -9,7 +9,8 @@ public class ALU {
 	*  N = Sign Flag
 	*/
 
-	public ALU(){}
+	public ALU() {
+	}
 
 	/* @brief Performs the operation A + M + C -> A, C
 	* Add memory to accumulator with carry.
@@ -24,17 +25,16 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public static int ADD(int value1, int value2){
+	public static int ADD(int value1, int value2) {
 		int temp = value1 + value2;
-		if (temp < 0 || temp > 255){
+		if (temp < 0 || temp > 255) {
 			Registers.setCarry(); //set overflow flag
 			temp &= 0xFF;
 			Registers.setOverflow();
 		}
-		if (temp == 0){
+		if (temp == 0) {
 			Registers.setZero();
-		}
-		else{
+		} else {
 			Registers.resetZero();
 		}
 		//decimal check here!!!!!
@@ -53,12 +53,11 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public static int OR(int value1, int value2){
+	public static int OR(int value1, int value2) {
 		int temp = value1 | value2;
-		if (temp == 0){
+		if (temp == 0) {
 			Registers.setZero();
-		}
-		else{
+		} else {
 			Registers.resetZero();
 		}
 		return temp;
@@ -76,14 +75,13 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public static int XOR(int value1, int value2){
+	public static int XOR(int value1, int value2) {
 		int temp = value1 ^ value2;
-		if (temp == 0){
+		if (temp == 0) {
 			Registers.setZero();
-		}
-		else{
+		} else {
 			Registers.resetZero();
-		}		
+		}
 		return temp;
 	}
 
@@ -99,12 +97,11 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public static int AND(int value1, int value2){
+	public static int AND(int value1, int value2) {
 		int temp = value1 & value2;
-		if (temp == 0){
+		if (temp == 0) {
 			Registers.setZero();
-		}
-		else{
+		} else {
 			Registers.resetZero();
 		}
 		return temp;
@@ -122,16 +119,16 @@ public class ALU {
 	* @param reg2 8-Bit register, either $A, $X, $Y
 	* @return 8-Bit number, the result, as well as any needed changes to the flags.
 	*/
-	public static int SR(int value1, int value2){
+	public static int SR(int value1, int value2) {
 		int temp = value1 >> value2;
-		if (temp == 0){
+		if (temp == 0) {
 			Registers.setZero();
-		}
-		else{
+		} else {
 			Registers.resetZero();
 		}
 		return temp;
 	}
+}
 
 
 

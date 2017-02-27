@@ -15,7 +15,6 @@ public class CPU{
 	*@return Void.
 	*/
 	public static void CPURun(){
-    writePC(0x0200);
     decode();
     decode();
     decode();

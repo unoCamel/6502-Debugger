@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class Registers {
 
 	private static int[] registers8 = new int[4];
@@ -69,7 +70,7 @@ public class Registers {
 	}
 
 	public static void init_Memory(){
-		Array.fill(registers8, 0);
+		Arrays.fill(registers8, 0);
 		writePC(0x0200);
 		writeSP(0xFF);
 	}

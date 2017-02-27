@@ -22,7 +22,7 @@ public class Assembly_UnitTest {
 				+ "CMP ($44),Y\n");	//IndirectY
 		
 		
-		int[] expected = {
+		Integer[] expected = {
 				0x40,			//Implicit
 				0x4A,			//Accumulator
 				0x69, 0x44,		//Immediate 
@@ -37,7 +37,7 @@ public class Assembly_UnitTest {
 				0x41, 0x44,		//IndirectX
 				0xD1, 0x44};	//IndirectY
 
-		 int[] actual = test.assemble();
+		 Integer[] actual = test.assemble();
 		 System.out.println("expected length: " + expected.length);
 		 for (int n: expected){
 			 System.out.print(Integer.toHexString(n));
