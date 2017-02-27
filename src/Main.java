@@ -9,7 +9,7 @@ public class Main {
         System.out.println("Running Test Suite");
         //Import_UnitTest.runImportSuite();
         //Registers_UnitTest.runRegisterSuite();
-        Memory_UnitTest.runMemorySuite();
+        //Memory_UnitTest.runMemorySuite();
         String content = null;
         Assembly Asm = null;
         Registers.init_Memory();

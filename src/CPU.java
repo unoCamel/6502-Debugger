@@ -13,7 +13,7 @@ public class CPU{
     *@return Void.
     */
     public static void Execute(){
-        while (Memory.read(Registers.readPC) != null){
+        while (Memory.read(Registers.readPC()) != null){
             CPURun();
         }
     }
