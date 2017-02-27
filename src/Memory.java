@@ -36,7 +36,7 @@ public class Memory {
     /*@brief Initializes a memory of size 65kb, and fills the memory with the inputted
 	*         list of binary instructions.
 	* @param binaryInstructions An int[] of 8-bit binary values.
-	* @return boolean True if successfully created and memory is loaded
+	* @return None
 	*/
     public Memory(int[] binaryInstructions) {
         RAM = Arrays.copyOf(binaryInstructions, 0x3FFF); //Instructions will only be written to RAM. 0x3F00 is RAM size minus ZeroPage.
@@ -111,7 +111,15 @@ public class Memory {
 	* @return String.
 	*/
     public static void instrToString() {
-        System.out.println(Arrays.toString(RAM));
+        int counter = 0;
+        for (int n: RAM){
+            if (n == 0){
+                counter++;}
+            if(counter > 5){
+                break;
+            }
+            System.out.print(Integer.toHexString(n) + ", ");
+        }
     }
 
     /*@brief Prints provided 8-bit number at specified index.
