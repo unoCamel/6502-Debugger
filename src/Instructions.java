@@ -139,7 +139,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xAA
-    public static void TAX_IMP(){Registers.write8(Global.$X, Registers.read8(Global.$A));checkArithmeticFlags(Global.$X);}
+    public static void TAX_IMP(){Registers.write8(Global.$X, Registers.read8(Global.$A));checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- TAY ---------------------- *
 * @brief Transfer Accumulator to Index Y
@@ -148,7 +148,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xA8
-    public static void TAY_IMP(){Registers.write8(Global.$Y, Registers.read8(Global.$A));checkArithmeticFlags(Global.$Y);}
+    public static void TAY_IMP(){Registers.write8(Global.$Y, Registers.read8(Global.$A));checkArithmeticFlags(Registers.read8(Global.$Y));}
 
 /* ---------------------- TXA ---------------------- *
 * @brief Transfer Index X to Accumulator
@@ -157,7 +157,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x8A
-    public static void TXA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$X));checkArithmeticFlags(Global.$A);}
+    public static void TXA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$X));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- TYA ---------------------- *
 * @brief Transfer Index Y to Accumulator
@@ -166,7 +166,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x98
-    public static void TYA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$Y));checkArithmeticFlags(Global.$A);}
+    public static void TYA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$Y));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ====================== STACK OPERATIONS ===========================
 *The 6502 microprocessor supports a 256 byte stack fixed between memory locations $0100 and $01FF.
@@ -243,21 +243,21 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x29
-    public static void AND_IMM(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), value8));checkArithmeticFlags(Global.$A);}
+    public static void AND_IMM(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), value8));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x25
-    public static void AND_ZP(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Global.$A);}
+    public static void AND_ZP(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x35
-    public static void AND_ZPX(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void AND_ZPX(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x2D
-    public static void AND_AB(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), value16));checkArithmeticFlags(Global.$A);}
+    public static void AND_AB(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), value16));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x3D
-    public static void AND_ABX(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void AND_ABX(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x39
-    public static void AND_ABY(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void AND_ABY(int value16){Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x21
-    public static void AND_IDX(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void AND_IDX(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x31
-    public static void AND_IDY(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void AND_IDY(int value8){Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- EOR ---------------------- *
 * @brief Exclusive-OR Memory with Accumulator
@@ -266,21 +266,21 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x49
-    public static void EOR_IMM(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), value8));checkArithmeticFlags(Global.$A);}
+    public static void EOR_IMM(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), value8));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x45
-    public static void EOR_ZP(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Global.$A);}
+    public static void EOR_ZP(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x55
-    public static void EOR_ZPX(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void EOR_ZPX(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x4D
-    public static void EOR_AB(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), value16));checkArithmeticFlags(Global.$A);}
+    public static void EOR_AB(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), value16));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x5D
-    public static void EOR_ABX(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void EOR_ABX(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x59
-    public static void EOR_ABY(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void EOR_ABY(int value16){Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x41
-    public static void EOR_IDX(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void EOR_IDX(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x51
-    public static void EOR_IDY(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void EOR_IDY(int value8){Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- ORA ---------------------- *
 * @brief OR Memory with Accumulator
@@ -289,21 +289,21 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x09
-    public static void ORA_IMM(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), value8));checkArithmeticFlags(Global.$A);}
+    public static void ORA_IMM(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), value8));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x05
-    public static void ORA_ZP(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Global.$A);}
+    public static void ORA_ZP(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x15
-    public static void ORA_ZPX(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void ORA_ZPX(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x0D
-    public static void ORA_AB(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), value16));checkArithmeticFlags(Global.$A);}
+    public static void ORA_AB(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), value16));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x1D
-    public static void ORA_ABX(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void ORA_ABX(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x19
-    public static void ORA_ABY(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void ORA_ABY(int value16){Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x01
-    public static void ORA_IDX(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Global.$A);}
+    public static void ORA_IDX(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x11
-    public static void ORA_IDY(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Global.$A);}
+    public static void ORA_IDY(int value8){Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- BIT ---------------------- *
 * @brief Test Bits in Memory with Accumulator bits 7 and 6 of operand are transferred to bit 7 and 6 of SR (N,V);
@@ -442,13 +442,13 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xE6
-	public static void INC_ZP(int value8){}
+	public static void INC_ZP(int value8){Memory.write(value8, ALU.ADD(Memory.read(value8), 1));checkArithmeticFlags(Memory.read(value8));}
 	//0xF6
-	public static void INC_ZPX(int value8){}
+	public static void INC_ZPX(int value8){int temp = ALU.ADD(value8, Registers.read8(Global.$X));Memory.write(temp, ALU.ADD(Memory.read(temp), 1));checkArithmeticFlags(Memory.read(temp));}
 	//0xEE
-	public static void INC_AB(int value16){}
+	public static void INC_AB(int value16){Memory.write(value16, ALU.ADD(Memory.read(value16), 1));checkArithmeticFlags(Memory.read(value16));}
 	//0xFE
-	public static void INC_ABX(int value16){}
+	public static void INC_ABX(int value16){int temp = ALU.ADD(value16, Registers.read8(Global.$X));Memory.write(temp, ALU.ADD(Memory.read(temp), 1));checkArithmeticFlags(Memory.read(temp));}
 
 /* ---------------------- INX ---------------------- *
 * @brief Increment Index X by One
@@ -457,7 +457,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xE8
-	public static void INX_IMP(){}
+	public static void INX_IMP(){Registers.write8(Global.$X, ALU.ADD(Registers.read8(Global.$X), 1));checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- INY ---------------------- *
 * @brief Increment Index Y by One
@@ -466,7 +466,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xC8
-	public static void INY_IMP(){}
+	public static void INY_IMP(){Registers.write8(Global.$Y, ALU.ADD(Registers.read8(Global.$Y), 1));checkArithmeticFlags(Registers.read8(Global.$Y));}
 
 /* ---------------------- DEC ---------------------- *
 * @brief Decrement Memory by One
@@ -475,13 +475,13 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xC6
-	public static void DEC_ZP(int value8){}
+	public static void DEC_ZP(int value8){Memory.write(value8, ALU.ADD(Memory.read(value8), -1));checkArithmeticFlags(Memory.read(value8));}
 	//0xD6
-	public static void DEC_ZPX(int value8){}
+	public static void DEC_ZPX(int value8){int temp = ALU.ADD(value8, Registers.read8(Global.$X));Memory.write(temp, ALU.ADD(Memory.read(temp), -1));checkArithmeticFlags(Memory.read(temp));}
 	//0xCE
-	public static void DEC_AB(int value16){}
+	public static void DEC_AB(int value16){Memory.write(value16, ALU.ADD(Memory.read(value16), -1));checkArithmeticFlags(Memory.read(value16));}
 	//0xDE
-	public static void DEC_ABX(int value16){}
+	public static void DEC_ABX(int value16){int temp = ALU.ADD(value16, Registers.read8(Global.$X));Memory.write(temp, ALU.ADD(Memory.read(temp), -1));checkArithmeticFlags(Memory.read(temp));}
 
 /* ---------------------- DEX ---------------------- *
 * @brief Decrement Index X by One
@@ -490,7 +490,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xCA
-	public static void DEX_IMP(){}
+	public static void DEX_IMP(){Registers.write8(Global.$X, ALU.ADD(Registers.read8(Global.$X), -1));checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- DEY ---------------------- *
 * @brief Decrement Index Y by One
@@ -499,7 +499,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0x88
-	public static void DEY_IMP(){}
+	public static void DEY_IMP(){Registers.write8(Global.$Y, ALU.ADD(Registers.read8(Global.$Y), -1));checkArithmeticFlags(Registers.read8(Global.$Y));}
 
 /* ====================== SHIFT OPERATIONS =========================== 
 *Shift instructions cause the bits within either a memory location or the 
@@ -807,11 +807,11 @@ public class Instructions {
         return (x & 1 << y) != 0;
 	}
 
-	private static void checkArithmeticFlags(int register){
-    	if (Registers.read8(register) == 0){
+	private static void checkArithmeticFlags(int value){
+    	if (Registers.read8(value) == 0){
     		Registers.setZero();
     	}
-    	if (checkBit(Registers.read8(register), 7)){
+    	if (checkBit(Registers.read8(value), 7)){
     		Registers.setNegative();
     	}
 	}
