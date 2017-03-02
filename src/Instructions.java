@@ -1,6 +1,10 @@
 public class Instructions {
 
-	public Instructions() {
+	public Instructions() {}
+
+	public static boolean checkBit(int x, int y) {
+		//taken from: https://www.java-forums.org/new-java/54114-checking-if-bit-set.html
+        return (x & 1 << y) != 0;
 	}
 
 	/* C = Carry Flag
@@ -140,7 +144,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xAA
-    public static void TAX_IMP(){}
+    public static void TAX_IMP(){Registers.write8(re)}
 
 /* ---------------------- TAY ---------------------- *
 * @brief Transfer Accumulator to Index Y
