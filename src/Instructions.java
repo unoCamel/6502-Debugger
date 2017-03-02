@@ -2,11 +2,6 @@ public class Instructions {
 
 	public Instructions() {}
 
-	public static boolean checkBit(int x, int y) {
-		//taken from: https://www.java-forums.org/new-java/54114-checking-if-bit-set.html
-        return (x & 1 << y) != 0;
-	}
-
 	/* C = Carry Flag
 	*  Z = Zero Flag
 	*  I = Interrupt disable/enable Flag
@@ -144,7 +139,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xAA
-    public static void TAX_IMP(){Registers.write8(re)}
+    public static void TAX_IMP(){Registers.write8(Global.$X, Registers.read8(Global.$A));checkArithmeticFlags(Global.$X);}
 
 /* ---------------------- TAY ---------------------- *
 * @brief Transfer Accumulator to Index Y
@@ -153,7 +148,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xA8
-    public static void TAY_IMP(){}
+    public static void TAY_IMP(){Registers.write8(Global.$Y, Registers.read8(Global.$A));checkArithmeticFlags(Global.$Y);}
 
 /* ---------------------- TXA ---------------------- *
 * @brief Transfer Index X to Accumulator
@@ -162,7 +157,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x8A
-    public static void TXA_IMP(){}
+    public static void TXA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$X));checkArithmeticFlags(Global.$A);}
 
 /* ---------------------- TYA ---------------------- *
 * @brief Transfer Index Y to Accumulator
@@ -170,9 +165,8 @@ public class Instructions {
 * Flags Set:	N	Z	C	I	D	V
 * 				+	+	-	-	-	-
 */
-
     //0x98
-    public static void TYA_IMP(){}
+    public static void TYA_IMP(){Registers.write8(Global.$A, Registers.read8(Global.$Y));checkArithmeticFlags(Global.$A);}
 
 /* ====================== STACK OPERATIONS ===========================
 *The 6502 microprocessor supports a 256 byte stack fixed between memory locations $0100 and $01FF.
@@ -240,7 +234,7 @@ public class Instructions {
 /* ====================== LOGICAL OPERATIONS =========================
 *The following instructions perform logical operations on the contents of the accumulator and another value held in memory.
 * The BIT instruction performs a logical AND to test the presence of bits in the memory value to set the flags but does not keep the result.
- */
+*/
 
 /* ---------------------- AND ---------------------- *
 * @brief AND Memory with Accumulator
@@ -249,21 +243,31 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x29
-    public static void AND_IMM(int value8){}
+    public static void AND_IMM(int value8) {
+    	Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), value8));
+    	checkArithmeticFlags(Global.$A);
+    }
     //0x25
-    public static void AND_ZP(int value8){}
+    public static void AND_ZP(int value8)  {
+    	Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(value8)));
+    	checkArithmeticFlags(Global.$A);
+    }
     //0x35
-    public static void AND_ZPX(int value8){}
+    public static void AND_ZPX(int value8) {
+    	Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X))));
+    	checkArithmeticFlags(Global.$A);
+    }
     //0x2D
-    public static void AND_AB(int value16){}
+    public static void AND_AB(int value16) {
+    }
     //0x3D
     public static void AND_ABX(int value16){}
     //0x39
     public static void AND_ABY(int value16){}
     //0x21
-    public static void AND_IDX(int value8){}
+    public static void AND_IDX(int value8) {}
     //0x31
-    public static void AND_IDY(int value8){}
+    public static void AND_IDY(int value8) {}
 
 /* ---------------------- EOR ---------------------- *
 * @brief Exclusive-OR Memory with Accumulator
@@ -790,5 +794,25 @@ public class Instructions {
 */
     //0x40
     public static void RTI_IMP(){}
+
+
+
+
+/* HELPER FUNCTIONS */
+
+	private static boolean checkBit(int x, int y) {
+		//taken from: https://www.java-forums.org/new-java/54114-checking-if-bit-set.html
+        return (x & 1 << y) != 0;
+	}
+
+	private static void checkArithmeticFlags(int register){
+    	if (Registers.read8(register) == 0){
+    		Registers.setZero();
+    	}
+    	if (checkBit(Registers.read8(register), 7)){
+    		Registers.setNegative();
+    	}
+	}
+
 	
 }
