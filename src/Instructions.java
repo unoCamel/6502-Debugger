@@ -364,21 +364,21 @@ public class Instructions {
 * 				+	+	+	-	-	+
 */
     //0xE9
-    public static void SBC_IMM(int value8){}
+    public static void SBC_IMM(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), value8));}
     //0xE5
-    public static void SBC_ZP(int value8){}
+    public static void SBC_ZP(int value8){      Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value8)));}
     //0xF5
-    public static void SBC_ZPX(int value8){}
+    public static void SBC_ZPX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));}
     //0xED
-    public static void SBC_AB(int value16){}
+    public static void SBC_AB(int value16){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value16)));}
     //0xFD
-    public static void SBC_ABX(int value16){}
+    public static void SBC_ABX(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));}
     //0xF9
-    public static void SBC_ABY(int value16){}
+    public static void SBC_ABY(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));}
     //0xE1
-    public static void SBC_IDX(int value8){}
+    public static void SBC_IDX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$X))));}
     //0xF1
-    public static void SBC_IDY(int value8){}
+    public static void SBC_IDY(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$Y))));}
 
 /* ---------------------- CMP ---------------------- *
 * @brief Compare Memory with Accumulator
@@ -815,6 +815,29 @@ public class Instructions {
     		Registers.setNegative();
     	}
 	}
+
+	private static int helperSBC(int value1, int value2){
+        int tmp =  value1 - value2 - (Registers.isCarry() ? 0 : 1);
+        if(tmp < -128 || tmp > 127){
+            Registers.setOverflow();
+            tmp &= 0x80;
+        }
+        checkArithmeticFlags(tmp);
+        return tmp & 0xFF;
+    }
+
+    //todo implement
+    private static void helperCMP(int value1, int value2){
+        if(value1 == value2){
+            Registers.setZero();
+            Registers.setCarry();
+        } else if(value1 > value2){
+            Registers.setCarry();
+        } else {
+            Registers.resetCarry();
+            Registers.resetZero();
+        }
+    }
 
 	
 }
