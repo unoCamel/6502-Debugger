@@ -341,21 +341,21 @@ public class Instructions {
 * 				+	+	+	-	-	+
 */
 	//0x69
-	public static void ADC_IMM(int value8){Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), value8));}
+	public static void ADC_IMM(int value8){     Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), value8));}
     //0x65
-	public static void ADC_ZP(int value8){}
+	public static void ADC_ZP(int value8){      Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), Memory.read(value8)));}
     //0x75
-	public static void ADC_ZPX(int value8){}
+	public static void ADC_ZPX(int value8){     Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));}
 	//0x6D
-	public static void ADC_AB(int value16){}
+	public static void ADC_AB(int value16){     Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), Memory.read(value16)));}
     //0x7D
-	public static void ADC_ABX(int value16){}
+	public static void ADC_ABX(int value16){    Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));}
     //0x79
-	public static void ADC_ABY(int value16){}
+	public static void ADC_ABY(int value16){    Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));}
     //0x61
-	public static void ADC_IDX(int value8){}
+	public static void ADC_IDX(int value8){     Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$X))));}
     //0x71
-	public static void ADC_IDY(int value8){}
+	public static void ADC_IDY(int value8){     Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$Y))));}
 
 /* ---------------------- SBC ---------------------- *
 * @brief Subtract Memory from Accumulator with Borrow

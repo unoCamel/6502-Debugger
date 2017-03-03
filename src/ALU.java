@@ -128,6 +128,10 @@ public class ALU {
 		}
 		return temp;
 	}
+
+
+	/*====================Helper Functions=====================*/
+
 }
 
 
