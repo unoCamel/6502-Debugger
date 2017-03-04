@@ -364,21 +364,21 @@ public class Instructions {
 * 				+	+	+	-	-	+
 */
     //0xE9
-    public static void SBC_IMM(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), value8));}
+    public static void SBC_IMM(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), value8)); checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xE5
-    public static void SBC_ZP(int value8){      Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value8)));}
+    public static void SBC_ZP(int value8){      Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xF5
-    public static void SBC_ZPX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));}
+    public static void SBC_ZPX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xED
-    public static void SBC_AB(int value16){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value16)));}
+    public static void SBC_AB(int value16){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(value16)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xFD
-    public static void SBC_ABX(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));}
+    public static void SBC_ABX(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xF9
-    public static void SBC_ABY(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));}
+    public static void SBC_ABY(int value16){    Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xE1
-    public static void SBC_IDX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$X))));}
+    public static void SBC_IDX(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$X))));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xF1
-    public static void SBC_IDY(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$Y))));}
+    public static void SBC_IDY(int value8){     Registers.write8(Global.$A, helperSBC(Registers.read8(Global.$A), ALU.ADD(Memory.read(value8), Registers.read8(Global.$Y))));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- CMP ---------------------- *
 * @brief Compare Memory with Accumulator
@@ -387,21 +387,21 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
     //0xC9
-    public static void CMP_IMM(int value8){}
+    public static void CMP_IMM(int value8){     helperCMP(Registers.read8(Global.$A), value8);checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xC5
-    public static void CMP_ZP(int value8){}
+    public static void CMP_ZP(int value8){      helperCMP(Registers.read8(Global.$A), Memory.read(value8));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xD5
-    public static void CMP_ZPX(int value8){}
+    public static void CMP_ZPX(int value8){     helperCMP(Registers.read8(Global.$A), Memory.read(ALU.ADD(Registers.read8(Global.$X), value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xCD
-    public static void CMP_AB(int value16){}
+    public static void CMP_AB(int value16){     helperCMP(Registers.read8(Global.$A), Memory.read(value16));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xDD
-    public static void CMP_ABX(int value16){}
+    public static void CMP_ABX(int value16){    helperCMP(Registers.read8(Global.$A), Memory.read(ALU.ADD(Registers.read8(Global.$X), value16)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xD9
-    public static void CMP_ABY(int value16){}
+    public static void CMP_ABY(int value16){    helperCMP(Registers.read8(Global.$A), Memory.read(ALU.ADD(Registers.read8(Global.$Y), value16)));checkArithmeticFlags(Registers.read8(Global.$A));}
     //0xC1
-    public static void CMP_IDX(int value8){}
-    //D1
-    public static void CMP_IDY(int value8){}
+    public static void CMP_IDX(int value8){     helperCMP(Registers.read8(Global.$A), ALU.ADD(Registers.read8(Global.$X), Memory.read(value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
+    //0xD1
+    public static void CMP_IDY(int value8){     helperCMP(Registers.read8(Global.$A), Memory.read(ALU.ADD(Registers.read8(Global.$Y), value8)));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- CPX ---------------------- *
 * @brief Compare Memory and Index X
@@ -410,11 +410,11 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
     //0xE0
-    public static void CPX_IMM(int value8){}
+    public static void CPX_IMM(int value8){     helperCMP(Registers.read8(Global.$X), value8);checkArithmeticFlags(Registers.read8(Global.$X));}
     //0xE4
-    public static void CPX_ZP(int value8){}
+    public static void CPX_ZP(int value8){      helperCMP(Registers.read8(Global.$X), Memory.read(value8));checkArithmeticFlags(Registers.read8(Global.$X));}
     //0xEC
-    public static void CPX_AB(int value16){}
+    public static void CPX_AB(int value16){     helperCMP(Registers.read8(Global.$X), Memory.read(value16));checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- CPY ---------------------- *
 * @brief Compare Memory and Index Y
@@ -423,11 +423,11 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
     //0xC0
-    public static void CPY_IMM(int value8){}
+    public static void CPY_IMM(int value8){     helperCMP(Registers.read8(Global.$Y), value8);checkArithmeticFlags(Registers.read8(Global.$Y));}
     //0xC4
-    public static void CPY_ZP(int value8){}
+    public static void CPY_ZP(int value8){      helperCMP(Registers.read8(Global.$Y), Memory.read(value8));checkArithmeticFlags(Registers.read8(Global.$Y));}
     //0xCC
-    public static void CPY_AB(int value16){}
+    public static void CPY_AB(int value16){     helperCMP(Registers.read8(Global.$Y), Memory.read(value16));checkArithmeticFlags(Registers.read8(Global.$Y));}
 
 
 /* ====================== INCREMENTS/DECREMENTS OPERATIONS =========== 
@@ -623,7 +623,7 @@ public class Instructions {
 /* ====================== BRANCHES OPERATIONS ======================== 
 *Branch instructions break the normal sequential flow of execution by changing
 *the program counter if a specified condition is met. All the conditions 
-*are based on examining a single bit within the processor status.
+*are based on examining a single bit within the processor status. ALl numbers are signed.
 */
 
 /* ---------------------- BCC ---------------------- *
@@ -633,7 +633,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x90
-	public static void BCC_REL(){}
+	public static void BCC_REL(int value8){if(!Registers.isCarry()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BCS ---------------------- *
 * @brief Branch on Carry Set
@@ -642,7 +642,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xB0
-	public static void BCS_REL(){}
+	public static void BCS_REL(int value8){if(Registers.isCarry()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BEQ ---------------------- *
 * @brief Branch on Result Zero
@@ -651,7 +651,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xF0
-	public static void BEQ_REL(){}
+	public static void BEQ_REL(int value8){if(Registers.isZero()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BMI ---------------------- *
 * @brief Branch on Result Minus
@@ -660,7 +660,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x30
-	public static void BMI_REL(){}
+	public static void BMI_REL(int value8){if(Registers.isNegative()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BNE ---------------------- *
 * @brief Branch on Result not Zero
@@ -669,7 +669,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0xD0
-	public static void BNE_REL(){}
+	public static void BNE_REL(int value8){if(!Registers.isZero()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BPL ---------------------- *
 * @brief Branch on Result not Zero
@@ -678,7 +678,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x10
-	public static void BPL_REL(){}
+	public static void BPL_REL(int value8){if(!Registers.isNegative()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BVC ---------------------- *
 * @brief Branch on Overflow Clear
@@ -687,7 +687,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x50
-	public static void BVC_REL(){}
+	public static void BVC_REL(int value8){if(!Registers.isOverflow()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ---------------------- BVS ---------------------- *
 * @brief Branch on Overflow Set
@@ -696,7 +696,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x50
-	public static void BVS_REL(){}
+	public static void BVS_REL(int value8){if(Registers.isOverflow()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
 
 /* ====================== STATUS/FLAG OPERATIONS =====================
 * The following instructions change the values of specific status flags.
