@@ -611,7 +611,7 @@ public class Instructions {
 	public static void ASL_ACC(){Registers.write8(Global.$A, helperASL(Registers.read8(Global.$A)));}
 	//0x06
 	public static void ASL_ZP(int value8){Memory.write(value8, helperASL(Memory.read(value8)));}
-	//0x16]
+	//0x16
 	public static void ASL_ZPX(int value8){Memory.write(ALU.ADD(value8, Registers.read8(Global.$X)), helperASL(Memory.read(Memory.read(ALU.ADD(value8,Registers.read8(Global.$X))))));}
 	//0x0E
 	public static void ASL_AB(int value16){Memory.write(value16, helperASL(Memory.read(value16)));}
