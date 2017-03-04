@@ -399,11 +399,11 @@ public class Instructions {
 		if (Registers.read8(temp)== 0){
 			Registers.setZero();
 		}
-        if (getBit(Registers.read8(temp), 6) != getBit(Registers.read8(Global.$P, 6))){
-            Registers.read8(Global.$P) ^ (1 << 6); //flip the bit to match temp bit
+        if (getBit(Registers.read8(temp), 6) != getBit(Registers.read8(Global.$P), 6)){
+            Registers.write8(Global.$P, Registers.read8(Global.$P) ^ (1 << 6)); //flip the bit to match temp bit
         }
-        if (getBit(Registers.read8(temp), 7) != getBit(Registers.read8(Global.$P, 7))){
-            Registers.read8(Global.$P) ^ (1 << 7); //flip the bit to match temp bit
+        if (getBit(Registers.read8(temp), 7) != getBit(Registers.read8(Global.$P), 7)){
+            Registers.write8(Global.$P, Registers.read8(Global.$P) ^ (1 << 7)); //flip the bit to match temp bit
         }
     }
     //0x2C
@@ -412,11 +412,11 @@ public class Instructions {
 		if (Registers.read16(temp) == 0){
 			Registers.setZero();
 		}
-        if (getBit(Registers.read16(temp), 6) != getBit(Registers.read8(Global.$P, 6))){
-            Registers.read8(Global.$P) ^ (1 << 6); //flip the bit to match temp bit
+        if (getBit(Registers.read16(temp), 6) != getBit(Registers.read8(Global.$P), 6)){
+            Registers.write8(Global.$P, Registers.read8(Global.$P) ^ (1 << 6)); //flip the bit to match temp bit
         }
-        if (getBit(Registers.read16(temp), 7) != getBit(Registers.read8(Global.$P, 7))){
-            Registers.read8(Global.$P) ^ (1 << 7); //flip the bit to match temp bit
+        if (getBit(Registers.read16(temp), 7) != getBit(Registers.read8(Global.$P), 7)){
+            Registers.write8(Global.$P, Registers.read8(Global.$P) ^ (1 << 7)); //flip the bit to match temp bit
         }
     }
 
