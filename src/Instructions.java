@@ -29,18 +29,18 @@ public class Instructions {
 * Flags Set:	N	Z	C	I	D	V
 * 				+	+	-	-	-	-
 */
-	//0xA9
-	public static void LDA_IMM(int value8){}
-	//0xA5
-	public static void LDA_ZP(int value8){}
-	//0xB5
-	public static void LDA_ZPX(int value8){}
-	//0xAD
+	//0xA9 Load value8 into the accumulator
+	public static void LDA_IMM(int value8){Registers.write8(Global.$A, value8);}
+	//0xA5 Load ZeroPage[value8] into the accumulator // calling Memory.read will do that
+	public static void LDA_ZP(int value8){Registers.write8(Global.$A, Memory.read(value8));}
+	//0xB5 Load ZeroPage[value8 + X] into the accumulator
+	public static void LDA_ZPX(int value8){Registers.write8(Global.$A, Memory.read( ALU.ADD(value8, Registers.read8(Global.$X))));}
+	//0xAD Load value16 into the accumulator
 	public static void LDA_AB(int value16){Registers.write8(Global.$A, Memory.read(value16));}
-	//0xBD
-	public static void LDA_ABX(int value16){}
-	//0xB9
-	public static void LDA_ABY(int value16){}
+	//0xBD Load (value16 + X) into the accumulator
+	public static void LDA_ABX(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));}
+	//0xB9 Load (value16 + Y) into the accumulator
+	public static void LDA_ABY(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));}
 	//0xA1
 	public static void LDA_IDX(int value8){}
 	//0xB1
@@ -53,15 +53,15 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xA2
-	public static void LDX_IMM(int value8){}
+	public static void LDX_IMM(int value8){Registers.write8(Global.$X, value8);}
 	//0xA6
-	public static void LDX_ZP(int value8){}
+	public static void LDX_ZP(int value8){Registers.write8(Global.$X, Memory.read(value8));}
 	//0xB6
-	public static void LDX_ZPY(int value8){}
+	public static void LDX_ZPY(int value8){Registers.write8(Global.$X, Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y))));}
 	//0xAE
-	public static void LDX_AB(int value16){}
+	public static void LDX_AB(int value16){Registers.write8(Global.$X, Memory.read(value16));}
 	//0xBE
-	public static void LDX_ABY(int value16){}
+	public static void LDX_ABY(int value16){Registers.write8(Global.$X, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));}
 
 /* ---------------------- LDY ---------------------- *
 * @brief Load Index Y with Memory
@@ -70,15 +70,15 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xA0
-	public static void LDY_IMM(int value8){}
+	public static void LDY_IMM(int value8){Registers.write8(Global.$Y, value8);}
 	//0xA4
-	public static void LDY_ZP(int value8){}
+	public static void LDY_ZP(int value8){Registers.write8(Global.$Y, Memory.read(value8));}
 	//0xB4
-	public static void LDY_ZPX(int value8){}
+	public static void LDY_ZPX(int value8){Registers.write8(Global.$Y, Memory.read(ALU.ADD(value8, Registers.read8(Global.$X))));}
 	//0xAC
-	public static void LDY_AB(int value16){}
+	public static void LDY_AB(int value16){Registers.write8(Global.$Y, Memory.read(value16));}
 	//0xBC
-	public static void LDY_ABX(int value16){}
+	public static void LDY_ABX(int value16){Registers.write8(Global.$Y, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));}
 
 /* ---------------------- STA ---------------------- *
 * @brief Store Accumulator in Memory
@@ -87,15 +87,15 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x85
-	public static void STA_ZP(int value8){}
+	public static void STA_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$A)));}
 	//0x95
-	public static void STA_ZPX(int value8){}
+	public static void STA_ZPX(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$X)), Registers.read8(Global.$A) );}
 	//0x8D
 	public static void STA_AB(int value16){Memory.write(value16, Registers.read8(Global.$A));}
 	//0x9D
-	public static void STA_ABX(int value16){}
+	public static void STA_ABX(int value16){Memory.write(ALU.ADD( value16, Registers.read16(Global.$X)), Registers.read16(Global.$A) );}
 	//0x99
-	public static void STA_ABY(int value16){}
+	public static void STA_ABY(int value16){Memory.write(ALU.ADD( value16, Registers.read16(Global.$Y)), Registers.read16(Global.$A) );}
 	//0x81
 	public static void STA_IDX(int value8){}
 	//0x91
@@ -108,11 +108,11 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x86
-	public static void STX_ZP(int value8){}
+	public static void STX_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$X)));}
 	//0x96
-	public static void STX_ZPY(int value8){}
+	public static void STX_ZPY(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$Y)), Registers.read8(Global.$X) );}
 	//0x8E
-	public static void STX_AB(int value16){}
+	public static void STX_AB(int value16){Memory.write(value16, Registers.read8(Global.$X));}
 
 /* ---------------------- STY ---------------------- *
 * @brief Store Index Y in Memory
@@ -121,11 +121,11 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x84
-	public static void STY_ZP(int value8){}
+	public static void STY_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$Y)));}
 	//0x94
-	public static void STY_ZPX(int value8){}
+	public static void STY_ZPX(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$X)), Registers.read8(Global.$Y) );}
 	//0x8C
-	public static void STY_AB(int value16){}
+	public static void STY_AB(int value16){Memory.write(value16, Registers.read8(Global.$Y));}
 
 /* ====================== REGISTER TRANSFERS =========================
 *The contents of the X and Y registers can be moved to or from the accumulator,
@@ -800,7 +800,7 @@ public class Instructions {
 * 				-	-	0	-	-	-
 */
     //0x18
-    public static void CLC_IMP(){}
+    public static void CLC_IMP(){Registers.resetCarry();}
 
 /* ---------------------- CLD ---------------------- *
 * @brief Clear Decimal Mode
@@ -809,7 +809,7 @@ public class Instructions {
 * 				-	-	-	-	0	-
 */
     //0xD8
-    public static void CLD_IMP(){}
+    public static void CLD_IMP(){Registers.resetDecimal();}
 
 /* ---------------------- CLI ---------------------- *
 * @brief Clear Interrupt Disable Bit
@@ -818,7 +818,7 @@ public class Instructions {
 * 				-	-	-	0	-	-
 */
     //0x58
-    public static void CLI_IMP(){}
+    public static void CLI_IMP(){Registers.resetIRQDisabled();}
 
 /* ---------------------- CLV ---------------------- *
 * @brief Clear Overflow Flag
@@ -827,16 +827,16 @@ public class Instructions {
 * 				-	-	-	-	-	0
 */
     //0xB8
-    public static void CLV_IMP(){}
+    public static void CLV_IMP(){Registers.resetOverflow();}
 
 /* ---------------------- SEC ---------------------- *
 * @brief Set Carry Flag
 * Operation:   1 -> C
 * Flags Set:	N	Z	C	I	D	V
-* 				-	-	1	0	-	-
+* 				-	-	1	-	-	-
 */
     //0x38
-    public static void SEC_IMP(){}
+    public static void SEC_IMP(){Registers.setCarry();}
 
 /* ---------------------- SED ---------------------- *
 * @brief Set Decimal Flag
@@ -845,7 +845,7 @@ public class Instructions {
 * 				-	-	-	-	1	-
 */
     //0xF8
-    public static void SED_IMP(){}
+    public static void SED_IMP(){Registers.setDecimal();}
 
 /* ---------------------- SEI ---------------------- *
 * @brief Set Interrupt Disable Status
@@ -854,7 +854,7 @@ public class Instructions {
 * 				-	-	-	1	-	-
 */
     //0x78
-    public static void SEI_IMP(){}
+    public static void SEI_IMP(){Registers.setIRQDisabled();}
 
 /* ======================  SYSTEM OPERATIONS ==========================
 * Functions focused on interrupts, and then the No-operation function.
@@ -868,7 +868,10 @@ public class Instructions {
 * 				-	-	-	1	-	-
 */
     //0x00
-    public static void BRK_IMP(){}
+    public static void BRK_IMP(){
+    	Registers.setIRQDisabled(); Registers.setBreak();
+    	Registers.incrPC(2);
+    	}
 
 /* ---------------------- NOP ---------------------- *
 * @brief No-Operation
@@ -877,7 +880,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //0xEA
-    public static void NOP_IMP(){}
+    public static void NOP_IMP(){return;}
 
 /* ---------------------- RTI ---------------------- *
 * @brief Return from interrupt
@@ -886,7 +889,9 @@ public class Instructions {
 * 				info comes from stack
 */
     //0x40
-    public static void RTI_IMP(){}
+    public static void RTI_IMP(){
+    	//Registers.write8(Global.$P, value);
+    	}
 
 
 
