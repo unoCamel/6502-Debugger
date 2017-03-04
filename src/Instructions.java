@@ -184,7 +184,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0xBA
-    public static void TSX_IMP(){}
+    public static void TSX_IMP(){Registers.write8(Global.$X, Registers.readSP());checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- TXS ---------------------- *
 * @brief Transfer Index X to Stack Register
@@ -193,7 +193,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x9A
-    public static void TXS_IMP(){}
+    public static void TXS_IMP(){Registers.writeSP(Registers.read8(Global.$X));checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- PHA ---------------------- *
 * @brief Push Accumulator on Stack
@@ -202,16 +202,16 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //48
-    public static void PHA_IMP(){}
+    public static void PHA_IMP(){helperStackPush(Registers.read8(Global.$A));}
 
 /* ---------------------- PHP ---------------------- *
-* @brief Push Processor Status on Stack
-* Operation:  push SR
+* @brief Push Processor Status on Stack, and set break flag inside the stack only.
+* Operation:  push SR, and set break flag inside stack only.
 * Flags Set:	N	Z	C	I	D	V
 * 				-	-	-	-	-	-
 */
     //0x08
-    public static void PHP_IMP(){}
+    public static void PHP_IMP(){helperStackPush(Registers.read8(Global.$P) | 0x10);}
 
 /* ---------------------- PLA ---------------------- *
 * @brief Pull Accumulator from Stack
@@ -220,7 +220,7 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
     //0x68
-    public static void PLA_IMP(){}
+    public static void PLA_IMP(){Registers.write8(Global.$A, helperStackPop());checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- PLP ---------------------- *
 * @brief Pull Processor Status from Stack
@@ -229,7 +229,7 @@ public class Instructions {
 * 				flag results from stack
 */
     //0x28
-    public static void PLP_IMP(){}
+    public static void PLP_IMP(){Registers.write8(Global.$P, helperStackPop());}
 
 /* ====================== LOGICAL OPERATIONS =========================
 *The following instructions perform logical operations on the contents of the accumulator and another value held in memory.
@@ -839,5 +839,28 @@ public class Instructions {
         }
     }
 
-	
+
+    private static void helperStackPush(int value){
+        Memory.write(0x100 + Registers.readSP(), value);
+
+        if (Registers.readSP() == 0) {
+            Registers.writeSP(0xFF);
+        } else {
+            Registers.writeSP(Registers.readSP()-1);
+        }
+    }
+
+
+    private static int helperStackPop(){
+        if (Registers.readSP() == 0xff) {
+            Registers.writeSP(0x00);
+        } else {
+            Registers.writeSP(Registers.readSP()+1);
+        }
+
+        return Memory.read(0x100 + Registers.readSP());
+    }
+
+
+
 }
