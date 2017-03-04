@@ -509,7 +509,7 @@ public class Instructions {
 *and logical shifts shift in an appropriate 0 or 1 bit as appropriate but 
 *catch the overflow bit in the carry flag (C).
 */
-
+//todo these are all pretty confusing
 /* ---------------------- ASL ---------------------- *
 * @brief Shift Left One Bit (Memory or Accumulator)
 * Operation:   C <- [76543210] <- 0 
@@ -517,15 +517,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x0A
-	public static void ASL_ACC(){}
+	public static void ASL_ACC(){Registers.write8(Global.$A, helperASL(Registers.read8(Global.$A)));}
 	//0x06
-	public static void ASL_ZP(int value8){}
-	//0x16
-	public static void ASL_ZPX(int value8){}
+	public static void ASL_ZP(int value8){Memory.write(value8, helperASL(Memory.read(value8)));}
+	//0x16]
+	public static void ASL_ZPX(int value8){Memory.write(ALU.ADD(value8, Registers.read8(Global.$X)), helperASL(Memory.read(Memory.read(ALU.ADD(value8,Registers.read8(Global.$X))))));}
 	//0x0E
-	public static void ASL_AB(int value16){}
+	public static void ASL_AB(int value16){Memory.write(value16, helperASL(Memory.read(value16)));}
 	//0x1E
-	public static void ASL_ABX(int value16){}
+	public static void ASL_ABX(int value16){Memory.write(ALU.ADD(value16, Registers.read8(Global.$X)), helperASL(Memory.read(Memory.read(ALU.ADD(value16, Registers.read8(Global.$X))))));}
 
 /* ---------------------- LSR ---------------------- *
 * @brief Shift One Bit Right (Memory or Accumulator)
@@ -534,15 +534,15 @@ public class Instructions {
 * 				-	+	+	-	-	-
 */
 	//0x4A
-	public static void LSR_ACC(){}
+	public static void LSR_ACC(){Registers.write8(Global.$A, helperLSR(Registers.read8(Global.$A)));}
 	//0x46
-	public static void LSR_ZP(int value8){}
+	public static void LSR_ZP(int value8){Memory.write(value8, helperLSR(Memory.read(value8)));}
 	//0x56
-	public static void LSR_ZPX(int value8){}
+	public static void LSR_ZPX(int value8){Memory.write(ALU.ADD(value8, Registers.read8(Global.$X)), helperLSR(Memory.read(Memory.read(ALU.ADD(value8,Registers.read8(Global.$X))))));}
 	//0x4E
-	public static void LSR_AB(int value16){}
+	public static void LSR_AB(int value16){Memory.write(value16, helperLSR(Memory.read(value16)));}
 	//0x5E
-	public static void LSR_ABX(int value16){}
+	public static void LSR_ABX(int value16){Memory.write(ALU.ADD(value16, Registers.read8(Global.$X)), helperLSR(Memory.read(Memory.read(ALU.ADD(value16, Registers.read8(Global.$X))))));}
 
 /* ---------------------- ROL ---------------------- *
 * @brief Rotate One Bit Left (Memory or Accumulator)
@@ -551,15 +551,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x2A
-	public static void ROL_ACC(){}
+	public static void ROL_ACC(){Registers.write8(Global.$A, helperROL(Registers.read8(Global.$A)));}
 	//0x26
-	public static void ROL_ZP(int value8){}
+	public static void ROL_ZP(int value8){Memory.write(value8, helperROL(Memory.read(value8)));}
 	//0x36
-	public static void ROL_ZPX(int value8){}
+	public static void ROL_ZPX(int value8){Memory.write(ALU.ADD(value8, Registers.read8(Global.$X)), helperROL(Memory.read(Memory.read(ALU.ADD(value8,Registers.read8(Global.$X))))));}
 	//0x2E
-	public static void ROL_AB(int value16){}
+	public static void ROL_AB(int value16){Memory.write(value16, helperROL(Memory.read(value16)));}
 	//0x3E
-	public static void ROL_ABX(int value16){}
+	public static void ROL_ABX(int value16){Memory.write(ALU.ADD(value16, Registers.read8(Global.$X)), helperROL(Memory.read(Memory.read(ALU.ADD(value16, Registers.read8(Global.$X))))));}
 
 /* ---------------------- ROR ---------------------- *
 * @brief Rotate One Bit Right (Memory or Accumulator)
@@ -568,15 +568,15 @@ public class Instructions {
 * 				+	+	+	-	-	-
 */
 	//0x6A
-	public static void ROR_ACC(){}
+	public static void ROR_ACC(){Registers.write8(Global.$A, helperROR(Registers.read8(Global.$A)));}
 	//0x66
-	public static void ROR_ZP(int value8){}
+	public static void ROR_ZP(int value8){Memory.write(value8, helperROR(Memory.read(value8)));}
 	//0x76
-	public static void ROR_ZPX(int value8){}
+	public static void ROR_ZPX(int value8){Memory.write(ALU.ADD(value8, Registers.read8(Global.$X)), helperROR(Memory.read(Memory.read(ALU.ADD(value8,Registers.read8(Global.$X))))));}
 	//0x6E
-	public static void ROR_AB(int value16){}
+	public static void ROR_AB(int value16){Memory.write(value16, helperROR(Memory.read(value16)));}
 	//0x7E
-	public static void ROR_ABX(int value16){}
+	public static void ROR_ABX(int value16){Memory.write(ALU.ADD(value16, Registers.read8(Global.$X)), helperROR(Memory.read(Memory.read(ALU.ADD(value16, Registers.read8(Global.$X))))));}
 
 
 /* ====================== JUMPS/CALLS OPERATIONS =====================
@@ -861,6 +861,35 @@ public class Instructions {
         return Memory.read(0x100 + Registers.readSP());
     }
 
+    private static int helperASL(int value){
+        if((value & 0x80) != 0){
+            Registers.setCarry();
+        }
+        return (value << 1) & 0xFF;
+    }
+
+    private static int helperLSR(int value){
+        if((value & 0x01) != 0){
+            Registers.setCarry();
+        }
+        return (value & 0xFF) >>> 0x01;
+    }
+
+    private static int helperROL(int value){
+        int tmp = ((value << 1) | (Registers.isCarry() ? 1 : 0) & 0xFF );
+        if((value & 0x80) != 0){
+            Registers.setCarry();
+        }
+        return tmp;
+    }
+
+    private static int helperROR(int value){
+        int tmp = ((value >>> 1) | (Registers.isCarry() ? 1 : 0) & 0xFF );
+        if((value & 0x80) != 0){
+            Registers.setCarry();
+        }
+        return tmp;
+    }
 
 
 }
