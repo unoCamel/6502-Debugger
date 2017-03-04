@@ -684,9 +684,9 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //0x4c
-    public static void JMP_AB(int value16){}
+    public static void JMP_AB(int value16){Registers.write16(Global.$PC, value16);}
     //0x6C
-    public static void JMP_ID(int value8){} //TODO CHECK
+    public static void JMP_ID(int value8){Registers.write16(Global.$PC, Memory.read(value8));} //TODO CHECK
 
 /* ---------------------- JSR ---------------------- *
 * @brief Jump to New Location Saving Return Address
@@ -890,7 +890,8 @@ public class Instructions {
 */
     //0x40
     public static void RTI_IMP(){
-    	//Registers.write8(Global.$P, value);
+    	//Registers.write8(Global.$SP, helperStackPop());
+    	//Registers.write8(Global.$PC, helperStackPop());
     	}
 
 
