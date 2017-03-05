@@ -30,17 +30,23 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xA9 Load value8 into the accumulator
-	public static void LDA_IMM(int value8){Registers.write8(Global.$A, value8);}
+	public static void LDA_IMM(int value8){Registers.write8(Global.$A, value8); 
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xA5 Load ZeroPage[value8] into the accumulator // calling Memory.read will do that
-	public static void LDA_ZP(int value8){Registers.write8(Global.$A, Memory.read(value8));}
+	public static void LDA_ZP(int value8){Registers.write8(Global.$A, Memory.read(value8)); 
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xB5 Load ZeroPage[value8 + X] into the accumulator
-	public static void LDA_ZPX(int value8){Registers.write8(Global.$A, Memory.read( ALU.ADD(value8, Registers.read8(Global.$X))));}
+	public static void LDA_ZPX(int value8){Registers.write8(Global.$A, Memory.read( ALU.ADD(value8, Registers.read8(Global.$X))));
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xAD Load value16 into the accumulator
-	public static void LDA_AB(int value16){Registers.write8(Global.$A, Memory.read(value16));}
+	public static void LDA_AB(int value16){Registers.write8(Global.$A, Memory.read(value16)); 
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xBD Load (value16 + X) into the accumulator
-	public static void LDA_ABX(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));}
+	public static void LDA_ABX(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xB9 Load (value16 + Y) into the accumulator
-	public static void LDA_ABY(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));}
+	public static void LDA_ABY(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xA1
 	public static void LDA_IDX(int value8){}
 	//0xB1
@@ -53,15 +59,20 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xA2
-	public static void LDX_IMM(int value8){Registers.write8(Global.$X, value8);}
+	public static void LDX_IMM(int value8){Registers.write8(Global.$X, value8);
+	checkArithmeticFlags(Registers.read8(Global.$X));}
 	//0xA6
-	public static void LDX_ZP(int value8){Registers.write8(Global.$X, Memory.read(value8));}
+	public static void LDX_ZP(int value8){Registers.write8(Global.$X, Memory.read(value8));
+	checkArithmeticFlags(Registers.read8(Global.$X));}
 	//0xB6
-	public static void LDX_ZPY(int value8){Registers.write8(Global.$X, Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y))));}
+	public static void LDX_ZPY(int value8){Registers.write8(Global.$X, Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y))));
+	checkArithmeticFlags(Registers.read8(Global.$X));}
 	//0xAE
-	public static void LDX_AB(int value16){Registers.write8(Global.$X, Memory.read(value16));}
+	public static void LDX_AB(int value16){Registers.write8(Global.$X, Memory.read(value16));
+	checkArithmeticFlags(Registers.read8(Global.$X));}
 	//0xBE
-	public static void LDX_ABY(int value16){Registers.write8(Global.$X, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));}
+	public static void LDX_ABY(int value16){Registers.write8(Global.$X, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));
+	checkArithmeticFlags(Registers.read8(Global.$X));}
 
 /* ---------------------- LDY ---------------------- *
 * @brief Load Index Y with Memory
@@ -70,15 +81,20 @@ public class Instructions {
 * 				+	+	-	-	-	-
 */
 	//0xA0
-	public static void LDY_IMM(int value8){Registers.write8(Global.$Y, value8);}
+	public static void LDY_IMM(int value8){Registers.write8(Global.$Y, value8);
+	checkArithmeticFlags(Registers.read8(Global.$Y));}
 	//0xA4
-	public static void LDY_ZP(int value8){Registers.write8(Global.$Y, Memory.read(value8));}
+	public static void LDY_ZP(int value8){Registers.write8(Global.$Y, Memory.read(value8));
+	checkArithmeticFlags(Registers.read8(Global.$Y));}
 	//0xB4
-	public static void LDY_ZPX(int value8){Registers.write8(Global.$Y, Memory.read(ALU.ADD(value8, Registers.read8(Global.$X))));}
+	public static void LDY_ZPX(int value8){Registers.write8(Global.$Y, Memory.read(ALU.ADD(value8, Registers.read8(Global.$X))));
+	checkArithmeticFlags(Registers.read8(Global.$Y));}
 	//0xAC
-	public static void LDY_AB(int value16){Registers.write8(Global.$Y, Memory.read(value16));}
+	public static void LDY_AB(int value16){Registers.write8(Global.$Y, Memory.read(value16));
+	checkArithmeticFlags(Registers.read8(Global.$Y));}
 	//0xBC
-	public static void LDY_ABX(int value16){Registers.write8(Global.$Y, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));}
+	public static void LDY_ABX(int value16){Registers.write8(Global.$Y, Memory.read( ALU.ADD(value16,Registers.read8(Global.$X))));
+	checkArithmeticFlags(Registers.read8(Global.$Y));}
 
 /* ---------------------- STA ---------------------- *
 * @brief Store Accumulator in Memory
@@ -93,9 +109,9 @@ public class Instructions {
 	//0x8D
 	public static void STA_AB(int value16){Memory.write(value16, Registers.read8(Global.$A));}
 	//0x9D
-	public static void STA_ABX(int value16){Memory.write(ALU.ADD( value16, Registers.read16(Global.$X)), Registers.read16(Global.$A) );}
+	public static void STA_ABX(int value16){Memory.write(ALU.ADD( value16, Registers.read8(Global.$X)), Registers.read8(Global.$A) );}
 	//0x99
-	public static void STA_ABY(int value16){Memory.write(ALU.ADD( value16, Registers.read16(Global.$Y)), Registers.read16(Global.$A) );}
+	public static void STA_ABY(int value16){Memory.write(ALU.ADD( value16, Registers.read8(Global.$Y)), Registers.read8(Global.$A) );}
 	//0x81
 	public static void STA_IDX(int value8){}
 	//0x91
