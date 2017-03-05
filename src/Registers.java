@@ -136,5 +136,19 @@ public class Registers {
 	public static void resetOverflow()		{registers8[Global.$P] &= ~(0b0100_0000);}
 	public static void resetNegative()		{registers8[Global.$P] &= ~(0b1000_0000);}
 
+	public static void currentState(){
+		System.out.print("Current State of Processor at: "+ Integer.toHexString(readPC()));
+		if(Memory.read(Registers.readPC()) != null) {
+			System.out.print(" Instr: " + Integer.toHexString(Memory.read(Registers.readPC())));
+		}
+		System.out.println("\n$A: " + Integer.toHexString(read8(Global.$A))
+							+ " $X: " + Integer.toHexString(read8(Global.$X))
+							+ " $Y: " + Integer.toHexString(read8(Global.$Y))
+							+ " $SP: " + Integer.toHexString(readSP())
+							+ " $P: " + Integer.toBinaryString(read8(Global.$P)));
+		System.out.println();
+		
+	}
+
 	
 }

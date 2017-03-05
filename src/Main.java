@@ -17,28 +17,30 @@ public class Main {
         Assembly Asm = null;
         Registers.init_Memory();
         try{
-            content = new Scanner(new File("src/simpleADCTest.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/simpleADCTest.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/test_files/register_transfers.txt")).useDelimiter("\\Z").next();
+            content = new Scanner(new File("src/test_files/jumps.txt")).useDelimiter("\\Z").next();
+
             Asm = Import.importInstructions(content);
             Memory.setMemory(Asm.assemble());
             System.out.println(Arrays.toString(Asm.getAllInstructions()));
             Memory.instrToString();
             CPU.Execute();
-            System.out.println("\n Register A is: " + Registers.read8(Global.$A));
         } catch(FileNotFoundException e){
 
 
         }
 
-        EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DebuggerGUI frame = new DebuggerGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//        EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					DebuggerGUI frame = new DebuggerGUI();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 
 
 
