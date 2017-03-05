@@ -230,37 +230,37 @@ public class Assembly{
 		return false;
 	}
 	private boolean checkAbsolute(String inst){
-		String pattern = "\\[0-9a-f]{3,4}";
+		String pattern = "\\$?[0-9a-f]{3,4}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkAbsoluteX(String inst){
-		String pattern = "\\[0-9a-f]{3,4},X";
+		String pattern = "\\$?[0-9a-f]{3,4},X";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkAbsoluteY(String inst){
-		String pattern = "\\[0-9a-f]{3,4},Y";
+		String pattern = "\\$?[0-9a-f]{3,4},Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkIndirect(String inst){
-		String pattern = "\\(\\[0-9a-f]{3,4}\\)";
+		String pattern = "\\(\\$?[0-9a-f]{3,4}\\)";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkIndirectX(String inst){
-		String pattern = "\\(\\[0-9a-f]{1,2},X\\)";
+		String pattern = "\\(\\$?[0-9a-f]{1,2},X\\)";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkIndirectY(String inst){
-		String pattern = "\\(\\[0-9a-f]{1,2}\\),Y";
+		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
