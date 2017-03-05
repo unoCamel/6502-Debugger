@@ -27,10 +27,18 @@ public class ALU {
 	*/
 	public static int ADD(int value1, int value2) {
 		int temp = value1 + value2;
-		if (temp < 0 || temp > 255) {
-			Registers.setCarry(); //set overflow flag
-			temp &= 0xFF;
-			Registers.setOverflow();
+		if(value1 < 0xFF && value2 < 0xFF){
+			if (temp < 0 || temp > 0xFF) {
+				Registers.setCarry(); //set overflow flag
+				temp &= 0xFF;
+				Registers.setOverflow();
+			}
+		} else if((value1 >= 0xFF && value2 < 0xFF) || (value2 >= 0xFF && value1 < 0xFF)){
+			if (temp < 0 || temp > 0xFFFF) {
+				Registers.setCarry(); //set overflow flag
+				temp &= 0xFFFF;
+				Registers.setOverflow();
+			}
 		}
 		if (temp == 0) {
 			Registers.setZero();

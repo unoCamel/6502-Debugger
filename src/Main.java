@@ -3,6 +3,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -26,9 +29,16 @@ public class Main {
 
         }
 
-
-
-
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DebuggerGUI frame = new DebuggerGUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 
 

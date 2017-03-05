@@ -684,9 +684,9 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //0x4c
-    public static void JMP_AB(int value16){Registers.write16(Global.$PC, value16);}
+    public static void JMP_AB(int value16){Registers.writePC(value16);}
     //0x6C
-    public static void JMP_ID(int value8){Registers.write16(Global.$PC, Memory.read(value8));} //TODO CHECK
+    public static void JMP_ID(int value8){Registers.writePC(Memory.read(value8));} //TODO CHECK
 
 /* ---------------------- JSR ---------------------- *
 * @brief Jump to New Location Saving Return Address
@@ -698,7 +698,13 @@ public class Instructions {
 */
 
     //0x20
-    public static void JSR_AB(int value16){}
+    public static void JSR_AB(int value16){
+    	helperStackPush(Registers.read8(Global.$P));
+    	int tmp = Registers.readPC() - 3;
+    	helperStackPush(tmp << 2); //PC is incremented before this function is called
+		helperStackPush(tmp >> 2); //PC is incremented before this function is called
+		Registers.writePC(value16);
+	}
 
 /* ---------------------- RTS ---------------------- *
 * @brief Return from Subroutine
@@ -709,7 +715,12 @@ public class Instructions {
 */
 
     //0x60
-    public static void RTS_IMP(){}
+    public static void RTS_IMP(){
+    	int tmpLow = helperStackPop();
+    	int tmpHigh= helperStackPop();
+    	Registers.writePC(CPU.littleEndian(tmpLow, tmpHigh) + 1);
+
+	}
 
 /* ====================== BRANCHES OPERATIONS ======================== 
 *Branch instructions break the normal sequential flow of execution by changing
@@ -890,8 +901,10 @@ public class Instructions {
 */
     //0x40
     public static void RTI_IMP(){
-    	//Registers.write8(Global.$SP, helperStackPop());
-    	//Registers.write8(Global.$PC, helperStackPop());
+    	Registers.writeSP(helperStackPop());
+		int tmpLow = helperStackPop();
+		int tmpHigh= helperStackPop();
+		//Registers.writePC(CPU.littleEndian(tmpLow, tmpHigh) + 1); No writing to the PC
     	}
 
 
@@ -912,10 +925,14 @@ public class Instructions {
         //you have to pass this function the VALUE, not the position in memorys
     	if (value == 0){
     		Registers.setZero();
-    	}
+    	} else {
+    		Registers.resetZero();
+		}
     	if (checkBit(value, 7)){
     		Registers.setNegative();
-    	}
+    	} else {
+    		Registers.resetNegative();
+		}
 	}
 
 	private static int helperSBC(int value1, int value2){
@@ -966,14 +983,18 @@ public class Instructions {
     private static int helperASL(int value){
         if((value & 0x80) != 0){
             Registers.setCarry();
-        }
+        } else {
+        	Registers.resetCarry();
+		}
         return (value << 1) & 0xFF;
     }
 
     private static int helperLSR(int value){
         if((value & 0x01) != 0){
             Registers.setCarry();
-        }
+        } else {
+			Registers.resetCarry();
+		}
         return (value & 0xFF) >>> 0x01;
     }
 
@@ -981,7 +1002,9 @@ public class Instructions {
         int tmp = ((value << 1) | (Registers.isCarry() ? 1 : 0) & 0xFF );
         if((value & 0x80) != 0){
             Registers.setCarry();
-        }
+        } else {
+			Registers.resetCarry();
+		}
         return tmp;
     }
 
@@ -989,7 +1012,9 @@ public class Instructions {
         int tmp = ((value >>> 1) | (Registers.isCarry() ? 1 : 0) & 0xFF );
         if((value & 0x80) != 0){
             Registers.setCarry();
-        }
+        } else {
+			Registers.resetCarry();
+		}
         return tmp;
     }
 

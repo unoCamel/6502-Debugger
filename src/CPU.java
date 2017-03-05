@@ -32,7 +32,7 @@ public class CPU{
     *@params value2 second index, will be first.
     *@return Void.
     */
-	private static int littleEndian(int value1, int value2){
+	public static int littleEndian(int value1, int value2){
 	    String result = "" + value2 + value1;
 	    return Integer.parseInt(result);
     }
@@ -240,7 +240,7 @@ public class CPU{
             case 0xA6: Instructions.LDX_ZP(value8); break;
             //case 0xA7:
             case 0xA8: Instructions.TAY_IMP(); break;
-            case 0xA9:
+            case 0xA9: Instructions.
             case 0xAA:
             //case 0xAB:
             case 0xAC:
