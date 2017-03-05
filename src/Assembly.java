@@ -260,7 +260,7 @@ public class Assembly{
 		return m.find();
 	}
 	private boolean checkIndirectY(String inst){
-		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y";
+		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y"; :
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
