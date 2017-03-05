@@ -287,27 +287,27 @@ public class Instructions {
     }
     //0x2D
     public static void AND_AB(int value16){
-        Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), value16));
+        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(value16)));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x3D
     public static void AND_ABX(int value16){
-        Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x39
     public static void AND_ABY(int value16){
-        Registers.write16(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x21
     public static void AND_IDX(int value8){
-        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(Memory.read(value8), Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x31
     public static void AND_IDY(int value8){
-        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.AND(Registers.read8(Global.$A), Memory.read(ALU.ADD(Memory.read(value8), Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
 
@@ -334,27 +334,27 @@ public class Instructions {
     }
     //0x4D
     public static void EOR_AB(int value16){
-        Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), value16));
+        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A),  Memory.read(value16)));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x5D
     public static void EOR_ABX(int value16){
-        Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x59
     public static void EOR_ABY(int value16){
-        Registers.write16(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x41
     public static void EOR_IDX(int value8){
-        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD( Memory.read(value8), Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x51
     public static void EOR_IDY(int value8){
-        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.XOR(Registers.read8(Global.$A), Memory.read(ALU.ADD( Memory.read(value8), Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- ORA ---------------------- *
@@ -380,26 +380,26 @@ public class Instructions {
     }
     //0x0D
     public static void ORA_AB(int value16){
-        Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), value16));
+        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A),  Memory.read(value16)));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x1D
     public static void ORA_ABX(int value16){
-        Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x19
     public static void ORA_ABY(int value16){
-        Registers.write16(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value16, Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));
     }
     //0x01
     public static void ORA_IDX(int value8){
-        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$X)))));
+        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(Memory.read(value8), Registers.read8(Global.$X)))));
         checkArithmeticFlags(Registers.read8(Global.$A));}
     //0x11
     public static void ORA_IDY(int value8){
-        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD(value8, Registers.read8(Global.$Y)))));
+        Registers.write8(Global.$A, ALU.OR(Registers.read8(Global.$A), Memory.read(ALU.ADD( Memory.read(value8), Registers.read8(Global.$Y)))));
         checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- BIT ---------------------- *

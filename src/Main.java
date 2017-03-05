@@ -23,9 +23,11 @@ public class Main {
             content = new Scanner(new File("src/test_files/logical_and.txt")).useDelimiter("\\Z").next();
 
             Asm = Import.importInstructions(content);
+            Memory.clean();
             Memory.setMemory(Asm.assemble());
             System.out.println(Arrays.toString(Asm.getAllInstructions()));
             Memory.instrToString();
+            System.out.println();
             CPU.Execute();
         } catch(FileNotFoundException e){
 

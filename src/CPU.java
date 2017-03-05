@@ -2,6 +2,7 @@ public class CPU{
 	//For now, this is going to be the same as the $PC, later, when pipelined
 	//This will be different.
 	private int clock;
+	public static int totalBytes = 0;
 	
 	public CPU(){
 		clock = 0;
@@ -13,7 +14,7 @@ public class CPU{
     *@return Void.
     */
     public static void Execute(){
-        while (Memory.read(Registers.readPC()) != null){
+        while (totalBytes + 0x200 > Registers.readPC()){
             CPURun();
             Registers.currentState();
         }
@@ -34,8 +35,8 @@ public class CPU{
     *@return Void.
     */
 	public static int littleEndian(int value1, int value2){
-	    String result = "" + value2 + value1;
-	    return Integer.parseInt(result);
+	    String result = "" + Integer.toHexString(value2) + Integer.toHexString(value1);
+	    return Integer.parseInt(result,16);
     }
 
     /*
@@ -56,6 +57,7 @@ public class CPU{
             value8 = Memory.read(Registers.readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
             value16 = littleEndian(value8, Memory.read(Registers.readPC()+2));
         }
+        System.out.print("value8: " + Integer.toHexString(value8) + " value16: " + Integer.toHexString(value16) + "    ");
         Registers.incrPC(Databank.getJumpCode(opCode));
 
 

@@ -11,6 +11,8 @@ public class Assembly{
 	private Integer[] binaryInstructions;
 	private int i = 0;
 	private Databank db;
+	private int lineCounter = 0;
+	private int[] lineLookup = new int[0x3FFF];
 
 
     /*@brief Initializes Assembly class, purpose is to hold instruction and
@@ -79,13 +81,19 @@ public class Assembly{
 				binaryInstructions[i++] = 0xEA ; //NOP
 				continue;
 			}
-			setupQueue(instruction);			
-			}
+			setupQueue(instruction);
+			lineCounter++;
+		}
 		
 		Integer[] result = Arrays.copyOfRange(binaryInstructions, 0, i);
 		return result;
 		}
-		
+
+
+	private void addBytes(int opcode){
+		CPU.totalBytes += db.getJumpCode(opcode);
+		lineLookup[lineCounter] = CPU.totalBytes;
+	}
 
 
 	private int setupQueue(String instruction){
@@ -98,8 +106,21 @@ public class Assembly{
 	    if (checkImplicit(instruction)){
 	    	modebit = 1;
 	    	int opcode= db.getOPCode(instName, modebit);
+	    	addBytes(opcode);
 	    	binaryInstructions[i++] = opcode;
 	    }
+		else if (checkAbsoluteX(instruction)){
+			modebit = 9;
+			addToQueue(instName, modebit, params);
+		}
+		else if (checkAbsoluteY(instruction)){
+			modebit = 10;
+			addToQueue(instName, modebit, params);
+		}
+		else if (checkAbsolute(instruction)){
+			modebit = 8;
+			addToQueue(instName, modebit, params);
+		}
 	    else if (checkIndirect(instruction)){
 	    	modebit = 11;
 	    	addToQueue(instName, modebit, params);
@@ -115,7 +136,8 @@ public class Assembly{
 	    else if (checkAccumulator(instruction)){
 	    	modebit = 2;
 	    	int opcode= db.getOPCode(instName, modebit);
-	    	binaryInstructions[i++] = opcode;
+			addBytes(opcode);
+			binaryInstructions[i++] = opcode;
 	    }
 	    else if (checkImmediate(instruction)){
 	    	modebit = 3;
@@ -136,27 +158,17 @@ public class Assembly{
 	    else if (checkBranch(instruction)){
 	    	modebit = 7;
 	    	System.out.println(params[1]);
-			int index = getLabelIndex(params[1]);
+			int tmp = getLabelIndex(params[1]);
+			int index = lineLookup[tmp-1] + 1;
 			addToQueue(instName, modebit, index);		
-	    }
-	    else if (checkAbsoluteX(instruction)){
-	    	modebit = 9;
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkAbsoluteY(instruction)){
-	    	modebit = 10;
-	    	addToQueue(instName, modebit, params);
-	    }
-	    else if (checkAbsolute(instruction)){
-	    	modebit = 8;
-	    	addToQueue(instName, modebit, params);
 	    }
 		return modebit;
 	}
 
 	private void addToQueue(String instName, int modebit, String[] params) {
 		int opcode= db.getOPCode(instName, modebit);
-    	int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9]+", ""), 16);
+		addBytes(opcode);
+		int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9]+", ""), 16);
     	binaryInstructions[i++] = opcode;
     	// check if 16 bit
     	if (modebit >= 8 && modebit <= 11){
@@ -172,7 +184,8 @@ public class Assembly{
 	private void addToQueue(String instName, int modebit, int param) {
 		// TODO Auto-generated method stub
 		int opcode= db.getOPCode(instName, modebit);
-    	binaryInstructions[i++] = opcode;
+		addBytes(opcode);
+		binaryInstructions[i++] = opcode;
     	binaryInstructions[i++] = param;  
 	}
 
@@ -199,19 +212,19 @@ public class Assembly{
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		String pattern = "\\$?[0-9a-f]{1,2}$";
+		String pattern = "\\$?[0-9a-f]{2,3}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageX(String inst){
-		String pattern = "\\$?[0-9a-f]{1,2},X";
+		String pattern = "\\$?[0-9a-f]{2},X";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageY(String inst){
-		String pattern = "\\$?[0-9a-f]{1,2},Y";
+		String pattern = "\\$?[0-9a-f]{2},Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();

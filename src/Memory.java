@@ -79,7 +79,7 @@ public class Memory {
     public static Integer read(int index) {
         if (index >= 0x0000 && index <= 0x00FF) {return ZeroPage[index];}
         else if (index >= 0x0100 && index <= 0x01FF) {return Stack[(index-0x0100)];}
-        else if (index >= 0x0200 && index <= 0x3FFF) {return RAM[(index-0x0200)];}
+        else if (index >= 0x0200 && index <= 0x3FFF) {return (RAM[(index-0x0200)] == null) ? 0 : RAM[(index-0x0200)];}
         else if (index >= 0x8000 && index <= 0xFFFF) {return ROM[(index-0x8000)];}
         else {
             System.err.println("NullMemoryException, trying to access invalid memory.");
