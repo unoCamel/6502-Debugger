@@ -177,7 +177,7 @@ public class Assembly{
 	}
 
 	private boolean checkImmediate(String inst){
-		String pattern = "#\\$[0-9a-f]{1,2}";
+		String pattern = "#\\$?[0-9a-f]{1,2}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -199,19 +199,19 @@ public class Assembly{
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		String pattern = "\\$[0-9a-f]{1,2}$";
+		String pattern = "\\$?[0-9a-f]{1,2}$";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageX(String inst){
-		String pattern = "\\$[0-9a-f]{1,2},X";
+		String pattern = "\\$?[0-9a-f]{1,2},X";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageY(String inst){
-		String pattern = "\\$[0-9a-f]{1,2},Y";
+		String pattern = "\\$?[0-9a-f]{1,2},Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -260,7 +260,7 @@ public class Assembly{
 		return m.find();
 	}
 	private boolean checkIndirectY(String inst){
-		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y"; :
+		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
