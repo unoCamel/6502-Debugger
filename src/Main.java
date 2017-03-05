@@ -19,7 +19,8 @@ public class Main {
         try{
             //content = new Scanner(new File("src/simpleADCTest.txt")).useDelimiter("\\Z").next();
             //content = new Scanner(new File("src/test_files/register_transfers.txt")).useDelimiter("\\Z").next();
-            content = new Scanner(new File("src/test_files/jumps.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/test_files/jumps.txt")).useDelimiter("\\Z").next();
+            content = new Scanner(new File("src/test_files/logical_and.txt")).useDelimiter("\\Z").next();
 
             Asm = Import.importInstructions(content);
             Memory.setMemory(Asm.assemble());

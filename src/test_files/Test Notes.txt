@@ -1,2 +1,3 @@
 Registers_Transfer: Passed | Notes: Fixed bug where if instruction with no args, infinite loop.
 Jumps: failed | Notes: Fixed bug with no decode for jmp to AB and ID, bug in assembler where labels aren't in regex
+Logical AND: Failed | Notes: Need to make assembler take both $ and nothing for ZP
