@@ -3,5 +3,4 @@
   LDX #$05 ; x = 1
 there:
   DEX	; x--
-  STX $0200 ; address[200] = x
-  ; x = 2
+  STX $0200 ; address[200] = x ; x = 2

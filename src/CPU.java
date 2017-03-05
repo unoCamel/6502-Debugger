@@ -15,6 +15,7 @@ public class CPU{
     public static void Execute(){
         while (Memory.read(Registers.readPC()) != null){
             CPURun();
+            Registers.currentState();
         }
     }
 	/* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
@@ -49,9 +50,14 @@ public class CPU{
     private static void decode(){
     //TODO need to write method to obtain index of instruction opcodes.
         int opCode = Memory.read(Registers.readPC()); //TODO Need to increment PC Correctly based on the instruction and whats to follow.
-        int value8 = Memory.read(Registers.readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
-        int value16 = littleEndian(value8, Memory.read(Registers.readPC()+2));
+        int value8 = 0;
+        int value16 = 0;
+        if(Memory.read(Registers.readPC()+1) != null){
+            value8 = Memory.read(Registers.readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
+            value16 = littleEndian(value8, Memory.read(Registers.readPC()+2));
+        }
         Registers.incrPC(Databank.getJumpCode(opCode));
+
 
 
         //PREFETCH MAXIMUM AMOUNT OF ARGUMENTS
@@ -175,7 +181,7 @@ public class CPU{
             case 0x69: Instructions.ADC_IMM(value8); break;
             case 0x6A: Instructions.ROR_ACC(); break;
             //case 0x6B:
-            case 0x6C: Instructions.JMP_AB(value16); break;
+            case 0x6C: Instructions.JMP_ID(value16); break;
             case 0x6D: Instructions.ADC_AB(value16); break;
             case 0x6E: Instructions.ROR_AB(value16); break;
             //case 0x6F:
