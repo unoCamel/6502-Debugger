@@ -240,97 +240,97 @@ public class CPU{
             case 0xA6: Instructions.LDX_ZP(value8); break;
             //case 0xA7:
             case 0xA8: Instructions.TAY_IMP(); break;
-            case 0xA9: Instructions.
-            case 0xAA:
+            case 0xA9: Instructions.LDA_IMM(value8); break;
+            case 0xAA: Instructions.TAX_IMP(); break;
             //case 0xAB:
-            case 0xAC:
+            case 0xAC: Instructions.LDY_AB(value16); break;
             case 0xAD: Instructions.LDA_AB(value16); break;
-            case 0xAE:
+            case 0xAE: Instructions.LDX_AB(value16); break;
             //case 0xAF:
 
-            case 0xB0:
-            case 0xB1:
+            case 0xB0: Instructions.BCS_REL(value8); break;
+            case 0xB1: Instructions.LDA_IDY(value8); break;
             //case 0xB2:
             //case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
+            case 0xB4: Instructions.LDY_ZPX(value8); break;
+            case 0xB5: Instructions.LDA_ZPX(value8); break;
+            case 0xB6: Instructions.LDX_ZPY(value8); break;
             //case 0xB7:
-            case 0xB8:
-            case 0xB9:
-            case 0xBA:
+            case 0xB8: Instructions.CLV_IMP(); break;
+            case 0xB9: Instructions.LDA_ABY(value16); break;
+            case 0xBA: Instructions.TSX_IMP(); break;
             //case 0xBB:
-            case 0xBC:
-            case 0xBD:
-            case 0xBE:
+            case 0xBC: Instructions.LDY_ABX(value16); break;
+            case 0xBD: Instructions.LDA_ABX(value16); break;
+            case 0xBE: Instructions.LDX_ABY(value16); break;
             //case 0xBF:
 
-            case 0xC0:
-            case 0xC1:
+            case 0xC0: Instructions.CPY_IMM(value8); break;
+            case 0xC1: Instructions.CMP_IDX(value8); break;
             //case 0xC2:
             //case 0xC3:
-            case 0xC4:
-            case 0xC5:
-            case 0xC6:
+            case 0xC4: Instructions.CPY_ZP(value8); break;
+            case 0xC5: Instructions.CMP_ZP(value8); break;
+            case 0xC6: Instructions.DEC_ZP(value8); break;
             //case 0xC7:
-            case 0xC8:
-            case 0xC9:
-            case 0xCA:
+            case 0xC8: Instructions.INY_IMP(); break;
+            case 0xC9: Instructions.CMP_IMM(value8); break;
+            case 0xCA: Instructions.DEX_IMP(); break;
             //case 0xCB:
-            case 0xCC:
-            case 0xCD:
-            case 0xCE:
+            case 0xCC: Instructions.CPY_AB(value16); break;
+            case 0xCD: Instructions.CMP_AB(value16); break;
+            case 0xCE: Instructions.DEC_AB(value16); break;
             //case 0xCF:
 
-            case 0xD0:
-            case 0xD1:
+            case 0xD0: Instructions.BNE_REL(value8); break;
+            case 0xD1: Instructions.CMP_IDY(value8); break;
             //case 0xD2:
             //case 0xD3:
             //case 0xD4:
-            case 0xD5:
-            case 0xD6:
+            case 0xD5: Instructions.CMP_ZPX(value8); break;
+            case 0xD6: Instructions.DEC_ZPX(value8); break;
             //case 0xD7:
-            case 0xD8:
-            case 0xD9:
+            case 0xD8: Instructions.CLD_IMP(); break;
+            case 0xD9: Instructions.CMP_ABY(value16); break;
             //case 0xDA:
             //case 0xDB:
             //case 0xDC:
-            case 0xDD:
-            case 0xDE:
+            case 0xDD: Instructions.CMP_ABX(value16); break;
+            case 0xDE: Instructions.DEC_ABX(value16); break;
             //case 0xDF:
 
-            case 0xE0:
-            case 0xE1:
+            case 0xE0: Instructions.CPX_IMM(value8); break;
+            case 0xE1: Instructions.SBC_IDX(value8); break;
             //case 0xE2:
             //case 0xE3:
-            case 0xE4:
-            case 0xE5:
-            case 0xE6:
+            case 0xE4: Instructions.CPX_ZP(value8); break;
+            case 0xE5: Instructions.SBC_ZP(value8); break;
+            case 0xE6: Instructions.INC_ZP(value8); break;
             //case 0xE7:
-            case 0xE8:
-            case 0xE9:
-            case 0xEA:
+            case 0xE8: Instructions.INX_IMP(); break;
+            case 0xE9: Instructions.SBC_IMM(value8); break;
+            case 0xEA: Instructions.NOP_IMP(); break;
             //case 0xEB:
-            case 0xEC:
-            case 0xED:
-            case 0xEE:
+            case 0xEC: Instructions.CPX_AB(value16); break;
+            case 0xED: Instructions.SBC_IMM(value8); break;
+            case 0xEE: Instructions.INC_AB(value16); break;
             //case 0xEF:
 
-            case 0xF0:
-            case 0xF1:
+            case 0xF0: Instructions.BEQ_REL(value8); break;
+            case 0xF1: Instructions.SBC_IDY(value8); break;
             //case 0xF2:
             //case 0xF3:
             //case 0xF4:
-            case 0xF5:
-            case 0xF6:
+            case 0xF5: Instructions.SBC_ZPX(value8); break;
+            case 0xF6: Instructions.INC_ZPX(value8); break;
             //case 0xF7:
-            case 0xF8:
-            case 0xF9:
+            case 0xF8: Instructions.SED_IMP(); break;
+            case 0xF9: Instructions.SBC_ABY(value16); break;
             //case 0xFA:
             //case 0xFB:
             //case 0xFC:
-            case 0xFD:
-            case 0xFE:
+            case 0xFD: Instructions.SBC_ABX(value16); break;
+            case 0xFE: Instructions.INC_ABX(value16); break;
             //case 0xFF:
             default: System.err.println("InvalidCPUInstructionException, decoded instruction not available in 6502 Processor." + Integer.toHexString(opCode));
 
