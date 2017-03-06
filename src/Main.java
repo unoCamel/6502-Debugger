@@ -17,10 +17,13 @@ public class Main {
         Assembly Asm = null;
         Registers.init_Memory();
         try{
-            //content = new Scanner(new File("src/simpleADCTest.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/test_files/simpleADCTest.txt")).useDelimiter("\\Z").next();
             //content = new Scanner(new File("src/test_files/register_transfers.txt")).useDelimiter("\\Z").next();
             //content = new Scanner(new File("src/test_files/jumps.txt")).useDelimiter("\\Z").next();
-            content = new Scanner(new File("src/test_files/logical_and.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/test_files/logical_and.txt")).useDelimiter("\\Z").next();
+            //content = new Scanner(new File("src/test_files/logical_or.txt")).useDelimiter("\\Z").next();
+            content = new Scanner(new File("src/test_files/logical_eor.txt")).useDelimiter("\\Z").next();
+
 
             Asm = Import.importInstructions(content);
             Memory.clean();

@@ -1,0 +1,3 @@
+FOr projects, include a module decomposition. Include Rationale for the deisng. Include any significant design decisions, should be able to trace requirements to code objects. Should be able to understand how the code reflects the quality requirements of the code.
+
+Next week, progress meeting. Show what he means by the module FWS Interface Specificaitons

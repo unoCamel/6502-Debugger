@@ -1,3 +1,8 @@
 Registers_Transfer: Passed | Notes: Fixed bug where if instruction with no args, infinite loop.
+
 Jumps: failed | Notes: Fixed bug with no decode for jmp to AB and ID, bug in assembler where labels aren't in regex
-Logical AND: Failed | Notes: Need to make assembler take both $ and nothing for ZP
+
+Logical AND: Passed | Notes: Need to make assembler take both $ and nothing for ZP. Had to add logic for both stopping the program at the correct end of the program, as well as add logic in the assemvler to count up the number of bytes of the program to correctly place labels.
+
+
+Logical OR: Passed | Notes: Check break flag with easy 6502.
