@@ -117,14 +117,27 @@ public class Assembly{
 			modebit = 10;
 			addToQueue(instName, modebit, params);
 		}
+		else if (checkIndirect(instruction)){
+	    	modebit = 11;
+	    	addToQueue(instName, modebit, params);
+	    }
 		else if (checkAbsolute(instruction)){
 			modebit = 8;
 			addToQueue(instName, modebit, params);
 		}
-	    else if (checkIndirect(instruction)){
+	    else if (checkIndirectLabel(instruction)){
 	    	modebit = 11;
-	    	addToQueue(instName, modebit, params);
+	    	int tmp = getLabelIndex(params[1].replaceAll("\\p{P}",""));
+			int index = lineLookup[tmp-1] + 1;
+			addToQueue(instName, modebit, index);
 	    }
+		else if (checkAbsoluteLabel(instruction)){
+			modebit = 8;
+			
+			int tmp = getLabelIndex(params[1]);
+			int index = lineLookup[tmp-1] + 1;
+			addToQueue(instName, modebit, index);
+		}
 	    else if (checkIndirectX(instruction)){
 	    	modebit = 12;
 	    	addToQueue(instName, modebit, params);
@@ -248,6 +261,21 @@ public class Assembly{
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
+	private boolean checkAbsoluteLabel(String inst){
+		String pattern = "(JMP|JSR) [0-9a-zA-Z]+";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		if (m.find()){
+			String[] s = inst.split(" ");
+			if (s.length < 2) return false;
+			String arg = s[1];
+			String p2 = "[0-9a-zA-Z]+";
+			Pattern r2 = Pattern.compile(p2);
+			Matcher m2 = r2.matcher(arg);
+			return m2.find();
+		}
+		return false;
+	}
 	private boolean checkAbsoluteX(String inst){
 		String pattern = "\\$?[0-9a-f]{3,4},X";
 		Pattern r = Pattern.compile(pattern);
@@ -265,6 +293,21 @@ public class Assembly{
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
+	}
+	private boolean checkIndirectLabel(String inst){
+		String pattern = "JMP \\([0-9a-zA-Z]+\\)";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(inst);
+		if (m.find()){
+			String[] s = inst.split(" ");
+			if (s.length < 2) return false;
+			String arg = s[1];
+			String p2 = "\\([0-9a-zA-Z]+\\)";
+			Pattern r2 = Pattern.compile(p2);
+			Matcher m2 = r2.matcher(arg);
+			return m2.find();
+		}
+		return false;
 	}
 	private boolean checkIndirectX(String inst){
 		String pattern = "\\(\\$?[0-9a-f]{1,2},X\\)";
