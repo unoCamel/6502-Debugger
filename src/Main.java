@@ -31,22 +31,21 @@ public class Main {
             System.out.println(Arrays.toString(Asm.getAllInstructions()));
             Memory.instrToString();
             System.out.println();
-            CPU.Execute();
+            //CPU.Execute();
         } catch(FileNotFoundException e){
 
 
         }
 
-//        EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					DebuggerGUI frame = new DebuggerGUI();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DebuggerGUI frame = new DebuggerGUI();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 
 
