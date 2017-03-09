@@ -2,6 +2,13 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.EventListener.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class DebuggerGUI extends JFrame {
@@ -10,7 +17,6 @@ public class DebuggerGUI extends JFrame {
 	private JFrame frame;
 	//private DebuggerGUI frame;
 
-    public static int txtBookNum = 1;
     int frameXpos = 200;
     int frameYpos = 200;
 
@@ -50,7 +56,7 @@ public class DebuggerGUI extends JFrame {
 
     //text area init
     JPanel assemblyEditor;
-    JTextArea textArea;
+    public JTextArea textArea;
     JScrollPane scrollEditor, stackScroll, memoryScroll;
 
     //register memory viewer
@@ -67,7 +73,11 @@ public class DebuggerGUI extends JFrame {
 
     //borders
 
+    //file chooser
+    JFileChooser fileChooser = new JFileChooser();
 
+    //Flags
+    boolean isAssembled = false; //flag for making sure user has assembled code.
 
 
 
@@ -108,6 +118,7 @@ public class DebuggerGUI extends JFrame {
         frame.add(mainPanel);
         frame.setJMenuBar(menuBar);
         frame.pack();
+        disableButtons();
         frame.setVisible(true);
 
 
@@ -258,6 +269,24 @@ public class DebuggerGUI extends JFrame {
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
 
+        textArea.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                disableButtons();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                disableButtons();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                disableButtons();
+            }
+        });
+
 
 //        assemblyEditor.setSize(300,300);
 //        assemblyEditor.setLocation(new Point(0,0));
@@ -301,11 +330,21 @@ public class DebuggerGUI extends JFrame {
 
         btnAssemble.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                assemble();
             }
         });
     }
+    public void enableButtons(){
+        btnExecute.setEnabled(true);
+        btnStep.setEnabled(true);
+        btnStepOver.setEnabled(true);
+    }
 
+    public void disableButtons(){
+        btnExecute.setEnabled(false);
+        btnStep.setEnabled(false);
+        btnStepOver.setEnabled(false);
+    }
 //
 //	private void initialize(){
 //        //Memory
@@ -403,6 +442,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem openMenuItem = new JMenuItem("Open", null);
         openMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                openFile();
             }
         });
         menu.add(openMenuItem);
@@ -458,6 +498,41 @@ public class DebuggerGUI extends JFrame {
 
     }
 
+
+    private boolean openFile(){
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(selectedFile));
+                String line = in.readLine();
+                while (line != null) {
+                    textArea.append(line + "\n");
+                    line = in.readLine();
+                }
+                return true;
+            } catch(IOException ex){
+                return false;
+            }
+
+        }
+        return false;
+    }
+
+    public String instructions;
+    private boolean assemble(){
+
+        Assembly asm = Import.importInstructions(textArea.getText());
+        Memory.clean();
+        Memory.setMemory(asm.assemble());
+        Memory.instrToString();
+        System.out.println();
+        enableButtons();
+        return true;
+    }
 }
+
 
 
