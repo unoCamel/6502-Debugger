@@ -16,26 +16,7 @@ public class Main {
         String content = null;
         Assembly Asm = null;
         Registers.init_Memory();
-        try{
-            //content = new Scanner(new File("src/test_files/simpleADCTest.txt")).useDelimiter("\\Z").next();
-            //content = new Scanner(new File("src/test_files/register_transfers.txt")).useDelimiter("\\Z").next();
-            //content = new Scanner(new File("src/test_files/jumps.txt")).useDelimiter("\\Z").next();
-            //content = new Scanner(new File("src/test_files/logical_and.txt")).useDelimiter("\\Z").next();
-            //content = new Scanner(new File("src/test_files/logical_or.txt")).useDelimiter("\\Z").next();
-            content = new Scanner(new File("src/test_files/logical_eor.txt")).useDelimiter("\\Z").next();
-
-
-            Asm = Import.importInstructions(content);
-            Memory.clean();
-            Memory.setMemory(Asm.assemble());
-            System.out.println(Arrays.toString(Asm.getAllInstructions()));
-            Memory.instrToString();
-            System.out.println();
-            //CPU.Execute();
-        } catch(FileNotFoundException e){
-
-
-        }
+        Memory.clean();
 
         EventQueue.invokeLater(new Runnable() {
 			public void run() {

@@ -345,76 +345,6 @@ public class DebuggerGUI extends JFrame {
         btnStep.setEnabled(false);
         btnStepOver.setEnabled(false);
     }
-//
-//	private void initialize(){
-//        //Memory
-//        JScrollPane scrollPane = new JScrollPane();
-//        scrollPane.setBounds(6, 20, 336, 284);
-//        contentPane.add(scrollPane);
-//
-//        //entry field
-//        JTextPane textPane = new JTextPane();
-//        scrollPane.setViewportView(textPane);
-//
-//        JButton btnExecute = new JButton("Execute");
-//        btnExecute.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//            }
-//        });
-//        btnExecute.setBounds(354, 102, 90, 29);
-//        contentPane.add(btnExecute);
-//
-//        JButton btnStep = new JButton("Step");
-//        btnStep.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                CPU.CPURun();
-//            }
-//        });
-//        btnStep.setBounds(354, 20, 90, 29);
-//        contentPane.add(btnStep);
-//
-//        JButton btnStepOver = new JButton("Step Over");
-//        btnStepOver.setBounds(354, 61, 90, 29);
-//        contentPane.add(btnStepOver);
-//
-//        JButton btnAssemble = new JButton("Assemble");
-//        btnStepOver.setBounds(354, 61, 90, 29);
-//        contentPane.add(btnStepOver);
-//
-//        //frame
-//        JPanel panel = new JPanel();
-//       // panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-//        panel.setBounds(252, 316, 192, 146);
-//        contentPane.add(panel);
-//        panel.setLayout(null);
-//
-//        JLabel lblNewLabel = new JLabel("A=$00");
-//        lblNewLabel.setBounds(83, 40, 43, 16);
-//        panel.add(lblNewLabel);
-//
-//        JLabel lblS = new JLabel("X=$00");
-//        lblS.setBounds(83, 68, 42, 16);
-//        panel.add(lblS);
-//
-//        JLabel lblY = new JLabel("Y=$00");
-//        lblY.setBounds(83, 96, 42, 16);
-//        panel.add(lblY);
-//
-//        JLabel lblRegisters = new JLabel("Registers:");
-//        lblRegisters.setBounds(9, 6, 85, 16);
-//        panel.add(lblRegisters);
-//
-//        JPanel panel_1 = new JPanel();
-//        //panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-//        panel_1.setBounds(6, 316, 237, 146);
-//        contentPane.add(panel_1);
-//        panel_1.setLayout(null);
-//
-//        JLabel lblMemory = new JLabel("Memory:");
-//        lblMemory.setBounds(6, 6, 54, 16);
-//        panel_1.add(lblMemory);
-//    }
-
 
 
     /**
@@ -503,6 +433,7 @@ public class DebuggerGUI extends JFrame {
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
+            textArea.setText("");
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             try {
@@ -527,9 +458,12 @@ public class DebuggerGUI extends JFrame {
         Assembly asm = Import.importInstructions(textArea.getText());
         Memory.clean();
         Memory.setMemory(asm.assemble());
+        Registers.init_Memory();
         Memory.instrToString();
         System.out.println();
         enableButtons();
+
+
         return true;
     }
 }
