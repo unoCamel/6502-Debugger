@@ -191,13 +191,13 @@ public class Memory {
 
             switch(byteSize){
                 case 1:
-                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr)+"\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr)+ " " + " " + " " + " "+ "\n");
                     break;
                 case 2:
-                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg1) + "\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg1) + " " + " " + "\n");
                     break;
                 case 3:
-                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg2) + " " + String.format("%02x", (int) tmpArg1) + "\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg2) + " " + String.format("%02x", (int) tmpArg1) + " ADC $1000"+"\n");
                     break;
             }
             x += byteSize-1;
