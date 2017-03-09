@@ -141,7 +141,7 @@ public class Memory {
 
         for(int x = 0; x < 0x3FFF; x += 0x10){
             binaryString = "";
-            memoryString = memoryString.concat("$" + String.format("%04x", (int) x) + ": ");
+            memoryString = memoryString.concat("$" + String.format("%04x", (int) x).toUpperCase() + ": ");
             for(int n = 0; n < 0x10; n++){
                 if(n == 0x08){memoryString = memoryString.concat(" |");}
                 tmpInstr = read(counter++);
@@ -150,7 +150,7 @@ public class Memory {
                 } else {
                     binaryString = binaryString.concat(Character.toString((char)tmpInstr));
                 }
-                memoryString = memoryString.concat(" " + String.format("%02x", (int) tmpInstr));
+                memoryString = memoryString.concat(" " + String.format("%02x", (int) tmpInstr).toUpperCase());
                 if(n == 0x0F){memoryString = memoryString.concat(" | " + binaryString);}
             }
             memoryString = memoryString.concat("\n");
@@ -171,12 +171,12 @@ public class Memory {
             tmpInstr = read(counter++);
             tmpInstr2 = read(counter++);
             if(x <=0xFF){
-                memoryString = memoryString.concat("ZP:" + String.format("%02x", (int) x));
-                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
+                memoryString = memoryString.concat("ZP:" + String.format("%02x", (int) x).toUpperCase());
+                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr).toUpperCase() + String.format("%02x", (int) tmpInstr2).toUpperCase() + "\n");
             }
             else if(x <= 0x01FF){
-                memoryString = memoryString.concat("HRAM:" + String.format("%02x", (int) x));
-                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
+                memoryString = memoryString.concat("HRAM:" + String.format("%02x", (int) x).toUpperCase());
+                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr).toUpperCase() + String.format("%02x", (int) tmpInstr2).toUpperCase() + "\n");
             }
 
         }
@@ -187,17 +187,17 @@ public class Memory {
             tmpArg2 = read(counter + 2);
             byteSize = Databank.getJumpCode(tmpInstr);
 
-            memoryString = memoryString.concat("$" + String.format("%02x", (int) x) + ": ");
+            memoryString = memoryString.concat("$" + String.format("%02x", (int) x).toUpperCase() + ": ");
 
             switch(byteSize){
                 case 1:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr)+ " " + " " + " " + " "+ "\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase()+ " " + " " + " " + " "+ "\n");
                     break;
                 case 2:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg1) + " " + " " + "\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + " " + " " + "\n");
                     break;
                 case 3:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg2) + " " + String.format("%02x", (int) tmpArg1) + " ADC $1000"+"\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg2).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + " ADC $1000"+"\n");
                     break;
             }
             x += byteSize-1;

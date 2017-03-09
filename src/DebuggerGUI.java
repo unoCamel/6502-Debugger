@@ -525,6 +525,7 @@ public class DebuggerGUI extends JFrame {
         //set memory viewer
         memoryViewer.setText(Memory.memoryToString());
         stackViewer.setText(Memory.stackToString());
+        registerViewer.setText(Registers.registersToString());
 
 
         flagS.setSelected(Registers.isNegative());
