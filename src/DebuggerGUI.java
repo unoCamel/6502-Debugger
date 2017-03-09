@@ -1,9 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.border.TitledBorder;
-
 
 
 public class DebuggerGUI extends JFrame {
@@ -53,7 +51,7 @@ public class DebuggerGUI extends JFrame {
     //text area init
     JPanel assemblyEditor;
     JTextArea textArea;
-    JScrollPane scrollEditor;
+    JScrollPane scrollEditor, stackScroll, memoryScroll;
 
     //register memory viewer
     JTextArea registerViewer;
@@ -81,21 +79,27 @@ public class DebuggerGUI extends JFrame {
         frame.setLocation(new Point(300,200));
         frame.setResizable(false);
 
+        //initButtons();
+        initTextArea();
         initComponent();
         initEvent();
-        initButtons();
         initRegisterViewer();
         initMemoryViewer();
+        initStackViewer();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         assemblyEditor.setPreferredSize(new Dimension(600, 300));
+        assemblyEditor.setBorder(new TitledBorder(new EtchedBorder(), "Assembly Editor:"));
+        assemblyEditor.setBorder(BorderFactory.createEmptyBorder(10,10,0,7));
         mainPanel.add(assemblyEditor, BorderLayout.WEST);
 
         rightViewer.setPreferredSize(new Dimension(200, 300));
+        rightViewer.setBorder(BorderFactory.createEmptyBorder(15,10,0,10));
         mainPanel.add(rightViewer, BorderLayout.EAST);
 
         bottomViewer.setPreferredSize(new Dimension(500, 200));
+        bottomViewer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         mainPanel.add(bottomViewer, BorderLayout.SOUTH);
 
         //mainPanel.add(inputButtons, BorderLayout.SOUTH);
@@ -117,35 +121,47 @@ public class DebuggerGUI extends JFrame {
         menuBar = new JMenuBar();
         menu = new JMenu("File");
         initMenu();
-        menuBar.add(menu);
+        //menuBar.add(menu);
         this.setJMenuBar(menuBar);
-
-
-        //create text area
-        initTextArea();
-        assemblyEditor = new JPanel(new BorderLayout());
-//        assemblyEditor.setSize(300,300);
-//        assemblyEditor.setLocation(new Point(0,0));
-        assemblyEditor.add(new JLabel("Assembly:", SwingConstants.LEFT), BorderLayout.PAGE_START);
-        assemblyEditor.setPreferredSize(new Dimension(30, 100));
-        assemblyEditor.add(textArea);
-        assemblyEditor.add(scrollEditor);
-
-
 
     }
 
     private void initMemoryViewer(){
         JPanel tmp = new JPanel(new BorderLayout());
         memoryViewer = new JTextArea();
-        TitledBorder registerTitle = new TitledBorder("Memory:");
-        memoryViewer.setBorder(registerTitle);
-        memoryViewer.setPreferredSize(new Dimension(500, 200));
+
+
+        //setting margins
+        //memoryViewer.setMargin(new Insets(20, 20, 20, 20));
+        memoryViewer.setBorder(new TitledBorder(new EtchedBorder(), "Memory:"));
+        memoryViewer.setPreferredSize(new Dimension(564, 150));
         memoryViewer.setEditable(false);
 
         bottomViewer = new JPanel(new BorderLayout());
-        bottomViewer.add(memoryViewer, BorderLayout.WEST);
-        bottomViewer.add(inputButtons, BorderLayout.EAST);
+        memoryViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        memoryScroll = new JScrollPane(memoryViewer);
+        memoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        bottomViewer.add(memoryScroll, BorderLayout.WEST);
+        bottomViewer.add(registerViewer, BorderLayout.EAST);
+        //bottomViewer.add(inputButtons, BorderLayout.EAST);
+
+
+    }
+
+    private void initStackViewer(){
+        stackViewer = new JTextArea();
+        stackViewer.setPreferredSize(new Dimension(150, 180));
+        stackViewer.setEditable(true);
+
+        rightViewer = new JPanel(new BorderLayout());
+
+
+        //scroll pane;
+        stackScroll = new JScrollPane(stackViewer);
+        stackScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        stackScroll.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        rightViewer.add(stackScroll, BorderLayout.CENTER);
 
 
     }
@@ -154,41 +170,26 @@ public class DebuggerGUI extends JFrame {
 
         JPanel tmp = new JPanel(new BorderLayout());
         registerViewer = new JTextArea();
-        TitledBorder registerTitle = new TitledBorder("Registers:");
-        registerViewer.setBorder(registerTitle);
-        registerViewer.setPreferredSize(new Dimension(200, 100));
+
+        registerViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        registerViewer.setPreferredSize(new Dimension(180, 100));
         registerViewer.setEditable(false);
+        registerViewer.setLineWrap(true);
+        registerViewer.setWrapStyleWord(true);
 
 
-        stackViewer = new JTextArea();
-        TitledBorder stackTitle = new TitledBorder("Stack:");
-        stackViewer.setBorder(stackTitle);
-        stackViewer.setPreferredSize(new Dimension(200, 400));
-        stackViewer.setEditable(false);
 
-        tmp.add(registerViewer, BorderLayout.NORTH);
-        tmp.add(stackViewer, BorderLayout.SOUTH);
 
-        rightViewer = new JPanel(new BorderLayout());
-        rightViewer.add(tmp, BorderLayout.CENTER);
+
+//        tmp.add(registerViewer, BorderLayout.NORTH);
+//        tmp.add(stackViewer, BorderLayout.SOUTH);
+
+//        rightViewer = new JPanel(new BorderLayout());
+//        rightViewer.add(tmp, BorderLayout.CENTER);
 
     }
 
     private void initButtons(){
-        //create user input buttons
-//        btnStep.setBounds(300,130, buttonWidth,buttonHeight);
-//        btnStepOver.setBounds(300,100, buttonWidth,buttonHeight);
-//        btnExecute.setBounds(300,130, buttonWidth,buttonHeight);
-//        btnAssemble.setBounds(300,100, buttonWidth,buttonHeight);
-        btnStep.setMinimumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
-        btnStepOver.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
-        btnExecute.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
-        btnAssemble.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
-
-//        btnStep.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-//        btnStepOver.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-//        btnExecute.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-//        btnAssemble.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
         inputButtons = new JPanel();
 
@@ -209,9 +210,24 @@ public class DebuggerGUI extends JFrame {
 
         //btnStep.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightButtons.add(btnStep);
-        //btnStepOver.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightButtons.add(btnStepOver);
 
+        //need these to set all buttons at same size.
+        btnStep.setMinimumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
+        btnStepOver.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        btnExecute.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        btnAssemble.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+
+        btnStep.setMaximumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
+        btnStepOver.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        btnExecute.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        btnAssemble.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+
+        //border around buttons
+        leftButtons.setBorder(new EmptyBorder(5, 5, 5, 5));
+        rightButtons.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        //add buttons to main panel
         inputButtons.add(leftButtons, BorderLayout.WEST);
         inputButtons.add(rightButtons, BorderLayout.EAST);
 
@@ -226,17 +242,33 @@ public class DebuggerGUI extends JFrame {
     }
 
     private void initTextArea(){
-        textArea = new JTextArea(8, 40);
+        assemblyEditor = new JPanel();
+
+        textArea = new JTextArea();
+        textArea.setPreferredSize(new Dimension(563, 325));
         textArea.setFont(new Font("Serif", Font.PLAIN, 16));
         textArea.setEditable(true);
-//        textArea.setLineWrap(true);
-//        textArea.setWrapStyleWord(true);
-        //textArea.setPreferredSize(new Dimension(400, 100));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        //textArea.setPreferredSize(new Dimension(400, 1000));
 
 
-        //scroll pane
+        //scroll pane;
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
+
+
+//        assemblyEditor.setSize(300,300);
+//        assemblyEditor.setLocation(new Point(0,0));
+        //assemblyEditor.setBorder(new TitledBorder(new EtchedBorder(), "Assembly Editor:"));
+        //assemblyEditor.setPreferredSize(new Dimension(30, 100));
+        //textArea.setMargin(new Insets(5, 5, 5, 5));
+        //assemblyEditor.add(textArea);
+        assemblyEditor.add(scrollEditor);
+
+
+
 
 
     }
@@ -274,71 +306,75 @@ public class DebuggerGUI extends JFrame {
         });
     }
 
-
-	private void initialize(){
-        //Memory
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(6, 20, 336, 284);
-        contentPane.add(scrollPane);
-
-        //entry field
-        JTextPane textPane = new JTextPane();
-        scrollPane.setViewportView(textPane);
-
-        JButton btnExecute = new JButton("Execute");
-        btnExecute.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        btnExecute.setBounds(354, 102, 90, 29);
-        contentPane.add(btnExecute);
-
-        JButton btnStep = new JButton("Step");
-        btnStep.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CPU.CPURun();
-            }
-        });
-        btnStep.setBounds(354, 20, 90, 29);
-        contentPane.add(btnStep);
-
-        JButton btnStepOver = new JButton("Step Over");
-        btnStepOver.setBounds(354, 61, 90, 29);
-        contentPane.add(btnStepOver);
-
-        //frame
-        JPanel panel = new JPanel();
-       // panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panel.setBounds(252, 316, 192, 146);
-        contentPane.add(panel);
-        panel.setLayout(null);
-
-        JLabel lblNewLabel = new JLabel("A=$00");
-        lblNewLabel.setBounds(83, 40, 43, 16);
-        panel.add(lblNewLabel);
-
-        JLabel lblS = new JLabel("X=$00");
-        lblS.setBounds(83, 68, 42, 16);
-        panel.add(lblS);
-
-        JLabel lblY = new JLabel("Y=$00");
-        lblY.setBounds(83, 96, 42, 16);
-        panel.add(lblY);
-
-        JLabel lblRegisters = new JLabel("Registers:");
-        lblRegisters.setBounds(9, 6, 85, 16);
-        panel.add(lblRegisters);
-
-        JPanel panel_1 = new JPanel();
-        //panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panel_1.setBounds(6, 316, 237, 146);
-        contentPane.add(panel_1);
-        panel_1.setLayout(null);
-
-        JLabel lblMemory = new JLabel("Memory:");
-        lblMemory.setBounds(6, 6, 54, 16);
-        panel_1.add(lblMemory);
-    }
+//
+//	private void initialize(){
+//        //Memory
+//        JScrollPane scrollPane = new JScrollPane();
+//        scrollPane.setBounds(6, 20, 336, 284);
+//        contentPane.add(scrollPane);
+//
+//        //entry field
+//        JTextPane textPane = new JTextPane();
+//        scrollPane.setViewportView(textPane);
+//
+//        JButton btnExecute = new JButton("Execute");
+//        btnExecute.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//            }
+//        });
+//        btnExecute.setBounds(354, 102, 90, 29);
+//        contentPane.add(btnExecute);
+//
+//        JButton btnStep = new JButton("Step");
+//        btnStep.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                CPU.CPURun();
+//            }
+//        });
+//        btnStep.setBounds(354, 20, 90, 29);
+//        contentPane.add(btnStep);
+//
+//        JButton btnStepOver = new JButton("Step Over");
+//        btnStepOver.setBounds(354, 61, 90, 29);
+//        contentPane.add(btnStepOver);
+//
+//        JButton btnAssemble = new JButton("Assemble");
+//        btnStepOver.setBounds(354, 61, 90, 29);
+//        contentPane.add(btnStepOver);
+//
+//        //frame
+//        JPanel panel = new JPanel();
+//       // panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        panel.setBounds(252, 316, 192, 146);
+//        contentPane.add(panel);
+//        panel.setLayout(null);
+//
+//        JLabel lblNewLabel = new JLabel("A=$00");
+//        lblNewLabel.setBounds(83, 40, 43, 16);
+//        panel.add(lblNewLabel);
+//
+//        JLabel lblS = new JLabel("X=$00");
+//        lblS.setBounds(83, 68, 42, 16);
+//        panel.add(lblS);
+//
+//        JLabel lblY = new JLabel("Y=$00");
+//        lblY.setBounds(83, 96, 42, 16);
+//        panel.add(lblY);
+//
+//        JLabel lblRegisters = new JLabel("Registers:");
+//        lblRegisters.setBounds(9, 6, 85, 16);
+//        panel.add(lblRegisters);
+//
+//        JPanel panel_1 = new JPanel();
+//        //panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        panel_1.setBounds(6, 316, 237, 146);
+//        contentPane.add(panel_1);
+//        panel_1.setLayout(null);
+//
+//        JLabel lblMemory = new JLabel("Memory:");
+//        lblMemory.setBounds(6, 6, 54, 16);
+//        panel_1.add(lblMemory);
+//    }
 
 
 
@@ -349,7 +385,10 @@ public class DebuggerGUI extends JFrame {
     private void initMenu() {
         // File Menu, F - Mnemonic
         menu = new JMenu("File");
+
+
         menuBar.add(menu);
+
 
         // File->New, N - Mnemonic
         JMenuItem newMenuItem = new JMenuItem("New", null);
@@ -402,6 +441,20 @@ public class DebuggerGUI extends JFrame {
             }
         });
         menu.add(quitMenuItem);
+
+        menuBar.add( Box.createHorizontalStrut( 200 ) );
+
+        //do not color the buttons
+        btnAssemble.setContentAreaFilled(false);
+        btnExecute.setContentAreaFilled(false);
+        btnStep.setContentAreaFilled(false);
+        btnStepOver.setContentAreaFilled(false);
+
+        menuBar.add(btnAssemble);
+        menuBar.add(btnExecute);
+        menuBar.add(btnStep);
+        menuBar.add(btnStepOver);
+
 
     }
 
