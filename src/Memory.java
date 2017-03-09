@@ -181,6 +181,7 @@ public class Memory {
 
         }
         counter = 0x200;
+        int instrCounter = 0;
         for(int x = 0x0200; x <= 0x0400; x += 0x01){
             tmpInstr = read(counter);
             tmpArg1 = read(counter + 1);
@@ -191,13 +192,21 @@ public class Memory {
 
             switch(byteSize){
                 case 1:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase()+ " " + " " + " " + " "+ "\n");
+                    if(DebuggerGUI.currentInstructions[instrCounter] != null){
+                        if(DebuggerGUI.currentInstructions[instrCounter].equals("LABEL")){
+                            instrCounter++;
+                        }
+                        memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase()+ "       " + DebuggerGUI.currentInstructions[instrCounter++] + "\n");
+                    } else {
+                        memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase()+ "       " + "BRK" + "\n");
+                        instrCounter++;
+                    }
                     break;
                 case 2:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + " " + " " + "\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + "    " + DebuggerGUI.currentInstructions[instrCounter++] +  "\n");
                     break;
                 case 3:
-                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg2).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + " ADC $1000"+"\n");
+                    memoryString = memoryString.concat(String.format("%02x", (int) tmpInstr).toUpperCase() + " " + String.format("%02x", (int) tmpArg2).toUpperCase() + " " + String.format("%02x", (int) tmpArg1).toUpperCase() + " " + DebuggerGUI.currentInstructions[instrCounter++] +"\n");
                     break;
             }
             x += byteSize-1;

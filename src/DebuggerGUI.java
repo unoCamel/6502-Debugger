@@ -90,6 +90,9 @@ public class DebuggerGUI extends JFrame {
     //Flags
     boolean isAssembled = false; //flag for making sure user has assembled code.
 
+    //assembly initiate
+    public static String[] currentInstructions;
+
 
 
     public DebuggerGUI(){
@@ -550,6 +553,7 @@ public class DebuggerGUI extends JFrame {
     private boolean assemble(){
 
         Assembly asm = Import.importInstructions(textArea.getText());
+        currentInstructions = asm.getAllInstructions();
         Memory.clean();
         Registers.init_Memory();
         Memory.setMemory(asm.assemble());
