@@ -163,7 +163,7 @@ public class DebuggerGUI extends JFrame {
 
     private void initStackViewer(){
         stackViewer = new JTextArea();
-        stackViewer.setPreferredSize(new Dimension(150, 180));
+        stackViewer.setPreferredSize(new Dimension(150, 8725));
         stackViewer.setEditable(true);
         stackViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
@@ -468,6 +468,7 @@ public class DebuggerGUI extends JFrame {
 
         //set memory viewer
         memoryViewer.setText(Memory.memoryToString());
+        stackViewer.setText(Memory.stackToString());
         return true;
     }
 }

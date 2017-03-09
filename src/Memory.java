@@ -132,7 +132,6 @@ public class Memory {
 */
     public static String memoryToString() {
         int counter = 0;
-        int zpIndex, stackIndex, ramIndex, romIndex;
         int tmpInstr;
         int tmpArg1;
         int tmpArg2;
@@ -146,18 +145,42 @@ public class Memory {
             for(int n = 0; n < 0x10; n++){
                 if(n == 0x08){memoryString = memoryString.concat(" |");}
                 tmpInstr = read(counter++);
-                binaryString = binaryString.concat(Character.toString((char)tmpInstr));
+                if(tmpInstr == 0x00){
+                    binaryString = binaryString.concat(".");
+                } else {
+                    binaryString = binaryString.concat(Character.toString((char)tmpInstr));
+                }
                 memoryString = memoryString.concat(" " + String.format("%02x", (int) tmpInstr));
                 if(n == 0x0F){memoryString = memoryString.concat(" | " + binaryString);}
             }
             memoryString = memoryString.concat("\n");
         }
         return memoryString;
-//        for(int x = 200; x < 0xFFFF; x++){
-//            tmpInstr = read(x);
-//
-//        }
+    }
 
+    public static String stackToString() {
+        int counter = 0;
+        int tmpInstr;
+        int tmpInstr2;
+        String memoryString = "";
+
+        for(int x = 0; x <= 0x0400; x += 0x02){
+            tmpInstr = read(counter++);
+            tmpInstr2 = read(counter++);
+            if(x <=0xFF){
+                memoryString = memoryString.concat("ZP:" + String.format("%02x", (int) x));
+            }
+            else if(x <= 0x01FF){
+                memoryString = memoryString.concat("HRAM:" + String.format("%02x", (int) x));
+            }
+            else if(x <= 0x0400){
+                memoryString = memoryString.concat("LROM:" + String.format("%02x", (int) x));
+            }
+            memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
+
+        }
+
+        return memoryString;
 
     }
 
