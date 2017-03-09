@@ -145,8 +145,9 @@ public class DebuggerGUI extends JFrame {
         //setting margins
         //memoryViewer.setMargin(new Insets(20, 20, 20, 20));
         memoryViewer.setBorder(new TitledBorder(new EtchedBorder(), "Memory:"));
-        memoryViewer.setPreferredSize(new Dimension(564, 150));
+        memoryViewer.setPreferredSize(new Dimension(564, 17410));
         memoryViewer.setEditable(false);
+        memoryViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
         bottomViewer = new JPanel(new BorderLayout());
         memoryViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
@@ -164,6 +165,7 @@ public class DebuggerGUI extends JFrame {
         stackViewer = new JTextArea();
         stackViewer.setPreferredSize(new Dimension(150, 180));
         stackViewer.setEditable(true);
+        stackViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
         rightViewer = new JPanel(new BorderLayout());
 
@@ -187,6 +189,7 @@ public class DebuggerGUI extends JFrame {
         registerViewer.setEditable(false);
         registerViewer.setLineWrap(true);
         registerViewer.setWrapStyleWord(true);
+        registerViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
 
 
@@ -257,7 +260,7 @@ public class DebuggerGUI extends JFrame {
 
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(563, 325));
-        textArea.setFont(new Font("Serif", Font.PLAIN, 16));
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
         textArea.setEditable(true);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
@@ -463,7 +466,8 @@ public class DebuggerGUI extends JFrame {
         System.out.println();
         enableButtons();
 
-
+        //set memory viewer
+        memoryViewer.setText(Memory.memoryToString());
         return true;
     }
 }

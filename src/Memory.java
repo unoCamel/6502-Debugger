@@ -2,10 +2,10 @@ import java.util.Arrays;
 
 public class Memory {
 
-    private static Integer[] ZeroPage = new Integer[0xFF];
-    private static Integer[] Stack = new Integer[0xFF];
-    public static Integer[] RAM = new Integer[0x3F00]; //0x0000-0x3FFFF This is for instructions, and the header RAM file. 32kb of information.
-    private static Integer[] ROM = new Integer[0x8000]; //0x
+    private static Integer[] ZeroPage = new Integer[0x100];
+    private static Integer[] Stack = new Integer[0x100];
+    public static Integer[] RAM = new Integer[0x3F01]; //0x0000-0x3FFFF This is for instructions, and the header RAM file. 32kb of information.
+    private static Integer[] ROM = new Integer[0xFFFF]; //0x
     //TODO We aren't going to implement these yet. More hardware based.
 //	private static int[] VIA1;
 //	private static int[] VIA2;
@@ -77,10 +77,10 @@ public class Memory {
 	* @return 8-bit binary instruction
 	*/
     public static Integer read(int index) {
-        if (index >= 0x0000 && index <= 0x00FF) {return ZeroPage[index];}
-        else if (index >= 0x0100 && index <= 0x01FF) {return Stack[(index-0x0100)];}
+        if (index >= 0x0000 && index <= 0x00FF) {return (ZeroPage[index] == null) ? 0 : ZeroPage[(index)];}
+        else if (index >= 0x0100 && index <= 0x01FF) {return (Stack[(index-0x0100)]== null) ? 0 : Stack[(index-0x0100)];}
         else if (index >= 0x0200 && index <= 0x3FFF) {return (RAM[(index-0x0200)] == null) ? 0 : RAM[(index-0x0200)];}
-        else if (index >= 0x8000 && index <= 0xFFFF) {return ROM[(index-0x8000)];}
+        else if (index >= 0x4000 && index <= 0xFFFF) {return (ROM[(index-0x4000)] == null) ? 0 : ROM[(index-0x4000)];}
         else {
             System.err.println("NullMemoryException, trying to access invalid memory.");
             return -1;
@@ -124,6 +124,66 @@ public class Memory {
             System.out.print(Integer.toHexString(n) + ", ");
         }
     }
+
+    /*@brief Prints the array of binary instructions
+*
+* @param None.
+* @return String.
+*/
+    public static String memoryToString() {
+        int counter = 0;
+        int zpIndex, stackIndex, ramIndex, romIndex;
+        int tmpInstr;
+        int tmpArg1;
+        int tmpArg2;
+        String memoryString = "";
+        String binaryString = "";
+        counter = 0;
+
+        for(int x = 0; x < 0x3FFF; x += 0x10){
+            binaryString = "";
+            memoryString = memoryString.concat("$" + String.format("%04x", (int) x) + ": ");
+            for(int n = 0; n < 0x10; n++){
+                if(n == 0x08){memoryString = memoryString.concat(" |");}
+                tmpInstr = read(counter++);
+                binaryString = binaryString.concat(Character.toString((char)tmpInstr));
+                memoryString = memoryString.concat(" " + String.format("%02x", (int) tmpInstr));
+                if(n == 0x0F){memoryString = memoryString.concat(" | " + binaryString);}
+            }
+            memoryString = memoryString.concat("\n");
+        }
+        return memoryString;
+//        for(int x = 200; x < 0xFFFF; x++){
+//            tmpInstr = read(x);
+//
+//        }
+
+
+    }
+
+//    public static void memoryToString() {
+//        int counter = 0;
+//        int zpIndex, stackIndex, ramIndex, romIndex;
+//        int tmpInstr;
+//        int tmpArg1;
+//        int tmpArg2;
+//        String memoryString = "";
+//
+//        for(int x = 0; x < 0x200; x +=10){
+//            for(int n = 0; n < 10; n++){
+//                tmpInstr = read(x);
+//                memoryString.concat("$" + Integer.toHexString(x) + ": " + tmpInstr + "\n");
+//            }
+//
+//
+//        }
+//        for(int x = 200; x < 0xFFFF; x++){
+//            tmpInstr = read(x);
+//
+//        }
+//
+//
+//    }
 
     /*@brief Prints provided 8-bit number at specified index.
     *
