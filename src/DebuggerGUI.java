@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
 
 
 public class DebuggerGUI extends JFrame {
@@ -63,6 +64,16 @@ public class DebuggerGUI extends JFrame {
     JTextArea registerViewer;
     JTextArea stackViewer;
     JPanel rightViewer;
+    JPanel registerFlagViewer;
+
+    JCheckBox flagS;
+    JCheckBox flagV;
+    JCheckBox flagNull;
+    JCheckBox flagB;
+    JCheckBox flagD;
+    JCheckBox flagI;
+    JCheckBox flagZ;
+    JCheckBox flagC;
 
     //Memory Viewer
     JTextArea memoryViewer;
@@ -85,7 +96,7 @@ public class DebuggerGUI extends JFrame {
         frame = new JFrame();
         frame.setTitle("6502 Emulator & Debugger");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(840, 600));
         frame.setLocation(new Point(300,200));
         frame.setResizable(false);
 
@@ -104,7 +115,7 @@ public class DebuggerGUI extends JFrame {
         assemblyEditor.setBorder(BorderFactory.createEmptyBorder(10,10,0,7));
         mainPanel.add(assemblyEditor, BorderLayout.WEST);
 
-        rightViewer.setPreferredSize(new Dimension(200, 300));
+        rightViewer.setPreferredSize(new Dimension(240, 300));
         rightViewer.setBorder(BorderFactory.createEmptyBorder(15,10,0,10));
         mainPanel.add(rightViewer, BorderLayout.EAST);
 
@@ -145,16 +156,20 @@ public class DebuggerGUI extends JFrame {
         //setting margins
         //memoryViewer.setMargin(new Insets(20, 20, 20, 20));
         memoryViewer.setBorder(new TitledBorder(new EtchedBorder(), "Memory:"));
-        memoryViewer.setPreferredSize(new Dimension(564, 150));
+        memoryViewer.setPreferredSize(new Dimension(564, 17410));
         memoryViewer.setEditable(false);
+        memoryViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
         bottomViewer = new JPanel(new BorderLayout());
         memoryViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         memoryScroll = new JScrollPane(memoryViewer);
         memoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        DefaultCaret caret3 = (DefaultCaret)memoryViewer.getCaret();
+        caret3.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         bottomViewer.add(memoryScroll, BorderLayout.WEST);
-        bottomViewer.add(registerViewer, BorderLayout.EAST);
+
+        bottomViewer.add(registerFlagViewer, BorderLayout.EAST);
         //bottomViewer.add(inputButtons, BorderLayout.EAST);
 
 
@@ -162,8 +177,11 @@ public class DebuggerGUI extends JFrame {
 
     private void initStackViewer(){
         stackViewer = new JTextArea();
-        stackViewer.setPreferredSize(new Dimension(150, 180));
-        stackViewer.setEditable(true);
+        stackViewer.setPreferredSize(new Dimension(150, 8725));
+        stackViewer.setEditable(false);
+        stackViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        DefaultCaret caret2 = (DefaultCaret)stackViewer.getCaret();
+        caret2.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         rightViewer = new JPanel(new BorderLayout());
 
@@ -175,25 +193,72 @@ public class DebuggerGUI extends JFrame {
         rightViewer.add(stackScroll, BorderLayout.CENTER);
 
 
+
+
     }
 
     private void initRegisterViewer(){
 
-        JPanel tmp = new JPanel(new BorderLayout());
+        registerFlagViewer = new JPanel(new BorderLayout());
         registerViewer = new JTextArea();
 
+        JPanel flagViewer = new JPanel();
+        flagViewer.setLayout(new GridLayout(8, 0));
+        Font flagFont = new Font("Monospaced", Font.BOLD,12);
+
+        flagS = new JCheckBox("S");
+        flagV = new JCheckBox("V");
+        flagNull = new JCheckBox(" ");
+        flagB = new JCheckBox("B");
+        flagD = new JCheckBox("D");
+        flagI = new JCheckBox("I");
+        flagZ = new JCheckBox("Z");
+        flagC = new JCheckBox("C");
+
+        flagS.setEnabled(false);
+        flagS.setFont(flagFont);
+        flagS.setForeground(Color.black);
+
+        flagV.setEnabled(false);
+        flagV.setFont(flagFont);
+
+        flagNull.setEnabled(false);
+        flagNull.setFont(flagFont);
+
+        flagB.setEnabled(false);
+        flagB.setFont(flagFont);
+
+        flagD.setEnabled(false);
+        flagD.setFont(flagFont);
+
+        flagI.setEnabled(false);
+        flagI.setFont(flagFont);
+
+        flagZ.setEnabled(false);
+        flagZ.setFont(flagFont);
+
+        flagC.setEnabled(false);
+        flagC.setFont(flagFont);
+
+        flagViewer.add(flagS);
+        flagViewer.add(flagV);
+        flagViewer.add(flagNull);
+        flagViewer.add(flagB);
+        flagViewer.add(flagD);
+        flagViewer.add(flagI);
+        flagViewer.add(flagZ);
+        flagViewer.add(flagC);
+
         registerViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
-        registerViewer.setPreferredSize(new Dimension(180, 100));
+        registerViewer.setPreferredSize(new Dimension(186, 100));
         registerViewer.setEditable(false);
         registerViewer.setLineWrap(true);
         registerViewer.setWrapStyleWord(true);
+        registerViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
 
-
-
-
-//        tmp.add(registerViewer, BorderLayout.NORTH);
-//        tmp.add(stackViewer, BorderLayout.SOUTH);
+        registerFlagViewer.add(registerViewer, BorderLayout.WEST);
+        registerFlagViewer.add(flagViewer, BorderLayout.EAST);
 
 //        rightViewer = new JPanel(new BorderLayout());
 //        rightViewer.add(tmp, BorderLayout.CENTER);
@@ -257,7 +322,7 @@ public class DebuggerGUI extends JFrame {
 
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(563, 325));
-        textArea.setFont(new Font("Serif", Font.PLAIN, 16));
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
         textArea.setEditable(true);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
@@ -268,6 +333,8 @@ public class DebuggerGUI extends JFrame {
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
+        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         textArea.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -313,6 +380,7 @@ public class DebuggerGUI extends JFrame {
         btnStep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CPU.CPURun();
+                updateGUI();
             }
         });
 
@@ -325,6 +393,7 @@ public class DebuggerGUI extends JFrame {
         btnExecute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CPU.Execute();
+                updateGUI();
             }
         });
 
@@ -452,6 +521,25 @@ public class DebuggerGUI extends JFrame {
         return false;
     }
 
+    public void updateGUI(){
+        //set memory viewer
+        memoryViewer.setText(Memory.memoryToString());
+        stackViewer.setText(Memory.stackToString());
+        registerViewer.setText(Registers.registersToString());
+
+
+        flagS.setSelected(Registers.isNegative());
+        flagV.setSelected(Registers.isOverflow());
+        flagNull.setSelected(true);
+        flagB.setSelected(Registers.isBreak());
+        flagD.setSelected(Registers.isDecimal());
+        flagI.setSelected(Registers.isIRQDisabled());
+        flagZ.setSelected(Registers.isZero());
+        flagC.setSelected(Registers.isCarry());
+
+
+    }
+
     public String instructions;
     private boolean assemble(){
 
@@ -462,6 +550,7 @@ public class DebuggerGUI extends JFrame {
         Memory.instrToString();
         System.out.println();
         enableButtons();
+        updateGUI();
 
 
         return true;
