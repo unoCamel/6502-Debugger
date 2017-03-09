@@ -14,7 +14,7 @@ public class CPU{
     *@return Void.
     */
     public static void Execute(){
-        while (totalBytes + 0x200 > Registers.readPC()){
+        while ((totalBytes + 0x200) > Registers.readPC()){
             CPURun();
             Registers.currentState();
         }
@@ -59,6 +59,7 @@ public class CPU{
         }
         System.out.print("value8: " + Integer.toHexString(value8) + " value16: " + Integer.toHexString(value16) + "    ");
         Registers.incrPC(Databank.getJumpCode(opCode));
+        System.out.println("Total Bytes: " + totalBytes);
 
 
 
