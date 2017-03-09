@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
 
 
 public class DebuggerGUI extends JFrame {
@@ -153,6 +154,8 @@ public class DebuggerGUI extends JFrame {
         memoryViewer.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         memoryScroll = new JScrollPane(memoryViewer);
         memoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        DefaultCaret caret3 = (DefaultCaret)memoryViewer.getCaret();
+        caret3.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         bottomViewer.add(memoryScroll, BorderLayout.WEST);
         bottomViewer.add(registerViewer, BorderLayout.EAST);
@@ -166,6 +169,8 @@ public class DebuggerGUI extends JFrame {
         stackViewer.setPreferredSize(new Dimension(150, 8725));
         stackViewer.setEditable(true);
         stackViewer.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        DefaultCaret caret2 = (DefaultCaret)stackViewer.getCaret();
+        caret2.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         rightViewer = new JPanel(new BorderLayout());
 
@@ -175,6 +180,8 @@ public class DebuggerGUI extends JFrame {
         stackScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         stackScroll.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         rightViewer.add(stackScroll, BorderLayout.CENTER);
+
+
 
 
     }
@@ -271,6 +278,8 @@ public class DebuggerGUI extends JFrame {
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
+        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         textArea.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -316,6 +325,7 @@ public class DebuggerGUI extends JFrame {
         btnStep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CPU.CPURun();
+                updateGUI();
             }
         });
 
@@ -328,6 +338,7 @@ public class DebuggerGUI extends JFrame {
         btnExecute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CPU.Execute();
+                updateGUI();
             }
         });
 
@@ -455,6 +466,12 @@ public class DebuggerGUI extends JFrame {
         return false;
     }
 
+    public void updateGUI(){
+        //set memory viewer
+        memoryViewer.setText(Memory.memoryToString());
+        stackViewer.setText(Memory.stackToString());
+    }
+
     public String instructions;
     private boolean assemble(){
 
@@ -465,10 +482,9 @@ public class DebuggerGUI extends JFrame {
         Memory.instrToString();
         System.out.println();
         enableButtons();
+        updateGUI();
 
-        //set memory viewer
-        memoryViewer.setText(Memory.memoryToString());
-        stackViewer.setText(Memory.stackToString());
+
         return true;
     }
 }

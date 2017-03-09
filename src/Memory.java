@@ -162,24 +162,50 @@ public class Memory {
         int counter = 0;
         int tmpInstr;
         int tmpInstr2;
+        int tmpArg1;
+        int tmpArg2;
+        int byteSize;
         String memoryString = "";
 
-        for(int x = 0; x <= 0x0400; x += 0x02){
+        for(int x = 0; x <= 0x0200; x += 0x02){
             tmpInstr = read(counter++);
             tmpInstr2 = read(counter++);
             if(x <=0xFF){
                 memoryString = memoryString.concat("ZP:" + String.format("%02x", (int) x));
+                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
             }
             else if(x <= 0x01FF){
                 memoryString = memoryString.concat("HRAM:" + String.format("%02x", (int) x));
+                memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
             }
-            else if(x <= 0x0400){
-                memoryString = memoryString.concat("LROM:" + String.format("%02x", (int) x));
-            }
-            memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + String.format("%02x", (int) tmpInstr2) + "\n");
 
         }
+        counter = 0x200;
+        for(int x = 0x0200; x <= 0x0400; x += 0x01){
+            tmpInstr = read(counter);
+            tmpArg1 = read(counter + 1);
+            tmpArg2 = read(counter + 2);
+            byteSize = Databank.getJumpCode(tmpInstr);
 
+            memoryString = memoryString.concat("$" + String.format("%02x", (int) x) + ": ");
+
+            switch(byteSize){
+                case 1:
+                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr)+"\n");
+                    break;
+                case 2:
+                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg1) + "\n");
+                    break;
+                case 3:
+                    memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg2) + " " + String.format("%02x", (int) tmpArg1) + "\n");
+                    break;
+            }
+            x += byteSize-1;
+            counter += byteSize;
+
+            //memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr) + " " + String.format("%02x", (int) tmpArg1) + "\n");
+
+        }
         return memoryString;
 
     }
