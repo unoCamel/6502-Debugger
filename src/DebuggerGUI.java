@@ -35,9 +35,9 @@ public class DebuggerGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-    private JButton btnStep  = new JButton("Step");
-    private JButton btnStepOver = new JButton("Step Over");
-    private JButton btnExecute  = new JButton("Execute");
+    private JButton btnStep  = new JButton    ("Step");
+    private JButton btnStepOver = new JButton ("Step Over");
+    private JButton btnExecute  = new JButton ("Execute");
     private JButton btnAssemble  = new JButton("Assemble");
 
 
@@ -60,6 +60,10 @@ public class DebuggerGUI extends JFrame {
     JTextArea stackViewer;
     JPanel rightViewer;
 
+    //Memory Viewer
+    JTextArea memoryViewer;
+    JPanel bottomViewer;
+
     // buttons
     JPanel inputButtons;
 
@@ -81,6 +85,7 @@ public class DebuggerGUI extends JFrame {
         initEvent();
         initButtons();
         initRegisterViewer();
+        initMemoryViewer();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -90,10 +95,10 @@ public class DebuggerGUI extends JFrame {
         rightViewer.setPreferredSize(new Dimension(200, 300));
         mainPanel.add(rightViewer, BorderLayout.EAST);
 
-        mainPanel.add(inputButtons, BorderLayout.SOUTH);
+        bottomViewer.setPreferredSize(new Dimension(500, 200));
+        mainPanel.add(bottomViewer, BorderLayout.SOUTH);
 
-
-
+        //mainPanel.add(inputButtons, BorderLayout.SOUTH);
 
 
         frame.add(mainPanel);
@@ -130,6 +135,21 @@ public class DebuggerGUI extends JFrame {
 
     }
 
+    private void initMemoryViewer(){
+        JPanel tmp = new JPanel(new BorderLayout());
+        memoryViewer = new JTextArea();
+        TitledBorder registerTitle = new TitledBorder("Memory:");
+        memoryViewer.setBorder(registerTitle);
+        memoryViewer.setPreferredSize(new Dimension(500, 200));
+        memoryViewer.setEditable(false);
+
+        bottomViewer = new JPanel(new BorderLayout());
+        bottomViewer.add(memoryViewer, BorderLayout.WEST);
+        bottomViewer.add(inputButtons, BorderLayout.EAST);
+
+
+    }
+
     private void initRegisterViewer(){
 
         JPanel tmp = new JPanel(new BorderLayout());
@@ -156,16 +176,52 @@ public class DebuggerGUI extends JFrame {
 
     private void initButtons(){
         //create user input buttons
-        btnStep.setBounds(300,130, buttonWidth,buttonHeight);
-        btnStepOver.setBounds(300,100, buttonWidth,buttonHeight);
-        btnExecute.setBounds(300,130, buttonWidth,buttonHeight);
-        btnAssemble.setBounds(300,100, buttonWidth,buttonHeight);
+//        btnStep.setBounds(300,130, buttonWidth,buttonHeight);
+//        btnStepOver.setBounds(300,100, buttonWidth,buttonHeight);
+//        btnExecute.setBounds(300,130, buttonWidth,buttonHeight);
+//        btnAssemble.setBounds(300,100, buttonWidth,buttonHeight);
+        btnStep.setMinimumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
+        btnStepOver.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        btnExecute.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        btnAssemble.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+
+//        btnStep.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+//        btnStepOver.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+//        btnExecute.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+//        btnAssemble.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
         inputButtons = new JPanel();
-        inputButtons.add(btnStep);
-        inputButtons.add(btnStepOver);
-        inputButtons.add(btnExecute);
-        inputButtons.add(btnAssemble);
+
+        JPanel leftButtons = new JPanel();
+        JPanel rightButtons = new JPanel();
+        leftButtons.setLayout(new BoxLayout(leftButtons, BoxLayout.Y_AXIS));
+        rightButtons.setLayout(new BoxLayout(rightButtons, BoxLayout.Y_AXIS));
+
+        inputButtons.setLayout(new BorderLayout());
+        //inputButtons.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        //inputButtons.add(Box.createVerticalGlue());
+        //inputButtons.setLayout(new BoxLayout());
+
+        //btnAssemble.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftButtons.add(btnAssemble);
+        //btnExecute.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftButtons.add(btnExecute);
+
+        //btnStep.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rightButtons.add(btnStep);
+        //btnStepOver.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rightButtons.add(btnStepOver);
+
+        inputButtons.add(leftButtons, BorderLayout.WEST);
+        inputButtons.add(rightButtons, BorderLayout.EAST);
+
+
+
+
+//        inputButtons.add(btnStep);
+//        inputButtons.add(btnStepOver);
+//        inputButtons.add(btnExecute);
+//        inputButtons.add(btnAssemble);
 
     }
 
