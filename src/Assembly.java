@@ -26,6 +26,7 @@ public class Assembly{
 		instructions = ins;
 		labels = ls;
 		db = new Databank();
+		CPU.totalBytes = 0;
 	}
 
     /*@brief Gets the array of instructions when called. Array is size

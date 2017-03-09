@@ -379,8 +379,13 @@ public class DebuggerGUI extends JFrame {
 
         btnStep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CPU.CPURun();
-                updateGUI();
+                if (Registers.readPC() > (CPU.totalBytes + 0x200)){
+                    disableButtons();
+                }else{
+                    CPU.CPURun();
+                    updateGUI();
+                }
+
             }
         });
 
@@ -394,6 +399,7 @@ public class DebuggerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CPU.Execute();
                 updateGUI();
+                disableButtons();
             }
         });
 
@@ -545,8 +551,8 @@ public class DebuggerGUI extends JFrame {
 
         Assembly asm = Import.importInstructions(textArea.getText());
         Memory.clean();
-        Memory.setMemory(asm.assemble());
         Registers.init_Memory();
+        Memory.setMemory(asm.assemble());
         Memory.instrToString();
         System.out.println();
         enableButtons();
