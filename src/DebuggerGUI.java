@@ -553,16 +553,34 @@ public class DebuggerGUI extends JFrame {
 
         //highlighting
         try{
-            int start = stackViewer.getLineStartOffset(Registers.readPC()/2);
-            int end = stackViewer.getLineEndOffset(Registers.readPC()/2);
-            stackViewer.getHighlighter().addHighlight(start, end, currentLine);
-            System.out.println("Line is: " + (Registers.readPC()));
+            int curLine = checkLine(stackViewer);
+            int startStack = stackViewer.getLineStartOffset(curLine);
+            int endStack = stackViewer.getLineEndOffset(curLine);
+            stackViewer.getHighlighter().addHighlight(startStack, endStack, currentLine);
+            System.out.println("Line is " + curLine);
+            textArea.getHighlighter().removeAllHighlights();
+            int startAssembly = textArea.getLineStartOffset(curLine - 0x100);
+            int endAssembly = textArea.getLineEndOffset(curLine -0x100);
+            textArea.getHighlighter().addHighlight(startAssembly, endAssembly, currentLine);
+
+
         } catch (BadLocationException ex){
 
         }
+    }
 
+    private int checkLine(JTextArea field){
+        int lineCounter = 0;
+        for (String line : field.getText().split("\\n")){
+            //System.out.println(line.subSequence(0, 4) + " and comparing" + "$" + Integer.toHexString(Registers.readPC()));
+            if(line.subSequence(0, 4).equals("$" + Integer.toHexString(Registers.readPC()).toUpperCase())){
+                return lineCounter;
+            } else{
+                lineCounter++;
+            }
+        }
 
-
+        return 0;
     }
 
     public String instructions;
