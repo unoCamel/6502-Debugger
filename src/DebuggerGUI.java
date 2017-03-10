@@ -2,16 +2,14 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.Highlighter;
 import javax.swing.text.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class DebuggerGUI extends JFrame {
@@ -86,6 +84,9 @@ public class DebuggerGUI extends JFrame {
 
     //borders
 
+    //File saving
+    File selectedFile = null;
+
     //file chooser
     JFileChooser fileChooser = new JFileChooser();
 
@@ -103,7 +104,7 @@ public class DebuggerGUI extends JFrame {
     public DebuggerGUI(){
         frame = new JFrame();
         frame.setTitle("6502 Emulator & Debugger");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setPreferredSize(new Dimension(840, 600));
         frame.setLocation(new Point(300,200));
         frame.setResizable(false);
@@ -140,9 +141,27 @@ public class DebuggerGUI extends JFrame {
         disableButtons();
         frame.setVisible(true);
 
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                int ret = JOptionPane.showConfirmDialog(frame, "Save File before exiting?", "Save this file?", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (ret == JOptionPane.CANCEL_OPTION){
+                    return;
+                }
+                if (ret == JOptionPane.YES_OPTION){
+                    saveFile();
+                    System.exit(JFrame.EXIT_ON_CLOSE);
+                }
+                frame.dispose();
+                System.exit(0);
+
+            }
+        });
+
 
 
     }
+
 
     private void initComponent(){
 
@@ -341,8 +360,8 @@ public class DebuggerGUI extends JFrame {
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
-        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+//        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+//        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         textArea.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -429,6 +448,32 @@ public class DebuggerGUI extends JFrame {
         btnStepOver.setEnabled(false);
     }
 
+    public void saveAs(){
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            // save to file
+        }
+    }
+
+    public void saveFile(){
+        try{
+            PrintWriter writer = new PrintWriter(selectedFile);
+            if(selectedFile == null){
+                System.out.println("File is null!");
+            }else{
+                writer.print(textArea.getText());
+                writer.flush();
+                System.out.println("File is!" + textArea.getText());
+            }
+
+        }catch(FileNotFoundException ex){
+
+        }
+
+
+    }
+
 
     /**
      * Sets up the menu bar by adding file in the menu which include:
@@ -473,7 +518,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem saveasMenuItem = new JMenuItem("Save As", null);
         saveasMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                saveAs();
             }
         });
         menu.add(saveasMenuItem);
@@ -512,12 +557,16 @@ public class DebuggerGUI extends JFrame {
     }
 
 
+
     private boolean openFile(){
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        FileNameExtensionFilter txtfilter = new FileNameExtensionFilter(
+                "txt files (*.txt)", "txt");
+        fileChooser.setFileFilter(txtfilter);
         int result = fileChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
             textArea.setText("");
-            File selectedFile = fileChooser.getSelectedFile();
+            selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             try {
                 BufferedReader in = new BufferedReader(new FileReader(selectedFile));
