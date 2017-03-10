@@ -3,6 +3,7 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -91,6 +92,9 @@ public class DebuggerGUI extends JFrame {
     //file chooser
     JFileChooser fileChooser = new JFileChooser();
 
+    //initial string to determine if different and needs saving
+    String initialString = null;
+
     //Flags
     boolean isAssembled = false; //flag for making sure user has assembled code.
 
@@ -141,6 +145,8 @@ public class DebuggerGUI extends JFrame {
         frame.pack();
         disableButtons();
         frame.setVisible(true);
+        assemble(); //set memory blank
+        disableButtons();
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -473,10 +479,11 @@ public class DebuggerGUI extends JFrame {
 
     public void saveFile(){
         try{
-            PrintWriter writer = new PrintWriter(selectedFile);
             if(selectedFile == null){
-                System.out.println("File is null!");
+                System.out.println("here!");
+                saveAs();
             }else{
+                PrintWriter writer = new PrintWriter(selectedFile);
                 writer.print(textArea.getText());
                 writer.flush();
                 System.out.println("File is!" + textArea.getText());
@@ -485,10 +492,10 @@ public class DebuggerGUI extends JFrame {
         }catch(FileNotFoundException ex){
 
         }
-
-
     }
-
+    private boolean isDifferent(){
+        return !textArea.getText().equals(initialString);
+    }
 
     /**
      * Sets up the menu bar by adding file in the menu which include:
@@ -506,7 +513,13 @@ public class DebuggerGUI extends JFrame {
         JMenuItem newMenuItem = new JMenuItem("New", null);
         newMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                if(isDifferent()){
+                    saveConfirmation("Save changes?");
+                }
+                textArea.setText("");
+                assemble();
+                disableButtons();
+                selectedFile = null;
             }
         });
         menu.add(newMenuItem);
@@ -590,6 +603,7 @@ public class DebuggerGUI extends JFrame {
                     textArea.append(line + "\n");
                     line = in.readLine();
                 }
+                initialString = textArea.getText();
                 return true;
             } catch(IOException ex){
                 return false;
@@ -645,6 +659,16 @@ public class DebuggerGUI extends JFrame {
         }
 
         return 0;
+    }
+
+    public void saveConfirmation(String message){
+        int ret = JOptionPane.showConfirmDialog(frame, message, "Save changes?", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (ret == JOptionPane.CANCEL_OPTION){
+            return;
+        }
+        if (ret == JOptionPane.YES_OPTION){
+            saveFile();
+        }
     }
 
     public String instructions;
