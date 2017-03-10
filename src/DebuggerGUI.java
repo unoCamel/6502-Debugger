@@ -151,7 +151,7 @@ public class DebuggerGUI extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if(isDifferent() || textArea.getText().equals("")) {
+                if(isDifferent() ||  textArea.getText().equals("")) {
 //                    int ret = JOptionPane.showConfirmDialog(frame, "Save File before exiting?", "Save this file?", JOptionPane.YES_NO_CANCEL_OPTION);
 //                    if (ret == JOptionPane.CANCEL_OPTION){
 //                        return;
