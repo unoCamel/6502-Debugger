@@ -126,10 +126,10 @@ public class DebuggerGUI extends JFrame {
 
         assemblyEditor.setPreferredSize(new Dimension(600, 300));
         assemblyEditor.setBorder(new TitledBorder(new EtchedBorder(), "Assembly Editor:"));
-        assemblyEditor.setBorder(BorderFactory.createEmptyBorder(10,10,0,7));
+        assemblyEditor.setBorder(BorderFactory.createEmptyBorder(10,8,0,7));
         mainPanel.add(assemblyEditor, BorderLayout.WEST);
 
-        rightViewer.setPreferredSize(new Dimension(240, 300));
+        rightViewer.setPreferredSize(new Dimension(238, 300));
         rightViewer.setBorder(BorderFactory.createEmptyBorder(15,10,0,10));
         mainPanel.add(rightViewer, BorderLayout.EAST);
 
@@ -151,14 +151,18 @@ public class DebuggerGUI extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                int ret = JOptionPane.showConfirmDialog(frame, "Save File before exiting?", "Save this file?", JOptionPane.YES_NO_CANCEL_OPTION);
-                if (ret == JOptionPane.CANCEL_OPTION){
-                    return;
+                if(isDifferent() || textArea.getText().equals("")) {
+//                    int ret = JOptionPane.showConfirmDialog(frame, "Save File before exiting?", "Save this file?", JOptionPane.YES_NO_CANCEL_OPTION);
+//                    if (ret == JOptionPane.CANCEL_OPTION){
+//                        return;
+//                    }
+//                    if (ret == JOptionPane.YES_OPTION){
+//                        saveFile();
+//                        System.exit(JFrame.EXIT_ON_CLOSE);
+//                    }
+                    saveConfirmation("Save changes before exiting?");
                 }
-                if (ret == JOptionPane.YES_OPTION){
-                    saveFile();
-                    System.exit(JFrame.EXIT_ON_CLOSE);
-                }
+
                 frame.dispose();
                 System.exit(0);
 
@@ -479,8 +483,7 @@ public class DebuggerGUI extends JFrame {
 
     public void saveFile(){
         try{
-            if(selectedFile == null){
-                System.out.println("here!");
+            if(selectedFile == null || textArea.getText().equals("")){
                 saveAs();
             }else{
                 PrintWriter writer = new PrintWriter(selectedFile);
@@ -513,7 +516,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem newMenuItem = new JMenuItem("New", null);
         newMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(isDifferent()){
+                if(isDifferent() || textArea.getText().equals("")){
                     saveConfirmation("Save changes?");
                 }
                 textArea.setText("");
@@ -537,7 +540,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem saveMenuItem = new JMenuItem("Save", null);
         saveMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                saveFile();
             }
         });
         menu.add(saveMenuItem);
@@ -551,19 +554,14 @@ public class DebuggerGUI extends JFrame {
         });
         menu.add(saveasMenuItem);
 
-        // File->Close, N - Mnemonic
-        JMenuItem closeMenuItem = new JMenuItem("Close", null);
-        closeMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        menu.add(closeMenuItem);
-
         // File->Quit, N - Mnemonic
         JMenuItem quitMenuItem = new JMenuItem("Quit", null);
         quitMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                if(!isDifferent() || !textArea.getText().equals("")){
+                    saveConfirmation("Save changes before quitting?");
+                }
+                System.exit(0);
             }
         });
         menu.add(quitMenuItem);
