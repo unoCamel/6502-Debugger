@@ -10,6 +10,7 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.Highlighter;
 import javax.swing.text.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FilenameUtils;
 
 
 public class DebuggerGUI extends JFrame {
@@ -451,8 +452,22 @@ public class DebuggerGUI extends JFrame {
     public void saveAs(){
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            // save to file
+            File tmp = fileChooser.getSelectedFile();
+            try{
+                //force txt extension. example.xml.txt is okay.
+                if(!FilenameUtils.getExtension(tmp.getName()).equalsIgnoreCase("txt")){
+                    tmp = new File(tmp.toString() + ".txt");
+                    tmp = new File(tmp.getParentFile(), FilenameUtils.getBaseName(tmp.getName()) + ".txt");
+                }
+                PrintWriter writer = new PrintWriter(tmp);
+                writer.print(textArea.getText());
+                writer.flush();
+                System.out.println("File is!" + textArea.getText());
+                    // save to file
+            }catch(FileNotFoundException ex){
+
+            }
+
         }
     }
 
