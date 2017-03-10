@@ -170,7 +170,7 @@ public class Memory {
         for(int x = 0; x <= 0x0200; x += 0x02){
             tmpInstr = read(counter++);
             tmpInstr2 = read(counter++);
-            if(x <=0xFF){
+            if(x <= 0xFF){
                 memoryString = memoryString.concat("ZP:" + String.format("%02x", (int) x).toUpperCase());
                 memoryString = memoryString.concat(String.format(" "+"%02x", (int) tmpInstr).toUpperCase() + String.format("%02x", (int) tmpInstr2).toUpperCase() + "\n");
             }

@@ -10,6 +10,8 @@ import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultCaret;
+import javax.swing.text.Highlighter;
+import javax.swing.text.*;
 
 
 public class DebuggerGUI extends JFrame {
@@ -92,6 +94,9 @@ public class DebuggerGUI extends JFrame {
 
     //assembly initiate
     public static String[] currentInstructions;
+
+    //highlighting lines
+    private Highlighter.HighlightPainter currentLine = new DefaultHighlighter.DefaultHighlightPainter(Color.green);
 
 
 
@@ -545,6 +550,17 @@ public class DebuggerGUI extends JFrame {
         flagI.setSelected(Registers.isIRQDisabled());
         flagZ.setSelected(Registers.isZero());
         flagC.setSelected(Registers.isCarry());
+
+        //highlighting
+        try{
+            int start = stackViewer.getLineStartOffset(Registers.readPC()/2);
+            int end = stackViewer.getLineEndOffset(Registers.readPC()/2);
+            stackViewer.getHighlighter().addHighlight(start, end, currentLine);
+            System.out.println("Line is: " + (Registers.readPC()));
+        } catch (BadLocationException ex){
+
+        }
+
 
 
     }
