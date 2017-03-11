@@ -14,7 +14,7 @@ public class CPU{
     *@return Void.
     */
     public static void Execute(){
-        while ((totalBytes + 0x200) > Registers.readPC()){
+        while ((totalBytes + 0x210) >= Registers.readPC()){
             CPURun();
             Registers.currentState();
         }

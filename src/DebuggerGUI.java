@@ -356,21 +356,20 @@ public class DebuggerGUI extends JFrame {
     }
 
     private void initTextArea(){
-        assemblyEditor = new JPanel();
 
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(563, 325));
+        textArea.setPreferredSize(new Dimension(563, 1500));
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
         textArea.setEditable(true);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         //textArea.setPreferredSize(new Dimension(400, 1000));
 
-
+        assemblyEditor = new JPanel(new BorderLayout());
         //scroll pane;
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        assemblyEditor.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED), "Assembly:"));
+        assemblyEditor.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 //        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
 //        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
@@ -399,7 +398,7 @@ public class DebuggerGUI extends JFrame {
         //assemblyEditor.setPreferredSize(new Dimension(30, 100));
         //textArea.setMargin(new Insets(5, 5, 5, 5));
         //assemblyEditor.add(textArea);
-        assemblyEditor.add(scrollEditor);
+        assemblyEditor.add(scrollEditor, BorderLayout.CENTER);
 
 
 
