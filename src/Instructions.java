@@ -103,7 +103,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x85
-	public static void STA_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$A)));}
+	public static void STA_ZP(int value8){Memory.write(value8, (Registers.read8(Global.$A)));}
 	//0x95
 	public static void STA_ZPX(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$X)), Registers.read8(Global.$A) );}
 	//0x8D
@@ -124,7 +124,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x86
-	public static void STX_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$X)));}
+	public static void STX_ZP(int value8){Memory.write(value8, Registers.read8(Global.$X));}
 	//0x96
 	public static void STX_ZPY(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$Y)), Registers.read8(Global.$X) );}
 	//0x8E
@@ -137,7 +137,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
 	//0x84
-	public static void STY_ZP(int value8){Memory.write(value8, Memory.read(Registers.read8(Global.$Y)));}
+	public static void STY_ZP(int value8){Memory.write(value8, Registers.read8(Global.$Y));}
 	//0x94
 	public static void STY_ZPX(int value8){Memory.write(ALU.ADD( value8, Registers.read8(Global.$X)), Registers.read8(Global.$Y) );}
 	//0x8C
@@ -782,12 +782,12 @@ public class Instructions {
 
 /* ---------------------- BNE ---------------------- *
 * @brief Branch on Result not Zero
-* Operation:   branch on Z = 0
+* Operation:   branch on Z != 0
 * Flags Set:	N	Z	C	I	D	V
 * 				-	-	-	-	-	-
 */
 	//0xD0
-	public static void BNE_REL(int value8){if(!Registers.isZero()){Registers.writePC(ALU.ADD(Registers.readPC(), value8));}}
+	public static void BNE_REL(int value8){if(!Registers.isZero()){Registers.writePC(value8+ 0x200);}}
 
 /* ---------------------- BPL ---------------------- *
 * @brief Branch on Result not Zero

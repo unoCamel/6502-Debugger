@@ -1,5 +1,3 @@
-;taken from: http://6502.org/source/sorting/bubble8.htm
-
 SORT8:   LDY #$00      ;TURN EXCHANGE FLAG OFF (= 0)
          STY $32
          LDA ($30),Y   ;FETCH ELEMENT COUNT
@@ -19,7 +17,7 @@ NXTEL:   LDA ($30),Y   ;FETCH ELEMENT
          PLA           ;PULL LOW BYTE FROM STACK
          INY           ; AND STORE IT AT HIGH ADDRESS
          STA ($30),Y
-         LDA #$FF      ;TURN EXCHANGE FLAG ON (= -1)
+         LDA #$ff      ;TURN EXCHANGE FLAG ON (= -1)
          STA $32
 CHKEND:  DEX           ;END OF LIST?
          BNE NXTEL     ;NO. FETCH NEXT ELEMENT
