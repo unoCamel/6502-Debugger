@@ -175,7 +175,9 @@ public class Assembly{
 			int tmp = getLabelIndex(params[1]);
 			int index = lineLookup[tmp-1] + 1;
 			addToQueue(instName, modebit, index);		
-	    }
+	    }else {
+	    	System.out.println("Not an instruction: " + instruction);
+		}
 		return modebit;
 	}
 
@@ -200,7 +202,8 @@ public class Assembly{
 		int opcode= db.getOPCode(instName, modebit);
 		addBytes(opcode);
 		binaryInstructions[i++] = opcode;
-    	binaryInstructions[i++] = param;  
+		binaryInstructions[i++] = (param & 0xff);
+		binaryInstructions[i++] = ((param >> 8) & 0xff);
 	}
 
 	private boolean checkImmediate(String inst){
@@ -245,14 +248,16 @@ public class Assembly{
 	}
 	private boolean checkBranch(String inst){
 		String pattern = "B\\w*";
+		String argPattern = "\\w*";
+		Pattern argMatcher = Pattern.compile(argPattern);
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		if (m.find()){
 			String[] s = inst.split(" ");
 			if (s.length < 2) return false;
 			String arg = s[1];
-			Matcher m1 = r.matcher(arg);
-			return m1.find();
+			Matcher mArg = argMatcher.matcher(arg);
+			return mArg.find();
 		}
 		return false;
 	}
