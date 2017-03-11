@@ -35,10 +35,11 @@ public class Import {
 				if (scindex != -1){
 					//there is a comment
 					ins = ins.substring(0, scindex);
+					ins = ins.trim();
 				}
 				if (cindex != -1){
 					//there is a lable
-					if (cindex == ins.length() - 1){
+					if (cindex == ins.length() - 1 ){
 						//there is only the label
 						ins = ins.replace(':', ' ').trim();
 						instructions[memCounter] = "LABEL";
@@ -57,8 +58,10 @@ public class Import {
 					}
 				}
 				ins = ins.trim();
-				instructions[memCounter] = ins;
-				memCounter += 1;
+				if (ins.length() != 0){
+					instructions[memCounter] = ins;
+					memCounter += 1;
+				}
 				index = nlindex + 1;
 			}
 			else{
@@ -71,6 +74,7 @@ public class Import {
 					if (scindex != -1){
 						//there is a comment
 						ins = ins.substring(0, scindex);
+						ins = ins.trim();
 					}
 					if (cindex != -1){
 						//there is a lable
@@ -92,7 +96,9 @@ public class Import {
 							break;
 						}
 					}
-					instructions[memCounter] = ins;
+					if (ins.length() != 0){
+						instructions[memCounter] = ins;				
+					}
 					break;
 				}
 				break;
