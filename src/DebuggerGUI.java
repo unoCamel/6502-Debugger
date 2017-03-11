@@ -676,8 +676,6 @@ public class DebuggerGUI extends JFrame {
         Registers.init_Memory();
         Memory.setMemory(asm.assemble());
         Memory.instrToString();
-        System.out.println();
-        System.out.println(Arrays.toString(asm.getAllInstructions()));
         enableButtons();
         updateGUI();
 
