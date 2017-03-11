@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.EventListener.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -471,7 +472,6 @@ public class DebuggerGUI extends JFrame {
                 PrintWriter writer = new PrintWriter(tmp);
                 writer.print(textArea.getText());
                 writer.flush();
-                System.out.println("File is!" + textArea.getText());
                     // save to file
             }catch(FileNotFoundException ex){
 
@@ -488,7 +488,6 @@ public class DebuggerGUI extends JFrame {
                 PrintWriter writer = new PrintWriter(selectedFile);
                 writer.print(textArea.getText());
                 writer.flush();
-                System.out.println("File is!" + textArea.getText());
             }
 
         }catch(FileNotFoundException ex){
@@ -678,6 +677,7 @@ public class DebuggerGUI extends JFrame {
         Memory.setMemory(asm.assemble());
         Memory.instrToString();
         System.out.println();
+        System.out.println(Arrays.toString(asm.getAllInstructions()));
         enableButtons();
         updateGUI();
 
