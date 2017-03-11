@@ -162,32 +162,32 @@ public class Databank {
     }
 
     private static Integer[] jumpCodes = {
-                                          1, 2, null, null, null, 2, 2, null, 1, 2,             //0
-                                          1, null, null, 3, 3, null, 2, 2, null, null,          //10
-                                          null, 2, 2, null, 1, 3, null, null, null, 3,          //20
-                                          3, null, 3, 2, null, null, 2, 2, 2, null,             //30
-                                          1, 2, 1, null, 3, 3, 3, null, 2, 2,                   //40
-                                          null, null, null, 2, 2, null, 1, 3, null, null,       //50
-                                          null, 3, 3, null, 1, 2, null, null, null, 2,          //60
-                                          2, null, 1, 2, 1, null, 3, 3, 3, null,                //70
-                                          2, 2, null, null, null, 2, 2, null, 1, 3,             //80
-                                          null, null, null, 3, 3, null, 1, 2, null, null,       //90
-                                          null, 2, 2, null, 1, 2, 1, null, 3, 3,                //100
-                                          3, null, 2, 2, null, null, null, 2, 2, null,          //110
-                                          1, 3, null, null, null, 3, 3, null, null, 2,          //120
-                                          null, null, 2, 2, 2, null, 1, null, 1, null,          //130
-                                          3, 3, 3, null, 2, 2, null, null, 2, 2,                //140
-                                          2, null, 1, 3, 1, null, null, 3, null, null,          //150
-                                          2, 2, 2, null, 2, 2, 2, null, 1, 2,                   //160
-                                          1, null, 3, 3, 3, null, 2, 2, null, null,             //170
-                                          2, 2, 2, null, 1, 3, 1, null, 3, 3,                   //180
-                                          3, null, 2, 2, null, null, 2, 2, 2, null,             //190
-                                          1, 2, 1, null, 3, 3, 3, null, 2, 2,                   //200
-                                          null, null, null, 2, 2, null, 1, 3, null, null,       //210
-                                          null, 3, 3, null, 2, 2, null, null, 2, 2,             //220
-                                          2, null, 1, 2, 1, null, 3, 3, 3, null,                //230
-                                          2, 2, null, null, null, 2, 2, null, 1, 3,             //240
-                                          null, null, null, 3, 3};                              //250
+                                          1, 2, null, null, null, 2, 2, null, 1, 2,                 //0
+                                          1, null, null, 3, 3, null, 2, 2, null, null,              //10
+                                          null, 2, 2, null, 1, 3, null, null, null, 3, //1d         //20
+                                          3, null, 3, 2, null, null, 2, 2, 2, null,//27             //30
+                                          1, 2, 1, null, 3, 3, 3, null, 2, 2, //31                  //40
+                                          null, null, null, 2, 2, null, 1, 3, null, null, //3b      //50
+                                          null, 3, 3, null, 1, 2, null, null, null, 2,  //45        //60
+                                          2, null, 1, 2, 1, null, 3, 3, 3, null, //4f               //70
+                                          2, 2, null, null, null, 2, 2, null, 1, 3, //59            //80
+                                          null, null, null, 3, 3, null, 1, 2, null, null,  //63     //90
+                                          null, 2, 2, null, 1, 2, 1, null, 3, 3,   //6d             //100
+                                          3, null, 2, 2, null, null, null, 2, 2, null,  //77        //110
+                                          1, 3, null, null, null, 3, 3, null, null, 2,  //81        //120
+                                          null, null, 2, 2, 2, null, 1, null, 1, null,  //8b        //130
+                                          3, 3, 3, null, 2, 2, null, null, 2, 2,    //95            //140
+                                          2, null, 1, 3, 1, null, null, 3, null, null, //9f         //150
+                                          2, 2, 2, null, 2, 2, 2, null, 1, 2,  //a9                 //160
+                                          1, null, 3, 3, 3, null, 2, 2, null, null,//b3             //170
+                                          2, 2, 2, null, 1, 3, 1, null, 3, 3,   //bd                //180
+                                          3, null, 2, 2, null, null, 2, 2, 2, null,   //c7          //190
+                                          1, 2, 1, null, 3, 3, 3, null, 2, 2, //d1                  //200
+                                          null, null, null, 2, 2, null, 1, 3, null, null, //db      //210
+                                          null, 3, 3, null, 2, 2, null, null, 2, 2,  //e5           //220
+                                          2, null, 1, 2, 1, null, 3, 3, 3, null,  //ef              //230
+                                          2, 2, null, null, null, 2, 2, null, 1, 3,    //f9         //240
+                                          null, null, null, 3, 3}; //fe                             //250
 
     /*@brief willgive back the number of increments to the program counter
     *
