@@ -161,31 +161,33 @@ public class Databank {
         System.out.println(map.toString());
     }
 
-    private static Integer[] jumpCodes = {1, 2, null, null, null, 2, 2, null, 1, 2,
-                                          1, null, null, 3, 3, null, 1, 2, null, null,
-                                          null, 2, 2, null, 1, 3, null, null, null, 3,
-                                          3, null, 3, 2, null, null, 2, 2, 2, null,
-                                          1, 2, 1, null, 3, 3, 3, null, 1, 2,
-                                          null, null, null, 2, 2, null, 1, 3, null, null,
-                                          null, 3, 3, null, 1, 2, null, null, null, 2,
-                                          2, null, 1, 2, 1, null, 3, 3, 3, null,
-                                          1, 2, null, null, null, 2, 2, null, 1, 3,
-                                          null, null, null, 3, 3, null, 1, 2, null, null,
-                                          null, 2, 2, null, 1, 2, 1, null, 3, 3,
-                                          3, null, 1, 2, null, null, null, 2, 2, null,
-                                          1, 3, null, null, null, 3, 3, null, null, 2,
-                                          null, null, 2, 2, 2, null, 1, null, 1, null,
-                                          3, 3, 3, null, 1, 2, null, null, 2, 2, 2,
-                                          null, 1, 3, 1, null, null, 3, null, null, 2,
-                                          2, 2, null, 2, 2, 2, null, 1, 2, 1, null,
-                                          3, 3, 3, null, 1, 2, null, null, 2, 2, 2, null,
-                                          1, 3, 1, null, 3, 3, 3, null, 2, 2, null, 
-                                          null, 2, 2, 2, null, 1, 2, 1, null, 3, 3, 3, 
-                                          null, 1, 2, null, null, null, 2, 2, null, 1, 3, 
-                                          null, null, null, 3, 3, null, 2, 2, null, null, 
-                                          2, 2, 2, null, 1, 2, 1, null, 3, 3, 3, null, 1, 
-                                          2, null, null, null, 2, 2, null, 1, 3, null, 
-                                          null, null, 3, 3};
+    private static Integer[] jumpCodes = {
+                                          1, 2, null, null, null, 2, 2, null, 1, 2,             //0
+                                          1, null, null, 3, 3, null, 1, 2, null, null,          //10
+                                          null, 2, 2, null, 1, 3, null, null, null, 3,          //20
+                                          3, null, 3, 2, null, null, 2, 2, 2, null,             //30
+                                          1, 2, 1, null, 3, 3, 3, null, 1, 2,                   //40
+                                          null, null, null, 2, 2, null, 1, 3, null, null,       //50
+                                          null, 3, 3, null, 1, 2, null, null, null, 2,          //60
+                                          2, null, 1, 2, 1, null, 3, 3, 3, null,                //70
+                                          1, 2, null, null, null, 2, 2, null, 1, 3,             //80
+                                          null, null, null, 3, 3, null, 1, 2, null, null,       //90
+                                          null, 2, 2, null, 1, 2, 1, null, 3, 3,                //100
+                                          3, null, 1, 2, null, null, null, 2, 2, null,          //110
+                                          1, 3, null, null, null, 3, 3, null, null, 2,          //120
+                                          null, null, 2, 2, 2, null, 1, null, 1, null,          //130
+                                          3, 3, 3, null, 1, 2, null, null, 2, 2,                //140
+                                          2, null, 1, 3, 1, null, null, 3, null, null,          //150
+                                          2, 2, 2, null, 2, 2, 2, null, 1, 2,                   //160
+                                          1, null, 3, 3, 3, null, 1, 2, null, null,             //170
+                                          2, 2, 2, null, 1, 3, 1, null, 3, 3,                   //180
+                                          3, null, 2, 2, null, null, 2, 2, 2, null,             //190
+                                          1, 2, 1, null, 3, 3, 3, null, 1, 2,                   //200
+                                          null, null, null, 2, 2, null, 1, 3, null, null,       //210
+                                          null, 3, 3, null, 2, 2, null, null, 2, 2,             //220
+                                          2, null, 1, 2, 1, null, 3, 3, 3, null,                //230
+                                          1, 2, null, null, null, 2, 2, null, 1, 3,             //240
+                                          null, null, null, 3, 3};                              //250
 
     /*@brief willgive back the number of increments to the program counter
     *
