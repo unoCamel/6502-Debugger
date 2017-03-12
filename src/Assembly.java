@@ -29,6 +29,16 @@ public class Assembly{
 		CPU.totalBytes = -1;
 	}
 
+	public int getLineLookup(int index){
+	    int tmp = 0;
+        if(index == 0){
+            tmp = lineLookup[index] + 1;
+        } else {
+            tmp = lineLookup[index-1] + 1;
+        }
+        return tmp;
+    }
+
     /*@brief Gets the array of instructions when called. Array is size
     * Global.MAX_SIZE/8
 	*

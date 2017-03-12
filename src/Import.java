@@ -9,7 +9,9 @@ public class Import {
 		@param: str : the string of instructions to be parsed
 		@return: Assembly
 	*/
-	public static Assembly importInstructions(String str){
+
+
+    public static Assembly importInstructions(String str){
 		int index = 0;
 		int nlindex = 0;
 		int scindex = 0;
@@ -17,7 +19,7 @@ public class Import {
 		int memCounter = 0;
 
 		String[] instructions = new String[Global.MAX_MEMORY];
-		HashMap<String, Integer> labels = new HashMap<String, Integer>();
+        HashMap<String, Integer> labels = new HashMap<String, Integer>();
 
 		while (memCounter < Global.MAX_MEMORY){
 			nlindex = str.indexOf('\n', index);

@@ -44,7 +44,7 @@ public class DebuggerGUI extends JFrame {
 	 * Create the frame.
 	 */
     private JButton btnStep  = new JButton    ("Step");
-    private JButton btnStepOver = new JButton ("Step Over");
+    private JButton btnStepTo = new JButton ("Step To");
     private JButton btnExecute  = new JButton ("Execute");
     private JButton btnAssemble  = new JButton("Assemble");
 
@@ -104,6 +104,10 @@ public class DebuggerGUI extends JFrame {
 
     //highlighting lines
     private Highlighter.HighlightPainter currentLine = new DefaultHighlighter.DefaultHighlightPainter(Color.green);
+
+    //step to
+    String jumpToIndex;
+    Assembly asm = null;
 
 
 
@@ -325,16 +329,16 @@ public class DebuggerGUI extends JFrame {
 
         //btnStep.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightButtons.add(btnStep);
-        rightButtons.add(btnStepOver);
+        rightButtons.add(btnStepTo);
 
         //need these to set all buttons at same size.
         btnStep.setMinimumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
-        btnStepOver.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        btnStepTo.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
         btnExecute.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
         btnAssemble.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
 
         btnStep.setMaximumSize(new Dimension(buttonWidth, buttonHeight)); //300,130, buttonWidth,buttonHeight);
-        btnStepOver.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        btnStepTo.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         btnExecute.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         btnAssemble.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
 
@@ -427,8 +431,22 @@ public class DebuggerGUI extends JFrame {
             }
         });
 
-        btnStepOver.addActionListener(new ActionListener() {
+        btnStepTo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String[] labelArray = asm.getAllLabels().keySet().toArray(new String[0]);
+                if(labelArray.length > 0){
+                    String firstKey = labelArray[0];
+                    String key = (String)JOptionPane.showInputDialog(null,"Enter a label to execute up to:", "Step To", JOptionPane.QUESTION_MESSAGE, null, labelArray, firstKey);
+                    int index = asm.getLineLookup(asm.getLabelIndex(key));
+                    CPU.CPURunTo(index);
+                    updateGUI();
+                    //finished program check
+                    if((CPU.totalBytes + 0x210) <= Registers.readPC()){
+                        disableButtons();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null,"Requires labels in assembled program to this functionality");
+                }
 
             }
         });
@@ -450,13 +468,13 @@ public class DebuggerGUI extends JFrame {
     public void enableButtons(){
         btnExecute.setEnabled(true);
         btnStep.setEnabled(true);
-        btnStepOver.setEnabled(true);
+        btnStepTo.setEnabled(true);
     }
 
     public void disableButtons(){
         btnExecute.setEnabled(false);
         btnStep.setEnabled(false);
-        btnStepOver.setEnabled(false);
+        btnStepTo.setEnabled(false);
     }
 
     public void saveAs(){
@@ -570,12 +588,12 @@ public class DebuggerGUI extends JFrame {
         btnAssemble.setContentAreaFilled(false);
         btnExecute.setContentAreaFilled(false);
         btnStep.setContentAreaFilled(false);
-        btnStepOver.setContentAreaFilled(false);
+        btnStepTo.setContentAreaFilled(false);
 
         menuBar.add(btnAssemble);
         menuBar.add(btnExecute);
         menuBar.add(btnStep);
-        menuBar.add(btnStepOver);
+        menuBar.add(btnStepTo);
 
 
     }
@@ -670,7 +688,7 @@ public class DebuggerGUI extends JFrame {
     public String instructions;
     private boolean assemble(){
 
-        Assembly asm = Import.importInstructions(textArea.getText());
+        asm = Import.importInstructions(textArea.getText());
         currentInstructions = asm.getAllInstructions();
         Memory.clean();
         Registers.init_Memory();

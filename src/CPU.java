@@ -28,6 +28,22 @@ public class CPU{
         decode();
 	}
 
+    /* @brief Run the CPU based till index. Called for every CPU cycle. This will call decode.
+    *
+    *@params None.
+    *@return Void.
+    */
+    public static void CPURunTo(int index){
+        CPURun();
+        while ((index + 0x200) != Registers.readPC()) {
+            if ((totalBytes + 0x210) <= Registers.readPC()) {
+                break;
+            }
+            CPURun();
+            Registers.currentState();
+        }
+    }
+
     /* @brief Taken two values, will concatenate by little endian method.
     *
     *@params value1 first index, will be second.
