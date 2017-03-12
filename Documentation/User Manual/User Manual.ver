@@ -1,0 +1,10 @@
+\begin {longtable}{@{}ll>{\hsize =\vhAuthorColWidth }X>{\hsize =\vhChangeColWidth }X@{}}
+\textbf {\vhversionname }
+ & \textbf {\vhdatename }
+ & \textbf {\vhauthorname }
+ & \textbf {\vhchangename }\\[1ex]
+.1
+ & 11.03.17
+ & \listset {Alison Legge}
+ & Created initial outline of document\\
+\end {longtable}
