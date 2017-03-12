@@ -47,6 +47,7 @@ public class DebuggerGUI extends JFrame {
     private JButton btnStepTo = new JButton ("Step To");
     private JButton btnExecute  = new JButton ("Execute");
     private JButton btnAssemble  = new JButton("Assemble");
+    private JButton btnMemoryDump = new JButton(("Memory Dump"));
 
 
     private int buttonWidth = 150;
@@ -61,7 +62,7 @@ public class DebuggerGUI extends JFrame {
     //text area init
     JPanel assemblyEditor;
     public JTextArea textArea;
-    JScrollPane scrollEditor, stackScroll, memoryScroll;
+    JScrollPane scrollEditor, stackScroll, memoryScroll, popupScroller;
 
     //register memory viewer
     JTextArea registerViewer;
@@ -80,7 +81,10 @@ public class DebuggerGUI extends JFrame {
 
     //Memory Viewer
     JTextArea memoryViewer;
+    JTextArea popupViewer;
+    JPanel popupPanel;
     JPanel bottomViewer;
+    JPanel mainPanel;
 
     // buttons
     JPanel inputButtons;
@@ -127,7 +131,7 @@ public class DebuggerGUI extends JFrame {
         initMemoryViewer();
         initStackViewer();
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout());
 
         assemblyEditor.setPreferredSize(new Dimension(600, 300));
         assemblyEditor.setBorder(new TitledBorder(new EtchedBorder(), "Assembly Editor:"));
@@ -211,9 +215,18 @@ public class DebuggerGUI extends JFrame {
         caret3.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         bottomViewer.add(memoryScroll, BorderLayout.WEST);
-
         bottomViewer.add(registerFlagViewer, BorderLayout.EAST);
-        //bottomViewer.add(inputButtons, BorderLayout.EAST);
+
+
+        popupPanel =  new JPanel(new BorderLayout());
+        popupViewer = new JTextArea();
+        popupViewer.setPreferredSize(new Dimension(780, 24595));
+        popupViewer.setEditable(false);
+        popupViewer.setFont(new Font("Monospaced", Font.PLAIN, 17));
+        popupScroller = new JScrollPane(popupViewer);
+        popupScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        popupPanel.add(popupScroller, BorderLayout.CENTER);
+        popupPanel.setPreferredSize(new Dimension(800, 600));
 
 
     }
@@ -351,13 +364,6 @@ public class DebuggerGUI extends JFrame {
         inputButtons.add(rightButtons, BorderLayout.EAST);
 
 
-
-
-//        inputButtons.add(btnStep);
-//        inputButtons.add(btnStepOver);
-//        inputButtons.add(btnExecute);
-//        inputButtons.add(btnAssemble);
-
     }
 
     private void initTextArea(){
@@ -397,18 +403,7 @@ public class DebuggerGUI extends JFrame {
         });
 
 
-//        assemblyEditor.setSize(300,300);
-//        assemblyEditor.setLocation(new Point(0,0));
-        //assemblyEditor.setBorder(new TitledBorder(new EtchedBorder(), "Assembly Editor:"));
-        //assemblyEditor.setPreferredSize(new Dimension(30, 100));
-        //textArea.setMargin(new Insets(5, 5, 5, 5));
-        //assemblyEditor.add(textArea);
         assemblyEditor.add(scrollEditor, BorderLayout.CENTER);
-
-
-
-
-
     }
 
     private void initEvent(){
@@ -464,17 +459,29 @@ public class DebuggerGUI extends JFrame {
                 assemble();
             }
         });
+
+        btnMemoryDump.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                popupViewer.setText(memoryViewer.getText());
+                JOptionPane.showMessageDialog(frame, popupPanel,
+                        "Memory",
+                        JOptionPane.PLAIN_MESSAGE);
+                System.out.println("hello");
+            }
+        });
     }
     public void enableButtons(){
         btnExecute.setEnabled(true);
         btnStep.setEnabled(true);
         btnStepTo.setEnabled(true);
+        btnMemoryDump.setEnabled(true);
     }
 
     public void disableButtons(){
         btnExecute.setEnabled(false);
         btnStep.setEnabled(false);
         btnStepTo.setEnabled(false);
+        btnMemoryDump.setEnabled(false);
     }
 
     public void saveAs(){
@@ -582,18 +589,22 @@ public class DebuggerGUI extends JFrame {
         });
         menu.add(quitMenuItem);
 
-        menuBar.add( Box.createHorizontalStrut( 200 ) );
+        menuBar.add( Box.createHorizontalStrut( 160 ) );
 
         //do not color the buttons
         btnAssemble.setContentAreaFilled(false);
         btnExecute.setContentAreaFilled(false);
         btnStep.setContentAreaFilled(false);
         btnStepTo.setContentAreaFilled(false);
+        btnMemoryDump.setContentAreaFilled(false);
 
         menuBar.add(btnAssemble);
+        menuBar.add(Box.createRigidArea(new Dimension(25,0)));
         menuBar.add(btnExecute);
         menuBar.add(btnStep);
         menuBar.add(btnStepTo);
+        menuBar.add(Box.createRigidArea(new Dimension(25,0)));
+        menuBar.add(btnMemoryDump);
 
 
     }
