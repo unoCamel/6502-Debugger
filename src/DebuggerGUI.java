@@ -18,36 +18,20 @@ import org.apache.commons.io.FilenameUtils;
 public class DebuggerGUI extends JFrame {
 
 	private JPanel contentPane;
-	private JFrame frame;
+	public static JFrame frame;
 	//private DebuggerGUI frame;
 
     int frameXpos = 200;
     int frameYpos = 200;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void debuggerINIT() {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					DebuggerGUI frame = new DebuggerGUI();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
+    
 	/**
 	 * Create the frame.
 	 */
-    private JButton btnStep  = new JButton    ("Step");
-    private JButton btnStepTo = new JButton ("Step To");
-    private JButton btnExecute  = new JButton ("Execute");
-    private JButton btnAssemble  = new JButton("Assemble");
-    private JButton btnMemoryDump = new JButton(("Memory Dump"));
+    private static JButton btnStep  = new JButton    ("Step");
+    private static JButton btnStepTo = new JButton ("Step To");
+    private static JButton btnExecute  = new JButton ("Execute");
+    private static JButton btnAssemble  = new JButton("Assemble");
+    private static JButton btnMemoryDump = new JButton(("Memory Dump"));
 
 
     private int buttonWidth = 150;
@@ -60,45 +44,45 @@ public class DebuggerGUI extends JFrame {
     JMenuItem menuItem;
 
     //text area init
-    JPanel assemblyEditor;
-    public JTextArea textArea;
-    JScrollPane scrollEditor, stackScroll, memoryScroll, popupScroller;
+    public static JPanel assemblyEditor;
+    public static JTextArea textArea;
+    public static JScrollPane scrollEditor, stackScroll, memoryScroll, popupScroller;
 
     //register memory viewer
-    JTextArea registerViewer;
-    JTextArea stackViewer;
-    JPanel rightViewer;
-    JPanel registerFlagViewer;
+    public static JTextArea registerViewer;
+    public static JTextArea stackViewer;
+    public static JPanel rightViewer;
+    public static JPanel registerFlagViewer;
 
-    JCheckBox flagS;
-    JCheckBox flagV;
-    JCheckBox flagNull;
-    JCheckBox flagB;
-    JCheckBox flagD;
-    JCheckBox flagI;
-    JCheckBox flagZ;
-    JCheckBox flagC;
+    public static JCheckBox flagS;
+    public static JCheckBox flagV;
+    public static JCheckBox flagNull;
+    public static JCheckBox flagB;
+    public static JCheckBox flagD;
+    public static JCheckBox flagI;
+    public static JCheckBox flagZ;
+    public static JCheckBox flagC;
 
     //Memory Viewer
-    JTextArea memoryViewer;
-    JTextArea popupViewer;
-    JPanel popupPanel;
-    JPanel bottomViewer;
-    JPanel mainPanel;
+    public static JTextArea memoryViewer;
+    public static JTextArea popupViewer;
+    public static JPanel popupPanel;
+    public static JPanel bottomViewer;
+    public static JPanel mainPanel;
 
     // buttons
-    JPanel inputButtons;
+    public static JPanel inputButtons;
 
     //borders
 
     //File saving
-    File selectedFile = null;
+    public static File selectedFile = null;
 
     //file chooser
-    JFileChooser fileChooser = new JFileChooser();
+    public static JFileChooser fileChooser = new JFileChooser();
 
     //initial string to determine if different and needs saving
-    String initialString = null;
+    public static String initialString = null;
 
     //Flags
     boolean isAssembled = false; //flag for making sure user has assembled code.
@@ -107,11 +91,11 @@ public class DebuggerGUI extends JFrame {
     public static String[] currentInstructions;
 
     //highlighting lines
-    private Highlighter.HighlightPainter currentLine = new DefaultHighlighter.DefaultHighlightPainter(Color.green);
+    private static Highlighter.HighlightPainter currentLine = new DefaultHighlighter.DefaultHighlightPainter(Color.green);
 
     //step to
-    String jumpToIndex;
-    Assembly asm = null;
+    public static String jumpToIndex;
+    public static Assembly asm = null;
 
     //current instruction
     public static CharSequence instructionString = "";
@@ -150,46 +134,28 @@ public class DebuggerGUI extends JFrame {
         bottomViewer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         mainPanel.add(bottomViewer, BorderLayout.SOUTH);
 
-        //mainPanel.add(inputButtons, BorderLayout.SOUTH);
-
-
         frame.add(mainPanel);
         frame.setJMenuBar(menuBar);
         frame.pack();
         disableButtons();
         frame.setVisible(true);
-        assemble(); //set memory blank
+        Debugger.assemble(); //set memory blank
         disableButtons();
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if(isDifferent() ||  textArea.getText().equals("")) {
-//                    int ret = JOptionPane.showConfirmDialog(frame, "Save File before exiting?", "Save this file?", JOptionPane.YES_NO_CANCEL_OPTION);
-//                    if (ret == JOptionPane.CANCEL_OPTION){
-//                        return;
-//                    }
-//                    if (ret == JOptionPane.YES_OPTION){
-//                        saveFile();
-//                        System.exit(JFrame.EXIT_ON_CLOSE);
-//                    }
-                    saveConfirmation("Save changes before exiting?");
+                if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
+                    Debugger.saveConfirmation("Save changes before exiting?");
                 }
-
                 frame.dispose();
                 System.exit(0);
 
             }
         });
-
-
-
     }
 
-
     private void initComponent(){
-
-
         //create menu bar
         menuBar = new JMenuBar();
         menu = new JMenu("File");
@@ -245,16 +211,11 @@ public class DebuggerGUI extends JFrame {
 
         rightViewer = new JPanel(new BorderLayout());
 
-
         //scroll pane;
         stackScroll = new JScrollPane(stackViewer);
         stackScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         stackScroll.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         rightViewer.add(stackScroll, BorderLayout.CENTER);
-
-
-
-
     }
 
     private void initRegisterViewer(){
@@ -320,9 +281,6 @@ public class DebuggerGUI extends JFrame {
         registerFlagViewer.add(registerViewer, BorderLayout.WEST);
         registerFlagViewer.add(flagViewer, BorderLayout.EAST);
 
-//        rightViewer = new JPanel(new BorderLayout());
-//        rightViewer.add(tmp, BorderLayout.CENTER);
-
     }
 
     private void initButtons(){
@@ -335,16 +293,8 @@ public class DebuggerGUI extends JFrame {
         rightButtons.setLayout(new BoxLayout(rightButtons, BoxLayout.Y_AXIS));
 
         inputButtons.setLayout(new BorderLayout());
-        //inputButtons.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-        //inputButtons.add(Box.createVerticalGlue());
-        //inputButtons.setLayout(new BoxLayout());
-
-        //btnAssemble.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftButtons.add(btnAssemble);
-        //btnExecute.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftButtons.add(btnExecute);
-
-        //btnStep.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightButtons.add(btnStep);
         rightButtons.add(btnStepTo);
 
@@ -378,16 +328,12 @@ public class DebuggerGUI extends JFrame {
         textArea.setEditable(true);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        //textArea.setPreferredSize(new Dimension(400, 1000));
 
         assemblyEditor = new JPanel(new BorderLayout());
         //scroll pane;
         scrollEditor = new JScrollPane(textArea);
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         assemblyEditor.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
-//        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
-//        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-
         textArea.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -460,7 +406,7 @@ public class DebuggerGUI extends JFrame {
 
         btnAssemble.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                assemble();
+                Debugger.assemble();
             }
         });
 
@@ -474,55 +420,17 @@ public class DebuggerGUI extends JFrame {
             }
         });
     }
-    public void enableButtons(){
+
+    public static void enableButtons(){
         btnExecute.setEnabled(true);
         btnStep.setEnabled(true);
         btnStepTo.setEnabled(true);
     }
 
-    public void disableButtons(){
+    public static void disableButtons(){
         btnExecute.setEnabled(false);
         btnStep.setEnabled(false);
         btnStepTo.setEnabled(false);
-    }
-
-    public void saveAs(){
-        JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-            File tmp = fileChooser.getSelectedFile();
-            try{
-                //force txt extension. example.xml.txt is okay.
-                if(!FilenameUtils.getExtension(tmp.getName()).equalsIgnoreCase("txt")){
-                    tmp = new File(tmp.toString() + ".txt");
-                    tmp = new File(tmp.getParentFile(), FilenameUtils.getBaseName(tmp.getName()) + ".txt");
-                }
-                PrintWriter writer = new PrintWriter(tmp);
-                writer.print(textArea.getText());
-                writer.flush();
-                    // save to file
-            }catch(FileNotFoundException ex){
-
-            }
-
-        }
-    }
-
-    public void saveFile(){
-        try{
-            if(selectedFile == null || textArea.getText().equals("")){
-                saveAs();
-            }else{
-                PrintWriter writer = new PrintWriter(selectedFile);
-                writer.print(textArea.getText());
-                writer.flush();
-            }
-
-        }catch(FileNotFoundException ex){
-
-        }
-    }
-    private boolean isDifferent(){
-        return !textArea.getText().equals(initialString);
     }
 
     /**
@@ -541,11 +449,11 @@ public class DebuggerGUI extends JFrame {
         JMenuItem newMenuItem = new JMenuItem("New", null);
         newMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(isDifferent() || textArea.getText().equals("")){
-                    saveConfirmation("Save changes?");
+                if(Debugger.isDifferent() || textArea.getText().equals("")){
+                    Debugger.saveConfirmation("Save changes?");
                 }
                 textArea.setText("");
-                assemble();
+                Debugger.assemble();
                 disableButtons();
                 selectedFile = null;
             }
@@ -556,7 +464,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem openMenuItem = new JMenuItem("Open", null);
         openMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                openFile();
+                Debugger.openFile();
             }
         });
         menu.add(openMenuItem);
@@ -565,7 +473,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem saveMenuItem = new JMenuItem("Save", null);
         saveMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveFile();
+                Debugger.saveFile();
             }
         });
         menu.add(saveMenuItem);
@@ -574,7 +482,7 @@ public class DebuggerGUI extends JFrame {
         JMenuItem saveasMenuItem = new JMenuItem("Save As", null);
         saveasMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveAs();
+                Debugger.saveAs();
             }
         });
         menu.add(saveasMenuItem);
@@ -583,8 +491,8 @@ public class DebuggerGUI extends JFrame {
         JMenuItem quitMenuItem = new JMenuItem("Quit", null);
         quitMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(!isDifferent() || !textArea.getText().equals("")){
-                    saveConfirmation("Save changes before quitting?");
+                if(!Debugger.isDifferent() || !textArea.getText().equals("")){
+                    Debugger.saveConfirmation("Save changes before quitting?");
                 }
                 System.exit(0);
             }
@@ -611,36 +519,7 @@ public class DebuggerGUI extends JFrame {
 
     }
 
-
-
-    private boolean openFile(){
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        FileNameExtensionFilter txtfilter = new FileNameExtensionFilter(
-                "txt files (*.txt)", "txt");
-        fileChooser.setFileFilter(txtfilter);
-        int result = fileChooser.showOpenDialog(frame);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            textArea.setText("");
-            selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            try {
-                BufferedReader in = new BufferedReader(new FileReader(selectedFile));
-                String line = in.readLine();
-                while (line != null) {
-                    textArea.append(line + "\n");
-                    line = in.readLine();
-                }
-                initialString = textArea.getText();
-                return true;
-            } catch(IOException ex){
-                return false;
-            }
-
-        }
-        return false;
-    }
-
-    public void updateGUI(){
+    public static void updateGUI(){
         //set memory viewer
         memoryViewer.setText(Memory.memoryToString());
         stackViewer.setText(Memory.stackToString());
@@ -657,16 +536,12 @@ public class DebuggerGUI extends JFrame {
 
         //highlighting
         try{
-            int curLine = checkLine(stackViewer);
+            int curLine = Debugger.checkLine(stackViewer);
             int startStack = stackViewer.getLineStartOffset(curLine);
             int endStack = stackViewer.getLineEndOffset(curLine);
             //finding current line
             prevInstructionString = instructionString;
             instructionString = stackViewer.getText().subSequence(startStack, endStack);
-
-
-            //
-
             stackViewer.getHighlighter().addHighlight(startStack, endStack, currentLine);
             System.out.println("Line is " + curLine);
             textArea.getHighlighter().removeAllHighlights();
@@ -681,46 +556,7 @@ public class DebuggerGUI extends JFrame {
         registerViewer.setText(Registers.registersToString());
     }
 
-    private int checkLine(JTextArea field){
-        int lineCounter = 0;
-        for (String line : field.getText().split("\\n")){
-            //System.out.println(line.subSequence(0, 4) + " and comparing" + "$" + Integer.toHexString(Registers.readPC()));
-            if(line.subSequence(0, 4).equals("$" + Integer.toHexString(Registers.readPC()).toUpperCase())){
-                return lineCounter;
-            } else{
-                lineCounter++;
-            }
-        }
 
-        return 0;
-    }
-
-    public void saveConfirmation(String message){
-        int ret = JOptionPane.showConfirmDialog(frame, message, "Save changes?", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (ret == JOptionPane.CANCEL_OPTION){
-            return;
-        }
-        if (ret == JOptionPane.YES_OPTION){
-            saveFile();
-        }
-    }
-
-    public String instructions;
-    private boolean assemble(){
-
-        asm = Import.importInstructions(textArea.getText());
-        currentInstructions = asm.getAllInstructions();
-        Memory.clean();
-        Registers.init_Memory();
-        Memory.setMemory(asm.assemble());
-        Memory.instrToString();
-        enableButtons();
-        updateGUI();
-        updateGUI();
-
-
-        return true;
-    }
 }
 
 
