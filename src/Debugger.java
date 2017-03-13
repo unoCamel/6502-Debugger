@@ -6,12 +6,6 @@ import java.io.*;
 
 public class Debugger {
 
-    public static String showAssembly(){
-
-        return "hello";
-    }
-
-
     public static boolean openFile(){
         DebuggerGUI.fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         FileNameExtensionFilter txtfilter = new FileNameExtensionFilter(

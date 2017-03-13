@@ -23,7 +23,7 @@ public class DebuggerGUI extends JFrame {
 
     int frameXpos = 200;
     int frameYpos = 200;
-    
+
 	/**
 	 * Create the frame.
 	 */
