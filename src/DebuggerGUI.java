@@ -113,6 +113,10 @@ public class DebuggerGUI extends JFrame {
     String jumpToIndex;
     Assembly asm = null;
 
+    //current instruction
+    public static CharSequence instructionString = "";
+    public static CharSequence prevInstructionString = "";
+
 
 
     public DebuggerGUI(){
@@ -640,7 +644,6 @@ public class DebuggerGUI extends JFrame {
         //set memory viewer
         memoryViewer.setText(Memory.memoryToString());
         stackViewer.setText(Memory.stackToString());
-        registerViewer.setText(Registers.registersToString());
 
 
         flagS.setSelected(Registers.isNegative());
@@ -657,6 +660,13 @@ public class DebuggerGUI extends JFrame {
             int curLine = checkLine(stackViewer);
             int startStack = stackViewer.getLineStartOffset(curLine);
             int endStack = stackViewer.getLineEndOffset(curLine);
+            //finding current line
+            prevInstructionString = instructionString;
+            instructionString = stackViewer.getText().subSequence(startStack, endStack);
+
+
+            //
+
             stackViewer.getHighlighter().addHighlight(startStack, endStack, currentLine);
             System.out.println("Line is " + curLine);
             textArea.getHighlighter().removeAllHighlights();
@@ -668,6 +678,7 @@ public class DebuggerGUI extends JFrame {
         } catch (BadLocationException ex){
 
         }
+        registerViewer.setText(Registers.registersToString());
     }
 
     private int checkLine(JTextArea field){
@@ -704,6 +715,7 @@ public class DebuggerGUI extends JFrame {
         Memory.setMemory(asm.assemble());
         Memory.instrToString();
         enableButtons();
+        updateGUI();
         updateGUI();
 
 
