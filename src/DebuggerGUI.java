@@ -474,14 +474,12 @@ public class DebuggerGUI extends JFrame {
         btnExecute.setEnabled(true);
         btnStep.setEnabled(true);
         btnStepTo.setEnabled(true);
-        btnMemoryDump.setEnabled(true);
     }
 
     public void disableButtons(){
         btnExecute.setEnabled(false);
         btnStep.setEnabled(false);
         btnStepTo.setEnabled(false);
-        btnMemoryDump.setEnabled(false);
     }
 
     public void saveAs(){
