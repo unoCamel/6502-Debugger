@@ -93,6 +93,7 @@ public class Assembly{
 				i++;
 				continue;
 			}
+			//System.out.println(instruction);
 			setupQueue(instruction);
 			lineCounter++;
 		}
@@ -114,7 +115,7 @@ public class Assembly{
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
 		// have to run Immediate check before before ZeroPage
 		String instName = instruction.substring(0, 3);
-		String[] params = instruction.split(" ");
+		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
 	    	System.out.println("IS IMPLICIT: " + instruction);
 	    	modebit = 1;
@@ -210,13 +211,20 @@ public class Assembly{
 	}
 
 	private void addToQueue(String instName, int modebit, String[] params) {
+		System.out.println(Arrays.toString(params));
 		int opcode= db.getOPCode(instName, modebit);
+		System.out.println(Integer.toHexString(opcode));
 		addBytes(opcode);
 		System.out.println(instName + " and param: " + Arrays.toString(params));
-		int paramNum = Integer.parseInt( params[1].replaceAll("[^-?0-9A-Fa-f]+", ""), 16);
+		int paramNum = Integer.parseInt( params[1].replaceAll("[^0-9A-Fa-f]+", ""), 16);
     	binaryInstructions[i++] = opcode;
     	// check if 16 bit
     	if (modebit >= 8 && modebit <= 11){
+    		if (opcode == 0x9D){
+    			System.out.println(paramNum);
+    			System.out.println((paramNum & 0xff));
+    			System.out.println((paramNum >> 8) & 0xff);
+    		}
     		binaryInstructions[i++] = (paramNum & 0xff);
     		binaryInstructions[i++] = ((paramNum >> 8) & 0xff);
     	}
@@ -235,7 +243,7 @@ public class Assembly{
 	}
 
 	private boolean checkImmediate(String inst){
-		String pattern = "#\\$?[0-9a-f]{1,2}";
+		String pattern = "#\\$?[0-9a-fA-F]{1,2}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -257,19 +265,19 @@ public class Assembly{
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		String pattern = "\\$?[0-9a-f]{2,3}";
+		String pattern = "(\\$| )[0-9a-fA-F]{2}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageX(String inst){
-		String pattern = "\\$?[0-9a-f]{2},X";
+		String pattern = "\\$?[0-9a-fA-F]{2},X";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkZeroPageY(String inst){
-		String pattern = "\\$?[0-9a-f]{2},Y";
+		String pattern = "\\$?[0-9a-fA-F]{2},Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -291,7 +299,7 @@ public class Assembly{
 		return false;
 	}
 	private boolean checkAbsolute(String inst){
-		String pattern = "\\$?[0-9a-f]{3,4}";
+		String pattern = "\\$?[0-9a-fA-F]{3,4}";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -312,19 +320,19 @@ public class Assembly{
 		return false;
 	}
 	private boolean checkAbsoluteX(String inst){
-		String pattern = "\\$?[0-9a-f]{3,4},X";
+		String pattern = "\\$?[0-9a-fA-F]{3,4},X";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkAbsoluteY(String inst){
-		String pattern = "\\$?[0-9a-f]{3,4},Y";
+		String pattern = "\\$?[0-9a-fA-F]{3,4},Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkIndirect(String inst){
-		String pattern = "\\(\\$?[0-9a-f]{3,4}\\)";
+		String pattern = "\\(\\$?[0-9a-fA-F]{3,4}\\)";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -345,13 +353,13 @@ public class Assembly{
 		return false;
 	}
 	private boolean checkIndirectX(String inst){
-		String pattern = "\\(\\$?[0-9a-f]{1,2},X\\)";
+		String pattern = "\\(\\$?[0-9a-fA-F]{1,2},X\\)";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
 	}
 	private boolean checkIndirectY(String inst){
-		String pattern = "\\(\\$?[0-9a-f]{1,2}\\),Y";
+		String pattern = "\\(\\$?[0-9a-fA-F]{1,2}\\),Y";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
