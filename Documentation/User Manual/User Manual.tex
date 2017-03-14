@@ -62,9 +62,9 @@ To launch the application, select and open the 6502-Debugger.jar file. This will
 
 \section{6502 Debugger Programming Nuances}
 \subsection{Brief}
-There are a few specific quirks that come with working with this specific 6502 debugger that you as the user should be aware of when writing your 6502 Assembly Code. The following covers those specifics.
+There are a few specific requirements that come with working with this specific 6502 debugger that you as the user should be aware of when writing your 6502 Assembly Code. The following covers those specifics.
 \subsection{Instruction Memory}
-This debugger has 16 kb of memory. This means that you as the programmer can only write as many instructions that fit into 16 kb of memory, else the program will not run to completion. This in practice means you have access to 0x0200 to 0x3FFF of the address space, since there needs to be room left for the zero page and high index RAM.
+This debugger has 16 kb of memory. This means that you as the programmer can only write as many instructions that fit into 16 kb of memory, else the program will not run to completion. This in practice means you have access to 0x0200 to 0x3FFF of the address space, since there needs to be room left for the zero page and high index RAM. Different 6502 implementations can do memory somewhat differently, except for the zero page and high index ram, this is the implementation that we chose that fits the requirements.
 \subsection{Line Termination}
 This debugger recognizes individual lines of code through the use of new line characters. Make sure to always hit "Enter" at the end of every individual line of code. Else the debugger might not recognize it.
 \subsection{Labels}
