@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  11 MAR 2017 18:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  14 MAR 2017 13:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -220,130 +220,131 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 \openout4 = `"User Manual.ver"'.
 
+ [1]
 \vh@hstfile=\write6
 \openout6 = `"User Manual.hst"'.
 
- (./User Manual.ver) (./User Manual.ver) (./User Manual.ver
-Overfull \vbox (1.34943pt too high) has occurred while \output is active []
-
-
-[1])
+ (./User Manual.ver) (./User Manual.ver)
+(./User Manual.ver) [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 47.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 47.
- [2] [3]
-<MainPage.png, id=20, 843.15pt x 599.23875pt>
+ [3] [4] [5]
+<MainPage.png, id=26, 843.15pt x 599.23875pt>
 File: MainPage.png Graphic file (type png)
  <use MainPage.png>
-Package pdftex.def Info: MainPage.png used on input line 72.
+Package pdftex.def Info: MainPage.png used on input line 85.
 (pdftex.def)             Requested size: 256.07324pt x 182.09549pt.
- [4 <./MainPage.png>] <FileMenu.png, id=26, 840.13875pt x 599.23875pt>
+ [6 <./MainPage.png>] <FileMenu.png, id=33, 840.13875pt x 599.23875pt>
 File: FileMenu.png Graphic file (type png)
  <use FileMenu.png>
-Package pdftex.def Info: FileMenu.png used on input line 80.
+Package pdftex.def Info: FileMenu.png used on input line 93.
 (pdftex.def)             Requested size: 256.06888pt x 182.09549pt.
 
-<OpenFile.png, id=27, 841.1425pt x 600.2425pt>
+<OpenFile.png, id=34, 841.1425pt x 600.2425pt>
 File: OpenFile.png Graphic file (type png)
  <use OpenFile.png>
-Package pdftex.def Info: OpenFile.png used on input line 85.
+Package pdftex.def Info: OpenFile.png used on input line 98.
 (pdftex.def)             Requested size: 256.06679pt x 182.09827pt.
- [5
+ [7
 
- <./FileMenu.png> <./OpenFile.png>] <SelectFile.png, id=33, 842.14626pt x 600.2
+ <./FileMenu.png> <./OpenFile.png>] <SelectFile.png, id=40, 842.14626pt x 600.2
 425pt>
 File: SelectFile.png Graphic file (type png)
 
 <use SelectFile.png>
-Package pdftex.def Info: SelectFile.png used on input line 93.
+Package pdftex.def Info: SelectFile.png used on input line 106.
 (pdftex.def)             Requested size: 256.0768pt x 182.09827pt.
- <FibCode.png, id=34, 838.13126pt x 601.24625pt>
+ <FibCode.png, id=41, 838.13126pt x 601.24625pt>
 File: FibCode.png Graphic file (type png)
 
 <use FibCode.png>
-Package pdftex.def Info: FibCode.png used on input line 100.
+Package pdftex.def Info: FibCode.png used on input line 113.
 (pdftex.def)             Requested size: 256.07088pt x 182.10002pt.
- [6
+ [8
 
  <./SelectFile.png> <./FibCode.png>]
-<Assemble.png, id=41, 839.135pt x 599.23875pt>
+<Assemble.png, id=47, 839.135pt x 599.23875pt>
 File: Assemble.png Graphic file (type png)
  <use Assemble.png>
-Package pdftex.def Info: Assemble.png used on input line 118.
+Package pdftex.def Info: Assemble.png used on input line 131.
 (pdftex.def)             Requested size: 227.61942pt x 163.31447pt.
- [7
+ [9
 
- <./Assemble.png>] <Execute.png, id=46, 841.1425pt x 601.24625pt>
+ <./Assemble.png>] <Execute.png, id=52, 841.1425pt x 601.24625pt>
 File: Execute.png Graphic file (type png)
  <use Execute.png>
-Package pdftex.def Info: Execute.png used on input line 147.
+Package pdftex.def Info: Execute.png used on input line 160.
 (pdftex.def)             Requested size: 227.62491pt x 163.3203pt.
 
-[8 <./Execute.png>] <FailedStepTo.png, id=51, 840.13875pt x 603.25375pt>
+[10 <./Execute.png>] <FailedStepTo.png, id=57, 840.13875pt x 603.25375pt>
 File: FailedStepTo.png Graphic file (type png)
 
 <use FailedStepTo.png>
-Package pdftex.def Info: FailedStepTo.png used on input line 164.
+Package pdftex.def Info: FailedStepTo.png used on input line 177.
 (pdftex.def)             Requested size: 227.62248pt x 163.31331pt.
 
-<StepToClosedMenu.png, id=52, 838.13126pt x 597.23125pt>
+<StepToClosedMenu.png, id=58, 838.13126pt x 597.23125pt>
 File: StepToClosedMenu.png Graphic file (type png)
 
 <use StepToClosedMenu.png>
-Package pdftex.def Info: StepToClosedMenu.png used on input line 171.
+Package pdftex.def Info: StepToClosedMenu.png used on input line 184.
 (pdftex.def)             Requested size: 227.6157pt x 163.31412pt.
 
-<StepToOpenMenu.png, id=53, 839.135pt x 597.23125pt>
+<StepToOpenMenu.png, id=59, 839.135pt x 597.23125pt>
 File: StepToOpenMenu.png Graphic file (type png)
  <use StepToOpenMenu.png>
-Package pdftex.def Info: StepToOpenMenu.png used on input line 178.
+Package pdftex.def Info: StepToOpenMenu.png used on input line 191.
 (pdftex.def)             Requested size: 227.61942pt x 163.31412pt.
 
-[9
+[11
 
  <./FailedStepTo.png> <./StepToClosedMenu.png>]
-<AfterStepTo.png, id=59, 842.14626pt x 600.2425pt>
+<AfterStepTo.png, id=65, 842.14626pt x 600.2425pt>
 File: AfterStepTo.png Graphic file (type png)
  <use AfterStepTo.png>
-Package pdftex.def Info: AfterStepTo.png used on input line 185.
+Package pdftex.def Info: AfterStepTo.png used on input line 198.
 (pdftex.def)             Requested size: 227.61383pt x 163.31325pt.
 
-[10 <./StepToOpenMenu.png> <./AfterStepTo.png>]
-<Save.png, id=65, 841.1425pt x 597.23125pt>
+[12 <./StepToOpenMenu.png> <./AfterStepTo.png>]
+<Save.png, id=72, 841.1425pt x 597.23125pt>
 File: Save.png Graphic file (type png)
  <use Save.png>
-Package pdftex.def Info: Save.png used on input line 198.
+Package pdftex.def Info: Save.png used on input line 211.
 (pdftex.def)             Requested size: 227.62491pt x 163.31412pt.
 
-<SaveText.png, id=66, 838.13126pt x 585.18625pt>
+<SaveText.png, id=73, 838.13126pt x 585.18625pt>
 File: SaveText.png Graphic file (type png)
  <use SaveText.png>
-Package pdftex.def Info: SaveText.png used on input line 205.
+Package pdftex.def Info: SaveText.png used on input line 218.
 (pdftex.def)             Requested size: 227.6157pt x 163.31528pt.
- [11
+ [13
 
- <./Save.png> <./SaveText.png>] (./User Manual.aux) ) 
+ <./Save.png> <./SaveText.png>] [14
+
+] (./User Manual.aux) ) 
 Here is how much of TeX's memory you used:
- 2251 strings out of 493014
- 33320 string characters out of 6133351
- 95857 words of memory out of 5000000
- 5742 multiletter control sequences out of 15000+600000
+ 2252 strings out of 493014
+ 33338 string characters out of 6133351
+ 96857 words of memory out of 5000000
+ 5743 multiletter control sequences out of 15000+600000
  9406 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,6n,23p,327b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "User Manual.pdf" (12 pages, 1044579 bytes).
+ 37i,6n,23p,377b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmcsc10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy10.pfb>
+Output written on "User Manual.pdf" (15 pages, 1049338 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 100 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
