@@ -186,7 +186,6 @@ public class Memory {
             tmpInstr = read(counter);
             tmpArg1 = read(counter + 1);
             tmpArg2 = read(counter + 2);
-            System.out.println("instr is null: " + Integer.toHexString(tmpInstr) + " or " + tmpInstr);
             byteSize = Databank.getJumpCode(tmpInstr);
 
             memoryString = memoryString.concat("$" + String.format("%02x", (int) x).toUpperCase() + ": ");

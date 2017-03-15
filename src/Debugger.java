@@ -101,6 +101,24 @@ public class Debugger {
         return 0;
     }
 
+    public static int checkLine(JTextArea field, int stackIndex){
+        int lineCounter = 0;
+        int numberNewLines = 0;
+        for (String line : field.getText().split("\\n")){
+            System.out.println("CURRENT LINE: " +line);
+            //System.out.println(line.subSequence(0, 4) + " and comparing" + "$" + Integer.toHexString(Registers.readPC()));
+            if(line.trim().isEmpty() || line.subSequence(0, 1).equals(";") || line.trim().charAt(0) == ';'){
+                System.out.println("CURRENT EMPTY LINE: " +line);
+                numberNewLines++;
+            }else{
+                if(lineCounter == stackIndex){
+                    return lineCounter++ + numberNewLines;}
+                lineCounter++;
+            }
+        }
+        return lineCounter + numberNewLines;
+    }
+
     public static boolean assemble(){
 
         DebuggerGUI.asm = Import.importInstructions(DebuggerGUI.textArea.getText());

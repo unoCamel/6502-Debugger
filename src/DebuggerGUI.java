@@ -542,16 +542,17 @@ public class DebuggerGUI extends JFrame {
         //highlighting
         try{
             int curLine = Debugger.checkLine(stackViewer);
+            int curInstrLine = Debugger.checkLine(textArea, curLine - 0x100);
+            System.out.println("line: " + (curLine - 0x100));
             int startStack = stackViewer.getLineStartOffset(curLine);
             int endStack = stackViewer.getLineEndOffset(curLine);
             //finding current line
             prevInstructionString = instructionString;
             instructionString = stackViewer.getText().subSequence(startStack, endStack);
             stackViewer.getHighlighter().addHighlight(startStack, endStack, currentLine);
-            System.out.println("Line is " + curLine);
             textArea.getHighlighter().removeAllHighlights();
-            int startAssembly = textArea.getLineStartOffset(curLine - 0x100);
-            int endAssembly = textArea.getLineEndOffset(curLine -0x100);
+            int startAssembly = textArea.getLineStartOffset(curInstrLine);
+            int endAssembly = textArea.getLineEndOffset(curInstrLine);
             textArea.getHighlighter().addHighlight(startAssembly, endAssembly, currentLine);
 
 

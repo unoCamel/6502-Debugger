@@ -117,12 +117,9 @@ public class Assembly{
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
-	    	System.out.println("IS IMPLICIT: " + instruction);
 	    	modebit = 1;
 	    	int opcode= db.getOPCode(instName, modebit);
-
 	    	addBytes(opcode);
-			System.out.println("IS IMPLICIT: " + instruction + "opcode: " + Integer.toHexString(opcode));
 	    	binaryInstructions[i++] = opcode;
 	    }
 		else if (checkAbsoluteX(instruction)){
@@ -211,11 +208,8 @@ public class Assembly{
 	}
 
 	private void addToQueue(String instName, int modebit, String[] params) {
-		System.out.println(Arrays.toString(params));
 		int opcode= db.getOPCode(instName, modebit);
-		System.out.println(Integer.toHexString(opcode));
 		addBytes(opcode);
-		System.out.println(instName + " and param: " + Arrays.toString(params));
 		int paramNum = Integer.parseInt( params[1].replaceAll("[^0-9A-Fa-f]+", ""), 16);
     	binaryInstructions[i++] = opcode;
     	// check if 16 bit
@@ -288,7 +282,6 @@ public class Assembly{
 		Pattern argMatcher = Pattern.compile(argPattern);
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
-		System.out.println("In branch: " + inst);
 		if (m.find()){
 			String[] s = inst.split(" ");
 			if (s.length < 2) return false;
