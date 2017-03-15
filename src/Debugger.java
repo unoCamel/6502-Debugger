@@ -33,14 +33,16 @@ public class Debugger {
         return false;
     }
 
-    public static void saveConfirmation(String message){
+    public static boolean saveConfirmation(String message){
         int ret = JOptionPane.showConfirmDialog(DebuggerGUI.frame, message, "Save changes?", JOptionPane.YES_NO_CANCEL_OPTION);
         if (ret == JOptionPane.CANCEL_OPTION){
-            return;
+            return true;
         }
         if (ret == JOptionPane.YES_OPTION){
             saveFile();
+            return false;
         }
+        return false;
     }
 
 

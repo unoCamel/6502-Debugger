@@ -145,11 +145,13 @@ public class DebuggerGUI extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                boolean isCancel = true;
                 if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
-                    Debugger.saveConfirmation("Save changes before exiting?");
+                    isCancel = Debugger.saveConfirmation("Save changes before exiting?");
+                } if(!isCancel){
+                    frame.dispose();
+                    System.exit(0);
                 }
-                frame.dispose();
-                System.exit(0);
 
             }
         });
@@ -491,10 +493,13 @@ public class DebuggerGUI extends JFrame {
         JMenuItem quitMenuItem = new JMenuItem("Quit", null);
         quitMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(!Debugger.isDifferent() || !textArea.getText().equals("")){
-                    Debugger.saveConfirmation("Save changes before quitting?");
+                boolean isCancel = true;
+                if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
+                    isCancel = Debugger.saveConfirmation("Save changes before exiting?");
+                } if(!isCancel){
+                    frame.dispose();
+                    System.exit(0);
                 }
-                System.exit(0);
             }
         });
         menu.add(quitMenuItem);
