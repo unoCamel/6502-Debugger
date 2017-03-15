@@ -114,6 +114,8 @@ public class Assembly{
 			// (1) Implicit / (2) Accumulator / (3) Immediate / (4) Zero Page / (5) Zero Page,X / (6) Zero Page,Y / (7) branch
 			// (8) Absolute / (9) Absolute,X / (10) Absolute,Y / (11) Indirect / (12) (Indirect,X) / (13) (Indirect,Y)
 		// have to run Immediate check before before ZeroPage
+		instruction = instruction.trim();
+		instruction = instruction.replaceAll("\\s+", " ");
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
@@ -132,6 +134,10 @@ public class Assembly{
 		}
 		else if (checkIndirect(instruction)){
 	    	modebit = 11;
+	    	addToQueue(instName, modebit, params);
+	    }
+	    else if (checkImmediate(instruction)){
+	    	modebit = 3;
 	    	addToQueue(instName, modebit, params);
 	    }
 		else if (checkAbsolute(instruction)){
@@ -172,10 +178,6 @@ public class Assembly{
 			addBytes(opcode);
 			binaryInstructions[i++] = opcode;
 	    }
-	    else if (checkImmediate(instruction)){
-	    	modebit = 3;
-	    	addToQueue(instName, modebit, params);
-	    }
 	    else if (checkZeroPageX(instruction)){
 	    	modebit = 5;
 	    	addToQueue(instName, modebit, params);
@@ -203,6 +205,7 @@ public class Assembly{
 			addToQueue(instName, modebit, index);		
 	    }else {
 	    	System.out.println("Not an instruction: " + instruction);
+	    	System.exit(0);
 		}
 		return modebit;
 	}
