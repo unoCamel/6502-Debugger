@@ -145,10 +145,18 @@ public class DebuggerGUI extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                System.out.println("closing");
                 boolean isCancel = true;
                 if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
                     isCancel = Debugger.saveConfirmation("Save changes before exiting?");
-                } if(!isCancel){
+                } else{
+                    int quit = JOptionPane.showConfirmDialog(null, "Quit?");
+                    if(quit == JOptionPane.OK_OPTION){
+                        isCancel = false;
+                    }
+                }
+
+                if(!isCancel){
                     frame.dispose();
                     System.exit(0);
                 }
@@ -498,7 +506,12 @@ public class DebuggerGUI extends JFrame {
                 boolean isCancel = true;
                 if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
                     isCancel = Debugger.saveConfirmation("Save changes before exiting?");
-                } if(!isCancel){
+                } else{
+                    int quit = JOptionPane.showConfirmDialog(null, "Quit?");
+                    if(quit == JOptionPane.OK_OPTION){
+                        isCancel = false;
+                    }
+                }if(!isCancel){
                     frame.dispose();
                     System.exit(0);
                 }

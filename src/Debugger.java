@@ -62,7 +62,7 @@ public class Debugger {
                 writer.flush();
                 // save to file
             }catch(FileNotFoundException ex){
-
+                System.out.println("file not found");
             }
 
         }
@@ -79,7 +79,7 @@ public class Debugger {
             }
 
         }catch(FileNotFoundException ex){
-
+            System.out.println("file not found");
         }
     }
 
