@@ -118,21 +118,18 @@ public class Assembly{
 		instruction = instruction.trim();
 		instruction = instruction.replaceAll("\\s+", " ");
 		if (instruction.split(" ")[0].length() != 3 || instruction.trim().charAt(instruction.length()-1) == ':'|| instruction.isEmpty()){
-			System.out.println("HereNot an instruction: " + instruction);
             CodeError = instruction;
 			throw new java.lang.NullPointerException();
 		}
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
-	    	System.out.println(instruction);
 	    	modebit = 1;
 	    	try{
                 int opcode= db.getOPCode(instName, modebit);
                 addBytes(opcode);
                 binaryInstructions[i++] = opcode;
             } catch(NullPointerException ex){
-                System.out.println("Not an instruction: " + instruction);
                 CodeError = instruction;
                 throw ex;
             }
@@ -156,8 +153,7 @@ public class Assembly{
 	    }
 		else if (checkAbsolute(instruction)){
 			modebit = 8;
-			System.out.println("ABS: " + instruction);
-			System.out.println("instruction at absolute: " + instruction);
+
 			addToQueue(instName, modebit, params);
 		}
 	    else if (checkIndirectLabel(instruction)){
@@ -175,7 +171,6 @@ public class Assembly{
 	    }
 		else if (checkAbsoluteLabel(instruction)){
 			modebit = 8;
-            System.out.println("instruction at absolute label: " + instruction);
 			int tmp = getLabelIndex(params[1]);
 			int index = lineLookup[tmp] + 1;
 			addToQueue(instName, modebit, index);
@@ -213,15 +208,12 @@ public class Assembly{
 			//minus 1 for previous line, add 1 byte to it.
 			if(tmp == 0){
 				index = lineLookup[tmp] + 1;
-				System.out.println("index if tmp=0: " +index);
 			} else {
 				index = lineLookup[tmp-1] + 1;
-				System.out.println("index if tmp!==0: " +index);
 			}
 			addToQueue(instName, modebit, index);		
 	    }else {
 	        if(instruction.trim().charAt(instruction.length()-1) != ':' || instruction.isEmpty()){
-                System.out.println("Not an instruction: " + instruction);
                 CodeError = instruction;
                 throw new java.lang.NullPointerException();
             }
@@ -233,15 +225,9 @@ public class Assembly{
 		int opcode= db.getOPCode(instName, modebit);
 		addBytes(opcode);
 		int paramNum = Integer.parseInt( params[1].replaceAll("[^0-9A-Fa-f]+", ""), 16);
-		System.out.println(instName + " mode: " + modebit + "number: " + paramNum);
     	binaryInstructions[i++] = opcode;
     	// check if 16 bit
     	if (modebit >= 8 && modebit <= 11){
-    		if (opcode == 0x9D){
-    			System.out.println(paramNum);
-    			System.out.println((paramNum & 0xff));
-    			System.out.println((paramNum >> 8) & 0xff);
-    		}
     		binaryInstructions[i++] = (paramNum & 0xff);
     		binaryInstructions[i++] = ((paramNum >> 8) & 0xff);
     	}

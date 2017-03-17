@@ -1,0 +1,16 @@
+;this program prints "CIS 422" 48 times
+LDY #$30
+loop: 	LDA #$c1
+	STA $00,X
+	INX
+	LDA #$50
+	STA $00,X
+	INX
+	LDA #$42
+	STA $00,X
+	INX
+	LDA #$20
+	STA $00,X
+	INX
+	DEY
+	BNE loop

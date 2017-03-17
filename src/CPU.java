@@ -16,7 +16,7 @@ public class CPU{
     public static void Execute(){
         while ((totalBytes + 0x210) >= Registers.readPC()){
             CPURun();
-            Registers.currentState();
+            //Registers.currentState();
         }
     }
 	/* @brief Run the CPU based on user input actions. Called for every CPU cycle. This will call decode.
@@ -40,7 +40,7 @@ public class CPU{
                 break;
             }
             CPURun();
-            Registers.currentState();
+            //Registers.currentState();
         }
     }
 
@@ -73,9 +73,9 @@ public class CPU{
             value8 = Memory.read(Registers.readPC()+1);  //TODO Create data bank to store what we need to increment the pc by based on instruction.
             value16 = littleEndian(value8, Memory.read(Registers.readPC()+2));
         }
-        System.out.print("value8: " + Integer.toHexString(value8) + " value16: " + Integer.toHexString(value16) + "    ");
+      //  System.out.print("value8: " + Integer.toHexString(value8) + " value16: " + Integer.toHexString(value16) + "    ");
         Registers.incrPC(Databank.getJumpCode(opCode));
-        System.out.println("Total Bytes: " + totalBytes);
+        //System.out.println("Total Bytes: " + totalBytes);
 
 
 

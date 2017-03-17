@@ -26,7 +26,6 @@ public class Import {
 			if (nlindex != -1){
 				//there is a new line
 				String ins = str.substring(index, nlindex + 1);
-				System.out.println(ins);
 				ins = ins.replace('\n', ' ').trim();
 				if (ins.length() == 0){
 					//if empty string
@@ -78,7 +77,6 @@ public class Import {
 			else{
 				//there is no newline -- last instruction
 				String ins = str.substring(index, str.length());
-				System.out.println(ins);
 				ins = ins.trim();
 				if (ins.length() != 0){
 					scindex = ins.indexOf(';');

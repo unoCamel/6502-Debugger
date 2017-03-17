@@ -15,7 +15,7 @@ public class Debugger {
         if (result == JFileChooser.APPROVE_OPTION) {
             DebuggerGUI.textArea.setText("");
             DebuggerGUI.selectedFile = DebuggerGUI.fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + DebuggerGUI.selectedFile.getAbsolutePath());
+            //System.out.println("Selected file: " + DebuggerGUI.selectedFile.getAbsolutePath());
             try {
                 BufferedReader in = new BufferedReader(new FileReader(DebuggerGUI.selectedFile));
                 String line = in.readLine();
@@ -125,12 +125,12 @@ public class Debugger {
             Memory.clean();
             Registers.init_Memory();
             Memory.setMemory(DebuggerGUI.asm.assemble());
-            Memory.instrToString();
+            //Memory.instrToString();
             DebuggerGUI.enableButtons();
             DebuggerGUI.updateGUI();
             DebuggerGUI.updateGUI();
         } catch(NullPointerException ex){
-            System.out.println("error");
+            System.out.println("Error found in assembled code.");
             return false;
         }
 

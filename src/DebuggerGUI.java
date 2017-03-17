@@ -145,7 +145,6 @@ public class DebuggerGUI extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                System.out.println("closing");
                 boolean isCancel = true;
                 if(Debugger.isDifferent() ||  textArea.getText().equals("")) {
                     isCancel = Debugger.saveConfirmation("Save changes before exiting?");
@@ -428,7 +427,6 @@ public class DebuggerGUI extends JFrame {
                 JOptionPane.showMessageDialog(frame, popupPanel,
                         "Memory",
                         JOptionPane.PLAIN_MESSAGE);
-                System.out.println("hello");
             }
         });
     }

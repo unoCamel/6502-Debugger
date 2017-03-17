@@ -1,0 +1,7 @@
+LDA #$01 ;register A = $01
+TAX ;register X = $01
+TAY ;register Y = $01
+LDX #$03 ;register X = $03
+TXA ;register A = $03
+LDY #$04 ;register Y = $04
+TYA ;register A = $04
