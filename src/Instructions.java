@@ -700,7 +700,7 @@ public class Instructions {
 * 				-	-	-	-	-	-
 */
     //0x4c
-    public static void JMP_AB(int value16){Registers.writePC(value16);}
+    public static void JMP_AB(int value16){Registers.writePC(value16 + 0x200);}
     //0x6C
     public static void JMP_ID(int value16){Registers.writePC(Memory.read(value16));} //TODO CHECK
 
