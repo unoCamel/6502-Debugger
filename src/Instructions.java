@@ -48,9 +48,11 @@ public class Instructions {
 	public static void LDA_ABY(int value16){Registers.write8(Global.$A, Memory.read( ALU.ADD(value16,Registers.read8(Global.$Y))));
 	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xA1
-	public static void LDA_IDX(int value8){}
+	public static void LDA_IDX(int value8){Registers.write8(Global.$A, ALU.ADD(Registers.read8(Global.$X), Memory.read(value8)));
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 	//0xB1
-	public static void LDA_IDY(int value8){}
+	public static void LDA_IDY(int value8){Registers.write8(Global.$A, Memory.read(ALU.ADD(Registers.read8(Global.$Y), value8)));
+	checkArithmeticFlags(Registers.read8(Global.$A));}
 
 /* ---------------------- LDX ---------------------- *
 * @brief Load Index X with Memory
@@ -113,9 +115,9 @@ public class Instructions {
 	//0x99
 	public static void STA_ABY(int value16){Memory.write(ALU.ADD( value16, Registers.read8(Global.$Y)), Registers.read8(Global.$A) );}
 	//0x81
-	public static void STA_IDX(int value8){}
+	public static void STA_IDX(int value8){Memory.write(ALU.ADD(Registers.read8(Global.$X), Memory.read(value8)), Registers.read8(Global.$A));}
 	//0x91
-	public static void STA_IDY(int value8){}
+	public static void STA_IDY(int value8){Memory.write(Memory.read(ALU.ADD(Registers.read8(Global.$Y), value8)), Registers.read8(Global.$A));}
 
 /* ---------------------- STX ---------------------- *
 * @brief Store Index X in Memory
