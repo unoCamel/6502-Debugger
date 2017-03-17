@@ -60,6 +60,19 @@ The development team will gave sent you the 6502-Debugger.jar file that launches
 To launch the application, select and open the 6502-Debugger.jar file. This will immediately launch the Debugger application. If you have any problems, please contact the support team. Enjoy!
 \pagebreak
 
+\section{6502 Debugger Programming Nuances}
+\subsection{Brief}
+There are a few specific requirements that come with working with this specific 6502 debugger that you as the user should be aware of when writing your 6502 Assembly Code. The following covers those specifics.
+\subsection{Instruction Memory}
+This debugger has 16 kb of memory. This means that you as the programmer can only write as many instructions that fit into 16 kb of memory, else the program will not run to completion. This in practice means you have access to 0x0200 to 0x3FFF of the address space, since there needs to be room left for the zero page and high index RAM. Different 6502 implementations can do memory somewhat differently, except for the zero page and high index ram, this is the implementation that we chose that fits the requirements.
+\subsection{Line Termination}
+This debugger recognizes individual lines of code through the use of new line characters. Make sure to always hit "Enter" at the end of every individual line of code. Else the debugger might not recognize it.
+\subsection{Labels}
+Labels must be terminated with a colon for the debugger to recognize them as labels. For example "Label:" is the correct use of a label while "Label" is not. 
+\subsection{Comments}
+This debugger allows for comments in the program. Comments must be preceded by a semi colon to be recognized as a comment. Comments must either be seperate from 6502 instructions or following 6502 instructions, never preceding 6502 instructions. For example "DEY ;this is a comment" or ";this is a comment" is valid, but ";this is a comment DEY" is invalid.
+\pagebreak
+
 \section{Importing Assembly Code}
 \subsection{Overview}
 Importing assembly code is easy to do with this 6502 Debugger, just make sure you are using 6502 ISA assembly code.
@@ -206,6 +219,16 @@ The Step To function will allow you to skip to a function of your choosing.
 		\caption{After the Name has been Typed}
 	\end{figure}
 \end{enumerate}
+\clearpage
+
+\section{Programs Included} 
+\subsection{Fibonacci}
+The file is named "fibonacci.txt". This program takes a hexadecimal number and calculates the corresponding fibonacci value, the value calculated is in hex and is stored in the Accumalator. The file indicates where to change the input so you can calculate another fibonacci value.
+\subsection{Print CIS 422}
+The file is named "print\_CIS422.txt". This program performs hex printing of the phrase "C15 422" over and over again. You can see the hex print in the memory viewer below the main window. If you would like to change the amount of times "C15 422" is printed change the value that follows the very first instruction "LDY".
+\subsection{Other Included Files}
+The files named after different instructions of a 6502 processor are designed to test the 6502. At each instruction is a comment with the expected state of the registers and flags.
+\clearpage
 
 
 \end{document}
