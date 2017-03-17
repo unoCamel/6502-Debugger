@@ -116,6 +116,10 @@ public class Assembly{
 		// have to run Immediate check before before ZeroPage
 		instruction = instruction.trim();
 		instruction = instruction.replaceAll("\\s+", " ");
+		if (instruction.split(" ")[0].length() != 3){
+			System.out.println("Not an instruction: " + instruction);
+			throw new java.lang.NullPointerException();
+		}
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
@@ -216,7 +220,7 @@ public class Assembly{
 			addToQueue(instName, modebit, index);		
 	    }else {
 	    	System.out.println("Not an instruction: " + instruction);
-	    	System.exit(0);
+	    	throw new java.lang.NullPointerException();
 		}
 		return modebit;
 	}
