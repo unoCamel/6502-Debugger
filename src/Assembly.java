@@ -13,6 +13,7 @@ public class Assembly{
 	private Databank db;
 	private int lineCounter = 0;
 	private int[] lineLookup = new int[0x3FFF];
+	public String CodeError = "";
 
 
     /*@brief Initializes Assembly class, purpose is to hold instruction and
@@ -116,8 +117,9 @@ public class Assembly{
 		// have to run Immediate check before before ZeroPage
 		instruction = instruction.trim();
 		instruction = instruction.replaceAll("\\s+", " ");
-		if (instruction.split(" ")[0].length() != 3){
+		if (instruction.split(" ")[0].length() != 3 && instruction.trim().charAt(instruction.length()-1) != ':'){
 			System.out.println("Not an instruction: " + instruction);
+            CodeError = instruction;
 			throw new java.lang.NullPointerException();
 		}
 		String instName = instruction.substring(0, 3);
@@ -130,6 +132,8 @@ public class Assembly{
                 addBytes(opcode);
                 binaryInstructions[i++] = opcode;
             } catch(NullPointerException ex){
+                System.out.println("Not an instruction: " + instruction);
+                CodeError = instruction;
                 throw ex;
             }
 
@@ -173,11 +177,8 @@ public class Assembly{
 			modebit = 8;
             System.out.println("instruction at absolute label: " + instruction);
 			int tmp = getLabelIndex(params[1]);
-			//int index = lineLookup[tmp] + 1;
-            int index = 0x07;
-            System.out.println("label at: " + tmp + " index: " + index);
-            String[] param2 = {"7", "20 07"};
-			addToQueue(instName, modebit, param2);
+			int index = lineLookup[tmp] + 1;
+			addToQueue(instName, modebit, index);
 		}
 	    else if (checkIndirectX(instruction)){
 	    	modebit = 12;
@@ -219,8 +220,11 @@ public class Assembly{
 			}
 			addToQueue(instName, modebit, index);		
 	    }else {
-	    	System.out.println("Not an instruction: " + instruction);
-	    	throw new java.lang.NullPointerException();
+	        if(instruction.trim().charAt(instruction.length()-1) != ':'){
+                System.out.println("Not an instruction: " + instruction);
+                CodeError = instruction;
+                throw new java.lang.NullPointerException();
+            }
 		}
 		return modebit;
 	}
