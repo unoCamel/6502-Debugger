@@ -119,6 +119,7 @@ public class Assembly{
 		String instName = instruction.substring(0, 3);
 		String[] params = instruction.split("\\s+");
 	    if (checkImplicit(instruction)){
+	    	System.out.println(instruction);
 	    	modebit = 1;
 	    	int opcode= db.getOPCode(instName, modebit);
 	    	addBytes(opcode);
@@ -192,7 +193,7 @@ public class Assembly{
 	    }
 	    else if (checkBranch(instruction)){
 	    	modebit = 7;
-	    	int index = 0;
+	    	int index = 0;   	
 			int tmp = getLabelIndex(params[1]);
 			//minus 1 for previous line, add 1 byte to it.
 			if(tmp == 0){
@@ -262,7 +263,7 @@ public class Assembly{
 		return true;
 	}
 	private boolean checkZeroPage(String inst){
-		String pattern = "(\\$| )[0-9a-fA-F]{2}";
+		String pattern = "(\\$| )[0-9a-fA-F]{2}$";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
@@ -295,7 +296,7 @@ public class Assembly{
 		return false;
 	}
 	private boolean checkAbsolute(String inst){
-		String pattern = "\\$?[0-9a-fA-F]{3,4}";
+		String pattern = "(\\$| )[0-9a-fA-F]{3,4}$";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(inst);
 		return m.find();
