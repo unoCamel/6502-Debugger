@@ -1,6 +1,6 @@
   LDX #$03 ; x = 3
-  JMP there; jump to "there"
   LDX #$05 ; x = 1
 there:
   DEX	; x--
   STX $0200 ; address[200] = x ; x = 2
+  JMP there; jump to "there" Will infinite loop
