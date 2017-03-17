@@ -408,7 +408,9 @@ public class DebuggerGUI extends JFrame {
 
         btnAssemble.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Debugger.assemble();
+                if(!Debugger.assemble()){
+                    JOptionPane.showMessageDialog(null,"Inputted Instructions are not valid code.");
+                };
             }
         });
 
@@ -543,7 +545,6 @@ public class DebuggerGUI extends JFrame {
         try{
             int curLine = Debugger.checkLine(stackViewer);
             int curInstrLine = Debugger.checkLine(textArea, curLine - 0x100);
-            System.out.println("line: " + (curLine - 0x100));
             int startStack = stackViewer.getLineStartOffset(curLine);
             int endStack = stackViewer.getLineEndOffset(curLine);
             //finding current line

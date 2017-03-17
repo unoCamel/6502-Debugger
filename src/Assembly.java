@@ -121,9 +121,14 @@ public class Assembly{
 	    if (checkImplicit(instruction)){
 	    	System.out.println(instruction);
 	    	modebit = 1;
-	    	int opcode= db.getOPCode(instName, modebit);
-	    	addBytes(opcode);
-	    	binaryInstructions[i++] = opcode;
+	    	try{
+                int opcode= db.getOPCode(instName, modebit);
+                addBytes(opcode);
+                binaryInstructions[i++] = opcode;
+            } catch(NullPointerException ex){
+                throw ex;
+            }
+
 	    }
 		else if (checkAbsoluteX(instruction)){
 			modebit = 9;
@@ -143,6 +148,8 @@ public class Assembly{
 	    }
 		else if (checkAbsolute(instruction)){
 			modebit = 8;
+			System.out.println("ABS: " + instruction);
+			System.out.println("instruction at absolute: " + instruction);
 			addToQueue(instName, modebit, params);
 		}
 	    else if (checkIndirectLabel(instruction)){
@@ -160,10 +167,13 @@ public class Assembly{
 	    }
 		else if (checkAbsoluteLabel(instruction)){
 			modebit = 8;
-			
+            System.out.println("instruction at absolute label: " + instruction);
 			int tmp = getLabelIndex(params[1]);
-			int index = lineLookup[tmp-1] + 1;
-			addToQueue(instName, modebit, index);
+			//int index = lineLookup[tmp] + 1;
+            int index = 0x07;
+            System.out.println("label at: " + tmp + " index: " + index);
+            String[] param2 = {"7", "20 07"};
+			addToQueue(instName, modebit, param2);
 		}
 	    else if (checkIndirectX(instruction)){
 	    	modebit = 12;
@@ -215,6 +225,7 @@ public class Assembly{
 		int opcode= db.getOPCode(instName, modebit);
 		addBytes(opcode);
 		int paramNum = Integer.parseInt( params[1].replaceAll("[^0-9A-Fa-f]+", ""), 16);
+		System.out.println(instName + " mode: " + modebit + "number: " + paramNum);
     	binaryInstructions[i++] = opcode;
     	// check if 16 bit
     	if (modebit >= 8 && modebit <= 11){

@@ -105,10 +105,8 @@ public class Debugger {
         int lineCounter = 0;
         int numberNewLines = 0;
         for (String line : field.getText().split("\\n")){
-            System.out.println("CURRENT LINE: " +line);
             //System.out.println(line.subSequence(0, 4) + " and comparing" + "$" + Integer.toHexString(Registers.readPC()));
             if(line.trim().isEmpty() || line.subSequence(0, 1).equals(";") || line.trim().charAt(0) == ';'){
-                System.out.println("CURRENT EMPTY LINE: " +line);
                 numberNewLines++;
             }else{
                 if(lineCounter == stackIndex){
@@ -122,14 +120,20 @@ public class Debugger {
     public static boolean assemble(){
 
         DebuggerGUI.asm = Import.importInstructions(DebuggerGUI.textArea.getText());
-        DebuggerGUI.currentInstructions = DebuggerGUI.asm.getAllInstructions();
-        Memory.clean();
-        Registers.init_Memory();
-        Memory.setMemory(DebuggerGUI.asm.assemble());
-        Memory.instrToString();
-        DebuggerGUI.enableButtons();
-        DebuggerGUI.updateGUI();
-        DebuggerGUI.updateGUI();
+        try{
+            DebuggerGUI.currentInstructions = DebuggerGUI.asm.getAllInstructions();
+            Memory.clean();
+            Registers.init_Memory();
+            Memory.setMemory(DebuggerGUI.asm.assemble());
+            Memory.instrToString();
+            DebuggerGUI.enableButtons();
+            DebuggerGUI.updateGUI();
+            DebuggerGUI.updateGUI();
+        } catch(NullPointerException ex){
+            System.out.println("error");
+            return false;
+        }
+
 
 
         return true;
