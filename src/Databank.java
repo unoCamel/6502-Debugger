@@ -29,7 +29,7 @@ public class Databank {
         Integer[] opcodesBMI = {null, null, null, null, null, null, 0x30, null, null, null, null, null, null, 0b0_0000_0100_0000};
         Integer[] opcodesBNE = {null, null, null, null, null, null, 0xD0, null, null, null, null, null, null, 0b0_0000_0100_0000};
         Integer[] opcodesBPL = {null, null, null, null, null, null, 0x10, null, null, null, null, null, null, 0b0_0000_0100_0000};
-        Integer[] opcodesBRK = {null, null, null, null, null, null, 0x00, null, null, null, null, null, null, 0b0_0000_0100_0000};
+        Integer[] opcodesBRK = {null, null, null, null, null, null, null, null, null, null, null, null, 0x00, 0b0_0000_0100_0000};
         Integer[] opcodesBVC = {null, null, null, null, null, null, 0x50, null, null, null, null, null, null, 0b0_0000_0100_0000};
         Integer[] opcodesBVS = {null, null, null, null, null, null, 0x70, null, null, null, null, null, null, 0b0_0000_0100_0000};
         Integer[] opcodesCLC = {null, null, null, null, null, null, null, null, null, null, null, null, 0x18, 0b0_0000_0000_0001};
@@ -56,7 +56,7 @@ public class Databank {
         Integer[] opcodesLSR = {null, null, null, null, 0x5E, 0x4E, null, null, 0x56, 0x46, null, 0x4A, null, 0b0_0001_1001_1010};
         Integer[] opcodesNOP = {null, null, null, null, null, null, null, null, null, null, null, null, 0xEA, 0b0_0000_0000_0001};
         Integer[] opcodesORA = {0x11, 0x01, null, 0x19, 0x1D, 0x0D, null, null, 0x15, 0x05, 0x09, null, null, 0b1_1011_1001_1100};
-        Integer[] opcodesPHA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x01, 0b0_0000_0000_0001};
+        Integer[] opcodesPHA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x48, 0b0_0000_0000_0001};
         Integer[] opcodesPHP = {null, null, null, null, null, null, null, null, null, null, null, null, 0x08, 0b0_0000_0000_0001};
         Integer[] opcodesPLA = {null, null, null, null, null, null, null, null, null, null, null, null, 0x68, 0b0_0000_0000_0001};
         Integer[] opcodesPLP = {null, null, null, null, null, null, null, null, null, null, null, null, 0x28, 0b0_0000_0000_0001};
