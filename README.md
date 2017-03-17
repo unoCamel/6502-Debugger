@@ -10,7 +10,7 @@ Alison Legge <br />
 
 Installation
 ------------
-TBC
+Please download the following project zip file, 6502 Debugger Program.zip, and unpack archive. Once unpacked, open the folder and double click on the 6502-Debugger.jar. From here, you can load any of the provided test files and run them to your liking, or create your own program.
 
 Cleaning
 --------
